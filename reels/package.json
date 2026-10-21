@@ -1,0 +1,25 @@
+{
+  "name": "laservision-zeiss-reels",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Reel templates for Laser Vision and Zeiss, built with Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render",
+    "still": "remotion still",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "@remotion/fonts": "4.0.537",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.537",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@remotion/zod-types": "4.0.537",
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}

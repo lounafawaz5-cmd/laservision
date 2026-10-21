@@ -61,7 +61,7 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - [ ] 4. Peer/competitor research with linked references
 - [ ] 5. Content calendar → Trello
 - [ ] 6. Scripts, captions, cover text
-- [ ] 7. Reel editing (Remotion)
+- [ ] 7. Reel editing (Remotion): project scaffolded in `reels/`, templates to be decided
 - [ ] 8. Carousel system (references → templates)
 - [ ] 9. Weekly planning
 - [ ] 10. Monthly-planning skill

@@ -1,0 +1,5 @@
+node_modules/
+out/
+# Raw footage is pulled from Google Drive per session; never commit it.
+public/footage/*
+!public/footage/.gitkeep
