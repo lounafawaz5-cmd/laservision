@@ -15,7 +15,7 @@ Strategy by Tawlé Consultancy. **Rules for all content: `strategy/SUMMARY.md`.*
 ## Channels & cadence
 - Platforms: Instagram, TikTok, Facebook
 - About 3 posts per week per brand
-- Languages: Lebanese Arabic most often, plus English (Lebanese-English mix on ZVC). Subtitles always.
+- Languages: reels mostly Lebanese Arabic, plus English (Lebanese-English mix on ZVC). Subtitles always. Carousels English only.
 
 ## Workflow
 1. **Pre-production** (Claude + user)
@@ -47,12 +47,13 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - One step at a time; don't run ahead into later stages.
 - A consultant strategy document exists (skeleton only); analytics and research fill it in.
 - Medical claims for LaserVision need care (no guarantees or "painless/perfect" promises). Full rules in `strategy/SUMMARY.md`.
-- ZVC original content never uses the ZEISS name or logo.
+- ZVC original content never uses the blue ZEISS block logo (the store name is fine).
 
 ## Brand assets (`brand/`)
 - LaserVision logo: `brand/laservision/logo.png` (+ `logo-transparent.png`). Primary blue **#15557C**.
-- ZVC lockup: `brand/zeiss/zvc-logo-lockup.jpg`. Reference only; not for original content.
-- **Carousel font (both accounts): Outfit** Light/Medium/Bold, in `brand/fonts/Outfit/`. It has no Arabic glyphs, so Arabic needs a paired font (to decide).
+- ZVC: store name **ZEISS Vision Center** is OK on screen. Logo = the "by Laser Vision" wordmark `brand/zeiss/zvc-wordmark-dark.png` / `-white.png`. **Never the blue ZEISS block logo.**
+- **Carousels: English only, font Outfit** (Light/Medium/Bold) for both accounts, in `brand/fonts/Outfit/`.
+- Arabic appears only in reels (spoken Arabic → Arabic subtitles). Reel style reference: coming from the user.
 - Canva templates (41 designs, both brands): `brand/CANVA-TEMPLATE-LINKS.md`
 
 ## Raw footage

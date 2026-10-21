@@ -30,7 +30,7 @@ export type Brand = {
 
 // Rules from the strategy doc (strategy/SUMMARY.md):
 // - Laser Vision: calm, clean, muted. CTA is WhatsApp, never sales language.
-// - ZVC: bright, high contrast. The ZEISS name and logo may NOT appear in original content.
+// - ZVC: bright, high contrast. Never the ZEISS block logo; use the ZVC "by Laser Vision" wordmark.
 export const brands: Record<BrandId, Brand> = {
   laservision: {
     name: "LaserVision",
@@ -47,9 +47,9 @@ export const brands: Record<BrandId, Brand> = {
     outroLine: "Questions? WhatsApp us",
   },
   zvc: {
-    // PLACEHOLDER: confirm the store name allowed on screen (no ZEISS name/logo in original content).
-    name: "Vision Center",
-    logo: "",
+    // Store name is fine on screen; the blue ZEISS block logo is not. Use the "by Laser Vision" wordmark.
+    name: "ZEISS Vision Center",
+    logo: "brand/zvc-wordmark-white.png",
     colors: {
       background: "#111111",
       primary: "#111111",

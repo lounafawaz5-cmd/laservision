@@ -13,7 +13,7 @@ Check every piece of content against this page.
 | Promise | You'll understand every step before it happens. | Walk in unsure. Walk out looking good and seeing clearly. |
 | Personality | A senior nurse of 20 years: calm, clear, clean, credible, modern, respectful | A 28-year-old friend with good taste: fun, quick, confident, fashion-led, local (Beirut/Hazmieh) |
 | Faces | Marc (founder), Georges (runs it today), 2–3 recurring staff (reception, nurse/technician) | Luna + the two optometrists |
-| CTA | WhatsApp (website is out of date) | WhatsApp **81 47 20 20** ("WhatsApp us your prescription") |
+| CTA | WhatsApp, on **every** post (number TBC; website is out of date) | WhatsApp **81 47 20 20** ("WhatsApp us your prescription") |
 | Visuals | Natural light, real rooms, muted palette, clean text. No stock, no AI footage, no trend audio, no gratuitous transitions | Bright, high contrast, movement, mirror/try-on shots. Trend audio and native formats welcome |
 
 ## Hard rules
@@ -26,7 +26,7 @@ Check every piece of content against this page.
 - Always: "consult your eye doctor first, then book at LaserVision."
 
 **ZVC never:**
-- uses the **ZEISS name or logo in content the store produces** (ZEISS global content is separate)
+- uses the **blue ZEISS block logo** in content the store produces. The name "ZEISS Vision Center" is fine; the logo is the **"ZEISS Vision Center by Laser Vision" wordmark** (`brand/zeiss/zvc-wordmark-*.png`).
 - makes medical claims or talks about surgery, conditions or treatment
 - lectures (one line of product knowledge, then back to frames)
 - hard-sells or runs constant discounts (promotions allowed, but chosen sparingly)
@@ -52,7 +52,8 @@ Check every piece of content against this page.
 - 12-month targets: **4 hearing aids a month, 3 glasses a day**, more patients in Hazmieh
 
 ## Practical answers
-- Language: depends on who's filming. **Lebanese Arabic most often.** ZVC: a natural Lebanese-English mix. **Subtitles on everything.**
+- Language: depends on who's filming. **Lebanese Arabic most often** in reels, with Arabic subtitles. ZVC: a natural Lebanese-English mix. **Subtitles on everything.**
+- **Carousels are always in English** (both brands).
 - Filming: all branches including HDF (coordinate with staff); surgery and prep rooms yes, **sterilisation room no**. Patients need consent; surgery needs patient **and** doctor consent.
 - Before and after: maybe for some surgeries and for hearing aids
 - Subtle tech comparisons are OK (no names)
@@ -63,7 +64,6 @@ Check every piece of content against this page.
 - Monthly report per account: followers, reach, engagement, top posts, WhatsApp enquiries
 
 ## Open questions to settle
-- The exact store name allowed on screen and in captions for ZVC, given the no-ZEISS-name rule
-- LaserVision's WhatsApp number
+- LaserVision's WhatsApp number (goes on every LaserVision post)
 - Which public claims about results, volumes and equipment are cleared (owners: "to share separately")
 - Lead collection online (forms, giveaways, quizzes): "to be discussed"
