@@ -50,7 +50,8 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - ZVC original content never uses the blue ZEISS block logo (the store name is fine).
 
 ## Brand assets (`brand/`)
-- LaserVision logo: `brand/laservision/logo.png` (+ `logo-transparent.png`). Primary blue **#15557C**.
+- LaserVision: logos and full palette in `brand/laservision/GUIDELINES.md` (primary #005D83, #00303F, #F1F2F2; secondary #30A4BF, #B6DFE5). Guidelines PDF saved alongside.
+- ZVC colors: official ZEISS palette in `brand/zeiss/GUIDELINES.md` (black and white dominant, Indigo #0F2DB3, Lime #D9E906 accent).
 - ZVC: store name **ZEISS Vision Center** is OK on screen. Logo = the "by Laser Vision" wordmark `brand/zeiss/zvc-wordmark-dark.png` / `-white.png`. **Never the blue ZEISS block logo.**
 - **Carousels: English only, font Outfit** (Light/Medium/Bold) for both accounts, in `brand/fonts/Outfit/`.
 - Arabic appears only in reels (spoken Arabic → Arabic subtitles). Reel style reference: coming from the user.

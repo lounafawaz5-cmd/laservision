@@ -28,6 +28,7 @@ export type Brand = {
   outroLine: string;
 };
 
+// Colors: brand/laservision/GUIDELINES.md and brand/zeiss/GUIDELINES.md.
 // Rules from the strategy doc (strategy/SUMMARY.md):
 // - Laser Vision: calm, clean, muted. CTA is WhatsApp, never sales language.
 // - ZVC: bright, high contrast. Never the ZEISS block logo; use the ZVC "by Laser Vision" wordmark.
@@ -37,10 +38,10 @@ export const brands: Record<BrandId, Brand> = {
     logo: "brand/laservision-logo.png",
     colors: {
       background: "#FFFFFF",
-      primary: "#15557C",
-      accent: "#8FB8CF",
+      primary: "#005D83",
+      accent: "#30A4BF",
       text: "#FFFFFF",
-      captionBg: "rgba(21,85,124,0.88)",
+      captionBg: "#005D83",
       captionText: "#FFFFFF",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
@@ -51,12 +52,12 @@ export const brands: Record<BrandId, Brand> = {
     name: "ZEISS Vision Center",
     logo: "brand/zvc-wordmark-white.png",
     colors: {
-      background: "#111111",
-      primary: "#111111",
-      accent: "#FFD84D",
+      background: "#000000",
+      primary: "#000000",
+      accent: "#D9E906",
       text: "#FFFFFF",
       captionBg: "#FFFFFF",
-      captionText: "#111111",
+      captionText: "#000000",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     outroLine: "WhatsApp us your prescription\n81 47 20 20",

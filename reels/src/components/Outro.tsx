@@ -33,7 +33,7 @@ export const Outro: React.FC<{ brand: Brand }> = ({ brand }) => {
           whiteSpace: "pre-line",
           lineHeight: 1.4,
           fontWeight: 700,
-          color: brand.colors.background === "#FFFFFF" ? brand.colors.primary : brand.colors.accent,
+          color: brand.colors.background === "#FFFFFF" ? brand.colors.primary : brand.colors.text,
         }}
       >
         {brand.outroLine}
