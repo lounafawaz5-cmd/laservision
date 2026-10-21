@@ -50,7 +50,7 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - ZVC original content never uses the blue ZEISS block logo (the store name is fine).
 
 ## Brand assets (`brand/`)
-- LaserVision: logos and full palette in `brand/laservision/GUIDELINES.md` (primary #005D83, #00303F, #F1F2F2; secondary #30A4BF, #B6DFE5). Guidelines PDF saved alongside.
+- LaserVision colors (only thing taken from its brand guidelines): `brand/laservision/GUIDELINES.md`. Primary #005D83, #00303F, #F1F2F2; secondary #30A4BF, #B6DFE5.
 - ZVC colors: official ZEISS palette in `brand/zeiss/GUIDELINES.md` (black and white dominant, Indigo #0F2DB3, Lime #D9E906 accent).
 - ZVC: store name **ZEISS Vision Center** is OK on screen. Logo = the "by Laser Vision" wordmark `brand/zeiss/zvc-wordmark-dark.png` / `-white.png`. **Never the blue ZEISS block logo.**
 - **Carousels: English only, font Outfit** (Light/Medium/Bold) for both accounts, in `brand/fonts/Outfit/`.
