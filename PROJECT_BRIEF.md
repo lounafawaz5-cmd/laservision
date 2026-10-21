@@ -25,6 +25,21 @@ monthly-planning skill we build at the end.
    - Reel editing with Remotion
    - Carousel design from the user's reference library
 
+## How each step will be done (agreed)
+- **Analytics:** through Claude in Chrome on the user's logged-in accounts (Instagram for both brands,
+  Meta Business Suite, TikTok, Facebook). Scroll and scrape directly, then write a report.
+- **Research:** through Chrome across TikTok, YouTube, Instagram, Facebook and LinkedIn. Topics come from
+  the consultant strategy doc's direction. Every reference is logged with its link.
+- **Scripting:** after the calendar is set, discuss length and style. Transcribe past reels
+  (user files or pulled from Instagram) to learn the voice. One script template per brand.
+- **Captions and cover text:** one standard formula per brand, applied to every post.
+- **Reels:** set up the most streamlined pipeline. Decide on reel template types together
+  (shared templates vs. unique one-offs).
+- **Carousels:** the user makes a references folder. Leading idea: text on the Trello card →
+  auto-generated slides. Final method decided together.
+
+Full setup checklist: `NEXT_SESSION_SETUP.md`.
+
 ## Working rules
 - One step at a time; don't run ahead into later stages.
 - A consultant strategy document exists (skeleton only); analytics and research fill it in.
