@@ -7,9 +7,10 @@ reach it. Tick boxes as you go.
 
 ## Part A: One-time setup (do all of this before the next session)
 
-### A1. Move to your desktop
-Chrome, the SD card and local files are only reachable from your computer, so
-the next session should run there, not in the cloud.
+### A1. Desktop (needed only for Chrome steps 3–4)
+Everything else (Trello, Drive, Canva, Remotion) works from the cloud session on
+the iPad. The Chrome extension needs a computer, so run the analytics and research
+sessions from the desktop.
 - [ ] Install the **Claude desktop app** and sign in with the same account (lounafawaz5@gmail.com)
 - [ ] Open Claude Code in the desktop app and point it at this project. Either clone the repo
       `lounafawaz5-cmd/laservision` (branch `claude/laser-vision-zeiss-strategy-tbslie`)
@@ -38,10 +39,13 @@ the next session should run there, not in the cloud.
 - [ ] **Remotion** (reel editing)
 - [ ] **Social Media Skills** (optional: hooks, scripts, captions, carousel frameworks)
 
-### A5. Software on your computer (for reel editing)
-- [ ] **Node.js** (LTS version) from nodejs.org. Remotion needs it.
-- [ ] Enough free disk space for raw footage plus renders (aim for 50 GB+)
-- [ ] I'll install Remotion itself and the transcription tool (Whisper, which handles English and Arabic) when we get there
+### A5. Reel editing runs in the cloud (nothing to install)
+- Node.js, ffmpeg and a headless browser are already in the cloud session, so Remotion
+  runs there and can be driven from the iPad.
+- The Remotion project lives in this repo, so it survives between sessions.
+- Footage path: iPad Files (or SD card via a USB-C card reader on the iPad) → Google Drive
+  `Footage/` folder → I pull it into the session through the Drive connector.
+- Each session has about 30 GB of working space, so we bring in one batch of reels at a time.
 
 ### A6. Files to gather
 - [ ] **Consultant strategy doc**: put it in Google Drive or have it ready to upload
