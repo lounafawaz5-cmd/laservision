@@ -10,33 +10,56 @@ for (const weight of ["400", "700", "800"]) {
   loadFont({ family: ARABIC_FONT, url: staticFile(`fonts/noto-sans-arabic-arabic-${weight}-normal.woff2`), weight });
 }
 
-export type BrandId = "laservision" | "zeiss";
+export type BrandId = "laservision" | "zvc";
 
 export type Brand = {
   name: string;
+  // Path in public/. Leave empty to show the name as text instead.
+  logo: string;
   colors: {
+    background: string;
     primary: string;
     accent: string;
     text: string;
     captionBg: string;
+    captionText: string;
   };
   fonts: { latin: string; arabic: string };
   outroLine: string;
 };
 
-// PLACEHOLDERS: replace colors, fonts and outro copy with each brand kit.
+// Rules from the strategy doc (strategy/SUMMARY.md):
+// - Laser Vision: calm, clean, muted. CTA is WhatsApp, never sales language.
+// - ZVC: bright, high contrast. The ZEISS name and logo may NOT appear in original content.
 export const brands: Record<BrandId, Brand> = {
   laservision: {
-    name: "Laser Vision",
-    colors: { primary: "#0B3D91", accent: "#2EC4F1", text: "#FFFFFF", captionBg: "rgba(11,61,145,0.85)" },
+    name: "LaserVision",
+    logo: "brand/laservision-logo.png",
+    colors: {
+      background: "#FFFFFF",
+      primary: "#15557C",
+      accent: "#8FB8CF",
+      text: "#FFFFFF",
+      captionBg: "rgba(21,85,124,0.88)",
+      captionText: "#FFFFFF",
+    },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
-    outroLine: "Book your consultation",
+    outroLine: "Questions? WhatsApp us",
   },
-  zeiss: {
-    name: "Zeiss",
-    colors: { primary: "#141E8C", accent: "#FFFFFF", text: "#FFFFFF", captionBg: "rgba(0,0,0,0.75)" },
+  zvc: {
+    // PLACEHOLDER: confirm the store name allowed on screen (no ZEISS name/logo in original content).
+    name: "Vision Center",
+    logo: "",
+    colors: {
+      background: "#111111",
+      primary: "#111111",
+      accent: "#FFD84D",
+      text: "#FFFFFF",
+      captionBg: "#FFFFFF",
+      captionText: "#111111",
+    },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
-    outroLine: "Visit us in store",
+    outroLine: "WhatsApp us your prescription\n81 47 20 20",
   },
 };
 

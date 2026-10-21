@@ -3,22 +3,22 @@ import { TalkingHead, talkingHeadSchema, TalkingHeadProps } from "./templates/Ta
 
 const FPS = 30;
 
-const sampleEn: TalkingHeadProps = {
+const sampleLv: TalkingHeadProps = {
   brand: "laservision",
   video: "",
-  hook: "3 myths about LASIK you still believe",
+  hook: "Your doctor said cataract. Here's what happens next.",
   hookSeconds: 3,
   outroSeconds: 2.5,
   captions: [
-    { text: "Myth one: it hurts.", startMs: 3000, endMs: 5000 },
-    { text: "The procedure takes minutes and you're awake the whole time.", startMs: 5000, endMs: 8000 },
+    { text: "حكيمك قلك إنو عندك ماء بيضاء؟", startMs: 3000, endMs: 5000 },
+    { text: "First, you'll meet our team at reception.", startMs: 5000, endMs: 8000 },
   ],
 };
 
-const sampleAr: TalkingHeadProps = {
-  brand: "zeiss",
+const sampleZvc: TalkingHeadProps = {
+  brand: "zvc",
   video: "",
-  hook: "كيف تختار النظارة المناسبة لوجهك؟",
+  hook: "I have a round face and I've been lied to for years",
   hookSeconds: 3,
   outroSeconds: 2.5,
   captions: [
@@ -39,7 +39,7 @@ export const RemotionRoot: React.FC = () => (
       id="TalkingHead-LaserVision"
       component={TalkingHead}
       schema={talkingHeadSchema}
-      defaultProps={sampleEn}
+      defaultProps={sampleLv}
       calculateMetadata={calc}
       fps={FPS}
       width={1080}
@@ -47,10 +47,10 @@ export const RemotionRoot: React.FC = () => (
       durationInFrames={300}
     />
     <Composition
-      id="TalkingHead-Zeiss"
+      id="TalkingHead-ZVC"
       component={TalkingHead}
       schema={talkingHeadSchema}
-      defaultProps={sampleAr}
+      defaultProps={sampleZvc}
       calculateMetadata={calc}
       fps={FPS}
       width={1080}

@@ -20,7 +20,7 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ capt
           padding: "18px 32px",
           borderRadius: 20,
           background: brand.colors.captionBg,
-          color: brand.colors.text,
+          color: brand.colors.captionText,
           fontFamily: fontFor(brand, current.text),
           fontWeight: 700,
           fontSize: 58,

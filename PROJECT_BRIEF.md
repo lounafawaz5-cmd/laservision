@@ -6,13 +6,16 @@ monthly-planning skill we build at the end.
 ## Brands
 | Brand | What it is | Trello |
 |---|---|---|
-| Laser Vision | Laser eye center (eye-related medical services) | Own board |
-| Zeiss | Eyewear (sunglasses, eyeglasses) | Own board |
+| LaserVision | Eye care + laser platform, 4 locations in Lebanon | Own board |
+| ZEISS Vision Center (ZVC) | Optical store inside LaserVision Hazmieh ("by Laser Vision") | Own board |
+
+The user is **Luna**, in-house and on site, and the face of ZVC content. Approver: **Georges**.
+Strategy by Tawlé Consultancy. **Rules for all content: `strategy/SUMMARY.md`.**
 
 ## Channels & cadence
 - Platforms: Instagram, TikTok, Facebook
 - About 3 posts per week per brand
-- Languages: English and Arabic, chosen per post (user flags in advance what works)
+- Languages: Lebanese Arabic most often, plus English (Lebanese-English mix on ZVC). Subtitles always.
 
 ## Workflow
 1. **Pre-production** (Claude + user)
@@ -43,7 +46,14 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 ## Working rules
 - One step at a time; don't run ahead into later stages.
 - A consultant strategy document exists (skeleton only); analytics and research fill it in.
-- Medical claims for Laser Vision need care (no guarantees or "painless/perfect" promises).
+- Medical claims for LaserVision need care (no guarantees or "painless/perfect" promises). Full rules in `strategy/SUMMARY.md`.
+- ZVC original content never uses the ZEISS name or logo.
+
+## Brand assets (`brand/`)
+- LaserVision logo: `brand/laservision/logo.png` (+ `logo-transparent.png`). Primary blue **#15557C**.
+- ZVC lockup: `brand/zeiss/zvc-logo-lockup.jpg`. Reference only; not for original content.
+- **Carousel font (both accounts): Outfit** Light/Medium/Bold, in `brand/fonts/Outfit/`. It has no Arabic glyphs, so Arabic needs a paired font (to decide).
+- Canva templates (41 designs, both brands): `brand/CANVA-TEMPLATE-LINKS.md`
 
 ## Raw footage
 - Lives on the user's iPad files, Google Drive, and an SD card
@@ -56,7 +66,7 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 
 ## Step tracker
 - [ ] 1. Connect Trello; read both boards
-- [ ] 2. Read the consultant strategy doc
+- [x] 2. Read the consultant strategy doc → `strategy/SUMMARY.md`
 - [ ] 3. Analytics audit (own accounts)
 - [ ] 4. Peer/competitor research with linked references
 - [ ] 5. Content calendar → Trello

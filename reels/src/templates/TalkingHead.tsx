@@ -6,7 +6,7 @@ import { Hook } from "../components/Hook";
 import { Outro } from "../components/Outro";
 
 export const talkingHeadSchema = z.object({
-  brand: z.enum(["laservision", "zeiss"]),
+  brand: z.enum(["laservision", "zvc"]),
   // Path inside public/, e.g. "footage/2026-11-03 lasik-myths/main.mp4". Empty = placeholder.
   video: z.string(),
   hook: z.string(),
