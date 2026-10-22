@@ -74,7 +74,7 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - [x] 2. Read the consultant strategy doc → `strategy/SUMMARY.md`
 - [ ] 3. Analytics audit (own accounts)
 - [ ] 4. Peer/competitor research with linked references
-- [ ] 5. Content calendar → Trello
+- [ ] 5. Content calendar → Trello (LaserVision draft: `calendar/laservision-2026-oct-dec.md`, awaiting approval; ZVC already planned on its board)
 - [ ] 6. Scripts, captions, cover text
 - [ ] 7. Reel editing (Remotion): project scaffolded in `reels/`, templates to be decided
 - [ ] 8. Carousel system (references → templates)
