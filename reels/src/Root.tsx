@@ -3,15 +3,20 @@ import { TalkingHead, talkingHeadSchema, TalkingHeadProps } from "./templates/Ta
 
 const FPS = 30;
 
+// LaserVision house style: no hook card, no end card, word-by-word Arabic subtitles.
 const sampleLv: TalkingHeadProps = {
   brand: "laservision",
   video: "",
-  hook: "Your doctor said cataract. Here's what happens next.",
-  hookSeconds: 3,
-  outroSeconds: 2.5,
+  hook: "",
+  hookSeconds: 0,
+  outroSeconds: 0,
   captions: [
-    { text: "حكيمك قلك إنو عندك ماء بيضاء؟", startMs: 3000, endMs: 5000 },
-    { text: "First, you'll meet our team at reception.", startMs: 5000, endMs: 8000 },
+    { text: "إذا عيونك", startMs: 0, endMs: 700 },
+    { text: "عم تنشف", startMs: 700, endMs: 1400 },
+    { text: "بسرعة", startMs: 1400, endMs: 2000 },
+    { text: "منعمل TEST", startMs: 2000, endMs: 2800 },
+    { text: "بالـ MEIBOMIAN GLANDS", startMs: 2800, endMs: 3800 },
+    { text: "وجلسات الـ IPL", startMs: 3800, endMs: 4800 },
   ],
 };
 
@@ -29,7 +34,7 @@ const sampleZvc: TalkingHeadProps = {
 
 // Duration follows the props, so each reel's length comes from its footage plan.
 const calc = ({ props }: { props: TalkingHeadProps }) => {
-  const lastCaption = Math.max(props.hookSeconds * 1000, ...props.captions.map((c) => c.endMs));
+  const lastCaption = Math.max(props.hook ? props.hookSeconds * 1000 : 0, ...props.captions.map((c) => c.endMs));
   return { durationInFrames: Math.ceil((lastCaption / 1000 + props.outroSeconds) * FPS) };
 };
 

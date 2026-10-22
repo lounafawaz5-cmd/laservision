@@ -25,6 +25,9 @@ export type Brand = {
     captionText: string;
   };
   fonts: { latin: string; arabic: string };
+  // "clean": white bold words with a shadow, no box (LaserVision house style).
+  // "box": text on a solid caption box.
+  captionStyle: "clean" | "box";
   outroLine: string;
 };
 
@@ -45,7 +48,8 @@ export const brands: Record<BrandId, Brand> = {
       captionText: "#FFFFFF",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
-    outroLine: "Questions? WhatsApp us",
+    captionStyle: "clean",
+    outroLine: "WhatsApp +961 81 54 20 20",
   },
   zvc: {
     // Store name is fine on screen; the blue ZEISS block logo is not. Use the "by Laser Vision" wordmark.
@@ -60,6 +64,7 @@ export const brands: Record<BrandId, Brand> = {
       captionText: "#000000",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
+    captionStyle: "box",
     outroLine: "WhatsApp us your prescription\n81 47 20 20",
   },
 };
@@ -67,5 +72,10 @@ export const brands: Record<BrandId, Brand> = {
 const ARABIC = /[؀-ۿ]/;
 export const isArabic = (text: string) => ARABIC.test(text);
 
-export const fontFor = (brand: Brand, text: string) =>
-  isArabic(text) ? brand.fonts.arabic : brand.fonts.latin;
+// Mixed lines (Arabic with English terms like IPL) need both fonts in the stack,
+// otherwise the Latin words fall back to a serif system font.
+export const fontFor = (brand: Brand, text: string) => {
+  const latin = `"${brand.fonts.latin}"`;
+  const arabic = `"${brand.fonts.arabic}"`;
+  return isArabic(text) ? `${arabic}, ${latin}, sans-serif` : `${latin}, ${arabic}, sans-serif`;
+};

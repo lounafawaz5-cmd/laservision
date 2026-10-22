@@ -6,8 +6,8 @@ monthly-planning skill we build at the end.
 ## Brands
 | Brand | What it is | Trello |
 |---|---|---|
-| LaserVision | Eye care + laser platform, 4 locations in Lebanon | Own board |
-| ZEISS Vision Center (ZVC) | Optical store inside LaserVision Hazmieh ("by Laser Vision") | Own board |
+| LaserVision | Eye care + laser platform, 4 locations in Lebanon | "content calendar": https://trello.com/b/0fmLExeR/content-calendar (empty) |
+| ZEISS Vision Center (ZVC) | Optical store inside LaserVision Hazmieh ("by Laser Vision") | https://trello.com/b/PFGrFOmn/zvc-content-calendar (planned through Dec; snapshot in `trello/`) |
 
 The user is **Luna**, in-house and on site, and the face of ZVC content. Approver: **Georges**.
 Strategy by Tawlé Consultancy. **Rules for all content: `strategy/SUMMARY.md`.**
@@ -54,8 +54,11 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - ZVC colors: official ZEISS palette in `brand/zeiss/GUIDELINES.md` (black and white dominant, Indigo #0F2DB3, Lime #D9E906 accent).
 - ZVC: store name **ZEISS Vision Center** is OK on screen. Logo = the "by Laser Vision" wordmark `brand/zeiss/zvc-wordmark-dark.png` / `-white.png`. **Never the blue ZEISS block logo.**
 - **Carousels: English only, font Outfit** (Light/Medium/Bold) for both accounts, in `brand/fonts/Outfit/`.
-- Arabic appears only in reels (spoken Arabic → Arabic subtitles). Reel style reference: coming from the user.
+- Arabic appears only in reels (spoken Arabic → Arabic subtitles). Reel style: `references/laservision/REEL_STYLE.md`. Carousel style: `references/laservision/CAROUSEL_STYLE.md`.
 - Canva templates (41 designs, both brands): `brand/CANVA-TEMPLATE-LINKS.md`
+
+## WhatsApp
+- LaserVision **+961 81 54 20 20** · ZVC **81 47 20 20**
 
 ## Raw footage
 - Lives on the user's iPad files, Google Drive, and an SD card
@@ -67,7 +70,7 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - Final deliverable: a monthly-planning skill that runs the whole cycle quickly.
 
 ## Step tracker
-- [ ] 1. Connect Trello; read both boards
+- [x] 1. Connect Trello; read both boards → `trello/`
 - [x] 2. Read the consultant strategy doc → `strategy/SUMMARY.md`
 - [ ] 3. Analytics audit (own accounts)
 - [ ] 4. Peer/competitor research with linked references

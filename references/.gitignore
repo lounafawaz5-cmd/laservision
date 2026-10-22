@@ -1,0 +1,2 @@
+# Reference videos stay out of git (re-download from the link in references/README.md)
+*.mp4

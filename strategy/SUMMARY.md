@@ -13,7 +13,7 @@ Check every piece of content against this page.
 | Promise | You'll understand every step before it happens. | Walk in unsure. Walk out looking good and seeing clearly. |
 | Personality | A senior nurse of 20 years: calm, clear, clean, credible, modern, respectful | A 28-year-old friend with good taste: fun, quick, confident, fashion-led, local (Beirut/Hazmieh) |
 | Faces | Marc (founder), Georges (runs it today), 2–3 recurring staff (reception, nurse/technician) | Luna + the two optometrists |
-| CTA | WhatsApp, on **every** post (number TBC; website is out of date) | WhatsApp **81 47 20 20** ("WhatsApp us your prescription") |
+| CTA | WhatsApp **+961 81 54 20 20**, on **every** post (website is out of date) | WhatsApp **81 47 20 20** ("WhatsApp us your prescription") |
 | Visuals | Natural light, real rooms, muted palette, clean text. No stock, no AI footage, no trend audio, no gratuitous transitions | Bright, high contrast, movement, mirror/try-on shots. Trend audio and native formats welcome |
 
 ## Hard rules
@@ -64,6 +64,8 @@ Check every piece of content against this page.
 - Monthly report per account: followers, reach, engagement, top posts, WhatsApp enquiries
 
 ## Open questions to settle
-- LaserVision's WhatsApp number (goes on every LaserVision post)
 - Which public claims about results, volumes and equipment are cleared (owners: "to share separately")
 - Lead collection online (forms, giveaways, quizzes): "to be discussed"
+
+## Conflict to settle
+- The ZVC Trello board says "Film in Arabic, subtitle in **English**". The LaserVision reference reel uses **Arabic** subtitles. Which applies to which account?

@@ -26,7 +26,7 @@ npx remotion render src/index.ts TalkingHead-Zeiss out/reel.mp4 --props=props.js
 ## Templates
 | Template | Status | What it is |
 |---|---|---|
-| TalkingHead | Starter | Footage + animated hook + timed captions + branded outro |
+| TalkingHead | Starter | Footage + timed captions; optional hook card and end card. LaserVision preset matches the reference reel (no cards, word-by-word subtitles). |
 
 The full template list (doctor Q&A, patient story, before/after, product showcase, listicle,
 trend formats…) is decided together in Step 8, then built here.
