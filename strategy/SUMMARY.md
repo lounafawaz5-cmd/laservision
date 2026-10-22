@@ -52,7 +52,7 @@ Check every piece of content against this page.
 - 12-month targets: **4 hearing aids a month, 3 glasses a day**, more patients in Hazmieh
 
 ## Practical answers
-- Language: depends on who's filming. **Lebanese Arabic most often** in reels, with Arabic subtitles. ZVC: a natural Lebanese-English mix. **Subtitles on everything.**
+- Language: depends on who's filming. **Lebanese Arabic most often** in reels. **Subtitles are in Arabic on both accounts** (decided 2026-10-22; overrides the ZVC board's "subtitle in English"). ZVC: a natural Lebanese-English mix. **Subtitles on everything.**
 - **Carousels are always in English** (both brands).
 - Filming: all branches including HDF (coordinate with staff); surgery and prep rooms yes, **sterilisation room no**. Patients need consent; surgery needs patient **and** doctor consent.
 - Before and after: maybe for some surgeries and for hearing aids
@@ -66,6 +66,3 @@ Check every piece of content against this page.
 ## Open questions to settle
 - Which public claims about results, volumes and equipment are cleared (owners: "to share separately")
 - Lead collection online (forms, giveaways, quizzes): "to be discussed"
-
-## Conflict to settle
-- The ZVC Trello board says "Film in Arabic, subtitle in **English**". The LaserVision reference reel uses **Arabic** subtitles. Which applies to which account?
