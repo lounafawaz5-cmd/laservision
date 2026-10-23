@@ -3,3 +3,6 @@ out/
 # Raw footage is pulled from Google Drive per session; never commit it.
 public/footage/*
 !public/footage/.gitkeep
+
+# Songs are licensed per use and pulled per session; never commit them.
+public/audio/*

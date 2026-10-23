@@ -278,7 +278,7 @@ const Outro: React.FC<{ logo: string; title: string; line: string; beatLen: numb
 };
 
 export const BeatAd: React.FC<BeatAdProps> = (props) => {
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
   const brand = brands[props.brand];
   const f = (beat: number) => beatToFrame(props, beat, fps);
   const beatLen = Math.round((60 / props.bpm) * fps);
@@ -310,7 +310,14 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
       <Sequence from={f(mainBeats)}>
         <Outro logo={brand.logo} title={props.outroTitle} line={props.outroLine} beatLen={beatLen} accent={brand.colors.accent} />
       </Sequence>
-      {props.audio ? <Audio src={staticFile(props.audio)} trimBefore={Math.round(props.audioStartSec * fps)} /> : null}
+      {props.audio ? (
+        <Audio
+          src={staticFile(props.audio)}
+          trimBefore={Math.round(props.audioStartSec * fps)}
+          // Song is cut mid-track, so fade the last beat and a half out instead of stopping dead.
+          volume={(fr) => interpolate(fr, [durationInFrames - beatLen * 1.5, durationInFrames - 1], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
+        />
+      ) : null}
     </AbsoluteFill>
   );
 };
