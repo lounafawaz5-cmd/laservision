@@ -1,6 +1,6 @@
 import { BeatAdProps } from "../templates/BeatAd";
 
-// ZVC · "monogram" reel (Trello ZVC board). Footage: Drive Videos/RIB_0166–0183.
+// ZVC · "monogram" reel (Trello ZVC board). Highlights the Monogram brand: handmade, lightweight, elegant, minimalistic. Footage: Drive Videos/RIB_0166–0183.
 // Song: ne zakryl shashku – Mimosa 2000, 147.04 BPM (fitted to the kicks).
 // Uses 2:19.85–2:39.4: 8 beats of the lead-in, the 32-beat main drop (first kick 2:23.112),
 // then the first 8 beats of the bass-less break under the end card.
@@ -48,15 +48,18 @@ export const monogram: BeatAdProps = {
     { src: c("0183"), at: 5, beats: 2.5, rate: 1.5, move: "push" },
     { src: c("0170"), at: 10, beats: 1.5, rate: 2, move: "punch", flash: true },
   ],
+  // Brand-led: Monogram logo, then its four key points on the drop's big hits.
   texts: [
-    { text: "MONOGRAM", beat: 0, beats: 4, style: "letters" },
-    { text: "for ZEISS", beat: 4, beats: 4, style: "small" },
-    { text: "OPTICAL", beat: 8, beats: 2.5, style: "slam" },
-    { text: "SUN", beat: 16, beats: 2.5, style: "slam" },
-    { text: "MONOGRAM\nfor ZEISS", beat: 32, beats: 4, style: "outline" },
-    { text: "NOW IN STORE", beat: 36, beats: 4, style: "tag" },
+    { text: "brand/monogram-logo-white.png", beat: 0, beats: 8, style: "logo" },
+    { text: "HANDMADE", beat: 8, beats: 4, style: "word" },
+    { text: "LIGHTWEIGHT", beat: 16, beats: 4, style: "word" },
+    { text: "ELEGANT", beat: 28, beats: 4, style: "word" },
+    { text: "MINIMALISTIC", beat: 32, beats: 4, style: "word" },
+    { text: "Discover the full collection", beat: 36, beats: 4, style: "cta" },
   ],
+  hudLogo: "brand/monogram-wordmark-white.png",
   outroBeats: 8,
-  outroTitle: "MONOGRAM",
-  outroLine: "Hazmieh · WhatsApp 81 47 20 20",
+  outroLogo: "brand/monogram-logo-white.png",
+  outroLine: "HAZMIEH",
+  whatsapp: "81 47 20 20",
 };

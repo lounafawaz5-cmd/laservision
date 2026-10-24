@@ -12,7 +12,14 @@ import {
   useVideoConfig,
   Easing,
 } from "remotion";
+import { loadFont } from "@remotion/fonts";
 import { brands } from "../brands";
+import { WhatsAppIcon } from "../components/WhatsAppIcon";
+
+// Outfit (thin, geometric) for brand-led edits where heavy type would fight a fine logo.
+for (const [weight, file] of [["300", "Light"], ["500", "Medium"]]) {
+  loadFont({ family: "Outfit", url: staticFile(`fonts/Outfit-${file}.ttf`), weight });
+}
 
 // Fast, ad-style product montage cut to the beat of a song.
 // Every cut and text hit is placed in beats, so a new song only needs new beat times.
@@ -44,12 +51,19 @@ export const beatAdSchema = z.object({
       text: z.string(),
       beat: z.number(),
       beats: z.number(),
-      style: z.enum(["slam", "letters", "outline", "tag", "small"]),
+      // "logo": text is an image path in public/, revealed with a wipe.
+      // "word": thin, wide-tracked key word. "cta": sentence-case line with an accent underline.
+      style: z.enum(["slam", "letters", "outline", "tag", "small", "logo", "word", "cta"]),
     }),
   ),
+  // Small logo in the corner overlay; empty = no logo.
+  hudLogo: z.string(),
   outroBeats: z.number(),
-  outroTitle: z.string(),
+  // Partner/product logo above the store wordmark on the end card.
+  outroLogo: z.string(),
   outroLine: z.string(),
+  // Shown after the WhatsApp icon; empty = no WhatsApp row.
+  whatsapp: z.string(),
 });
 
 export type BeatAdProps = z.infer<typeof beatAdSchema>;
@@ -75,6 +89,7 @@ export const beatAdDuration = (p: BeatAdProps, fps: number) => {
 };
 
 const FONT = `"Inter", sans-serif`;
+const THIN = `"Outfit", "Inter", sans-serif`;
 
 const Shot: React.FC<{
   src: string;
@@ -136,6 +151,11 @@ const Shot: React.FC<{
   );
 };
 
+// Soft black falloff behind thin type so it stays readable over the white boxes and shelves.
+const Scrim: React.FC<{ y: string; opacity: number }> = ({ y, opacity }) => (
+  <AbsoluteFill style={{ background: `radial-gradient(ellipse 75% 16% at 50% ${y}, rgba(0,0,0,0.55), transparent)`, opacity }} />
+);
+
 const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"]; beatLen: number; accent: string }> = ({
   text,
   style,
@@ -160,6 +180,72 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
             </span>
           ))}
         </div>
+      </AbsoluteFill>
+    );
+  }
+  if (style === "logo") {
+    // Wipe the logo on left to right over the first beat, then let it breathe.
+    const wipe = interpolate(frame, [0, beatLen], [0, 100], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+    return (
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
+        <Scrim y="50%" opacity={interpolate(frame, [0, beatLen], [0, 1], { extrapolateRight: "clamp" })} />
+        <Img
+          src={staticFile(text)}
+          style={{
+            width: 820,
+            clipPath: `inset(0 ${100 - wipe}% 0 0)`,
+            transform: `scale(${interpolate(frame, [0, d], [1, 1.06])})`,
+            filter: "drop-shadow(0 6px 24px rgba(0,0,0,0.5))",
+          }}
+        />
+      </AbsoluteFill>
+    );
+  }
+  if (style === "word") {
+    // Tracking opens up as the word fades in: quiet, not punchy.
+    const spread = interpolate(inn, [0, 1], [0.05, 0.32]);
+    return (
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
+        <Scrim y="50%" opacity={inn} />
+        <div
+          style={{
+            fontFamily: THIN,
+            fontWeight: 300,
+            // Long words shrink so the fully opened tracking still fits inside the frame lines.
+            fontSize: Math.min(96, 860 / (text.length * 0.9)),
+            letterSpacing: `${spread}em`,
+            marginRight: `-${spread}em`,
+            color: "#fff",
+            opacity: inn,
+            filter: `blur(${(1 - inn) * 8}px)`,
+            textShadow: "0 4px 30px rgba(0,0,0,0.55)",
+          }}
+        >
+          {text}
+        </div>
+        <div style={{ width: interpolate(inn, [0, 1], [0, 160]), height: 2, background: "#fff", marginTop: 34, opacity: 0.9 }} />
+      </AbsoluteFill>
+    );
+  }
+  if (style === "cta") {
+    return (
+      <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 400, opacity: out }}>
+        <Scrim y="76%" opacity={inn} />
+        <div
+          style={{
+            fontFamily: THIN,
+            fontWeight: 500,
+            fontSize: 64,
+            letterSpacing: 2,
+            color: "#fff",
+            opacity: inn,
+            transform: `translateY(${(1 - inn) * 30}px)`,
+            textShadow: "0 4px 30px rgba(0,0,0,0.6)",
+          }}
+        >
+          {text}
+        </div>
+        <div style={{ width: interpolate(inn, [0, 1], [0, 420]), height: 5, background: accent, marginTop: 22 }} />
       </AbsoluteFill>
     );
   }
@@ -236,7 +322,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
 };
 
 // Thin camera-style frame lines and a running shot counter: the "motion graphics" layer.
-const Hud: React.FC<{ index: number; total: number }> = ({ index, total }) => {
+const Hud: React.FC<{ index: number; total: number; logo: string }> = ({ index, total, logo }) => {
   const c = "rgba(255,255,255,0.85)";
   const corner = (pos: React.CSSProperties, rot: number) => (
     <div style={{ position: "absolute", width: 70, height: 70, borderTop: `4px solid ${c}`, borderLeft: `4px solid ${c}`, transform: `rotate(${rot}deg)`, ...pos }} />
@@ -248,7 +334,7 @@ const Hud: React.FC<{ index: number; total: number }> = ({ index, total }) => {
       {corner({ top: 150, right: 60 }, 90)}
       {corner({ bottom: 300, right: 60 }, 180)}
       {corner({ bottom: 300, left: 60 }, 270)}
-      <div style={{ ...label, top: 240, left: 90 }}>MONOGRAM</div>
+      {logo ? <Img src={staticFile(logo)} style={{ position: "absolute", top: 232, left: 90, width: 200, opacity: 0.9 }} /> : null}
       <div style={{ ...label, top: 240, right: 90 }}>
         {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
       </div>
@@ -256,22 +342,35 @@ const Hud: React.FC<{ index: number; total: number }> = ({ index, total }) => {
   );
 };
 
-const Outro: React.FC<{ logo: string; title: string; line: string; beatLen: number; accent: string }> = ({ logo, title, line, beatLen, accent }) => {
+const Outro: React.FC<{ logo: string; storeLogo: string; line: string; whatsapp: string; beatLen: number; accent: string }> = ({
+  logo,
+  storeLogo,
+  line,
+  whatsapp,
+  beatLen,
+  accent,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const at = (beat: number) => spring({ frame: frame - beat * beatLen, fps, config: { damping: 16, stiffness: 240 } });
+  const at = (beat: number) => spring({ frame: frame - beat * beatLen, fps, config: { damping: 200 } });
   const a = at(0);
   const b = at(1);
   const c = at(2);
   return (
-    <AbsoluteFill style={{ background: "#000", justifyContent: "center", alignItems: "center", gap: 60 }}>
-      <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 120, letterSpacing: 12, color: "#fff", opacity: a, transform: `scale(${interpolate(a, [0, 1], [1.4, 1])})` }}>
-        {title}
-      </div>
-      <div style={{ width: interpolate(b, [0, 1], [0, 520]), height: 6, background: accent }} />
-      <Img src={staticFile(logo)} style={{ width: 760, opacity: b, transform: `translateY(${(1 - b) * 40}px)` }} />
-      <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 48, color: "#fff", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.4, opacity: c }}>
-        {line}
+    <AbsoluteFill style={{ background: "#000", justifyContent: "center", alignItems: "center", gap: 56 }}>
+      {logo ? (
+        <Img src={staticFile(logo)} style={{ width: 760, opacity: a, transform: `scale(${interpolate(a, [0, 1], [1.08, 1])})` }} />
+      ) : null}
+      <div style={{ width: interpolate(b, [0, 1], [0, 420]), height: 5, background: accent }} />
+      <Img src={staticFile(storeLogo)} style={{ width: 620, opacity: b, transform: `translateY(${(1 - b) * 30}px)` }} />
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18, opacity: c }}>
+        {whatsapp ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+            <WhatsAppIcon size={64} />
+            <div style={{ fontFamily: THIN, fontWeight: 500, fontSize: 56, letterSpacing: 3, color: "#fff" }}>{whatsapp}</div>
+          </div>
+        ) : null}
+        {line ? <div style={{ fontFamily: THIN, fontWeight: 300, fontSize: 40, letterSpacing: 8, color: "#fff" }}>{line}</div> : null}
       </div>
     </AbsoluteFill>
   );
@@ -292,7 +391,7 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
     return (
       <Sequence key={i} from={from} durationInFrames={f(beat) - from}>
         <Shot src={s.src} at={s.at} rate={s.rate} move={s.move} flash={s.flash ?? false} beatFrames={beatFrames} />
-        <Hud index={i} total={props.shots.length} />
+        <Hud index={i} total={props.shots.length} logo={props.hudLogo} />
       </Sequence>
     );
   });
@@ -308,7 +407,14 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
         </Sequence>
       ))}
       <Sequence from={f(mainBeats)}>
-        <Outro logo={brand.logo} title={props.outroTitle} line={props.outroLine} beatLen={beatLen} accent={brand.colors.accent} />
+        <Outro
+          logo={props.outroLogo}
+          storeLogo={brand.logo}
+          line={props.outroLine}
+          whatsapp={props.whatsapp}
+          beatLen={beatLen}
+          accent={brand.colors.accent}
+        />
       </Sequence>
       {props.audio ? (
         <Audio
