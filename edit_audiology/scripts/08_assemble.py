@@ -49,14 +49,12 @@ def comp(frame, key, scale=1.0, alpha=1.0, dx=0.0, dy=0.0, mask=None):
     dst = frame[fy0:fy1, fx0:fx1].astype(np.float32)
     frame[fy0:fy1, fx0:fx1] = (sr + dst * (1 - sa)).clip(0, 255).astype(np.uint8)
 
-KEY_FOR = {"emoji:👂": ["badge_ear"], "card": None, "pill": None, "earplug": ["card_earplugs"],
-           "emoji:🔊": ["badge_noise"], "emoji:💧": ["badge_water"], "lower_third": ["lower_third"]}
 def keys_for(r):
-    if r["asset"] == "card":
-        return ["card_department"] if "Audiology" in r["overlay_text"] else ["card_hearing_aids"]
-    if r["asset"] == "pill":
-        return ["pill_audiometry"] if r["overlay_text"] == "AUDIOMETRY" else ["pill_tympanometry"]
-    return KEY_FOR[r["asset"]]
+    a, t = r["asset"], r["overlay_text"]
+    if a == "title": return ["title_department"] if "Audiology" in t else ["title_hearing_aids"]
+    if a == "tag": return ["tag_audiometry"] if t == "AUDIOMETRY" else ["tag_tympanometry"]
+    return {"emoji:👂": ["badge_ear"], "earplug": ["earplugs"], "emoji:🔊": ["badge_noise"],
+            "emoji:💧": ["badge_water"], "name": ["name_hala"]}[a]
 overlays = [(r, k) for r in plan if r["layer"] == "overlay" for k in keys_for(r)]
 
 def draw_overlay(frame, r, key, t):
@@ -67,11 +65,8 @@ def draw_overlay(frame, r, key, t):
         x = (t - b) / 0.25; comp(frame, key, 1 - 0.04 * x, 1 - ease_out(x), 0, 10 * x); return
     if anim == "pop":
         x = (t - a) / 0.28; comp(frame, key, 0.4 + 0.6 * ease_back(x), ease_out(x * 2))
-    else:
-        o = OV[key]; w = o["a"].shape[1]
-        dist = (o["x"] + w + 40) if anim == "slide_left" else (W - o["x"] + 40)
-        sgn = -1 if anim == "slide_left" else 1
-        x = (t - a) / 0.32; comp(frame, key, 1, min(1, ease_out(x) * 1.5), sgn * dist * (1 - ease_back(x, 1.2)))
+    else:   # rise: fade up 40 px; titles carry their accent line, which draws in after the text
+        x = (t - a) / 0.4; comp(frame, key, 1, ease_out(x * 1.4), 0, 40 * (1 - ease_out(x)))
 
 logo_rows = [r for r in plan if r["layer"] == "logo"]
 def draw_logo(frame, t, f):
@@ -109,12 +104,11 @@ def broll_frame(r, t):
 
 outro = next(r for r in plan if r["layer"] == "outro")
 def draw_outro(frame, t):
-    k = t - outro["a"] - 0.2; sp = lambda i: ease_out((k - i * 0.33) / 0.5)
-    o = OV["outro_line"]; wf = o["a"].shape[1]; w = int(wf * sp(0))
-    if w > 1:
-        cx = o["x"] + wf // 2; frame[o["y"]:o["y"] + 5, cx - w // 2:cx + w // 2] = (48, 164, 191)
-    comp(frame, "outro_logo", 1, sp(1), 0, 30 * (1 - sp(1)))
-    comp(frame, "outro_whatsapp", 1, sp(2))
+    """Claudia end card (no Arabic line): logo, then WhatsApp label + number box, then the four branches."""
+    k = t - outro["a"] - 0.15; sp = lambda i: ease_out((k - i * 0.3) / 0.5)
+    comp(frame, "end_logo", 0.94 + 0.06 * sp(0), sp(0))
+    comp(frame, "end_whatsapp", 1, sp(1), 0, 30 * (1 - sp(1)))
+    comp(frame, "end_branches", 1, sp(2), 0, 20 * (1 - sp(2)))
 
 def audio_graph():
     ev = []

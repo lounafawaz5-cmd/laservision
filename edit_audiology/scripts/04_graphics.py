@@ -1,132 +1,121 @@
 #!/usr/bin/env python3
 """Phase 4: overlays for the audiology reel (transparent 1080x1920 PNGs + manifest with bboxes).
-LaserVision palette (brand/laservision/GUIDELINES.md), Outfit font, Noto Color Emoji.
-Each overlay's animation is set in edit_plan.csv; the assembler adds the matching SFX (pop / whoosh / ding).
+Style (v2 review): clean titles, no notification-style boxes. Text in LaserVision blue with a soft white glow
+so it reads on her white coat and on the B-roll; a thin accent line under titles.
+End card = the "Claudia" LaserVision card (brand/references/laservision-endcard-claudia.png) WITHOUT the
+Arabic sentence: logo, WhatsApp label + icon, number box, four branches.
 """
 import io, json, os, re
-import numpy as np
+import cairosvg
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
-from common import J, W, H, SAFE_TOP, SAFE_BOTTOM, LV_PRIMARY, LV_DARK, LV_BLUE, LV_PALE, WHATSAPP
+from common import J, W, H, SAFE_TOP, SAFE_BOTTOM, LV_BLUE, LV_PALE, WHATSAPP
 
 ROOT = os.path.dirname(J())
 FB = os.path.join(ROOT, "brand/fonts/Outfit/Outfit-Bold.ttf")
 FM = os.path.join(ROOT, "brand/fonts/Outfit/Outfit-Medium.ttf")
 EMOJI = "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"
 OUT = J("overlays"); os.makedirs(OUT, exist_ok=True)
+for f in os.listdir(OUT): os.remove(os.path.join(OUT, f))
 rgb = lambda h: tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
-PRI, DARK, BLUE, PALE, WHITE = rgb(LV_PRIMARY), rgb(LV_DARK), rgb(LV_BLUE), rgb(LV_PALE), (255, 255, 255)
+CARD_BLUE = (40, 90, 134)          # sampled from the Claudia end card (#285A86)
+BLUE, PALE, WHITE = rgb(LV_BLUE), rgb(LV_PALE), (255, 255, 255)
 font = lambda size, bold=True: ImageFont.truetype(FB if bold else FM, size)
 manifest = {}
 
-def save(key, img, bbox, anchor=None, check=True):
+def save(key, img, bbox, check=True):
     x0, y0, x1, y1 = [int(v) for v in bbox]
     if check: assert y0 >= SAFE_TOP and y1 <= H - SAFE_BOTTOM, f"{key} outside safe zone {bbox}"
-    img.save(os.path.join(OUT, key + ".png"))
-    manifest[key] = {"file": key + ".png", "bbox": [x0, y0, x1, y1],
-                     "anchor": anchor or [(x0 + x1) // 2, (y0 + y1) // 2]}
+    img.save(os.path.join(OUT, key + ".png")); manifest[key] = {"file": key + ".png", "bbox": [x0, y0, x1, y1]}
+
+def glow(img, radius=14, strength=2.2):
+    """Soft white halo behind whatever is drawn on img (alpha-based), then the drawing on top."""
+    a = img.getchannel("A").filter(ImageFilter.GaussianBlur(radius)).point(lambda v: min(255, int(v * strength)))
+    halo = Image.new("RGBA", img.size, WHITE + (0,)); halo.putalpha(a)
+    out = Image.new("RGBA", img.size); out.alpha_composite(halo); out.alpha_composite(img); return out
 
 def emoji(ch, px):
     f = ImageFont.truetype(EMOJI, 109)
     im = Image.new("RGBA", (170, 170)); ImageDraw.Draw(im).text((10, 10), ch, font=f, embedded_color=True)
     im = im.crop(im.getbbox()); return im.resize((px, round(px * im.height / im.width)), Image.LANCZOS)
 
-def shadow_shape(box, radius, fill, blur=20, off=8, alpha=90, outline=None):
+def circle_badge(ch, cx, cy, r):
     img = Image.new("RGBA", (W, H)); sh = Image.new("RGBA", (W, H))
-    x0, y0, x1, y1 = box
-    ImageDraw.Draw(sh).rounded_rectangle((x0, y0 + off, x1, y1 + off), radius, fill=(0, 0, 0, alpha))
-    img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(blur)))
-    ImageDraw.Draw(img).rounded_rectangle(box, radius, fill=fill, outline=outline, width=4 if outline else 0)
-    return img
-
-def badge(ch, cx, cy, r=86):
-    img = shadow_shape((cx - r, cy - r, cx + r, cy + r), r, WHITE + (250,), outline=PALE)
+    ImageDraw.Draw(sh).ellipse((cx - r, cy - r + 6, cx + r, cy + r + 6), fill=(0, 0, 0, 70))
+    img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(10)))
+    ImageDraw.Draw(img).ellipse((cx - r, cy - r, cx + r, cy + r), fill=WHITE + (250,), outline=PALE, width=4)
     e = emoji(ch, int(r * 1.15)); img.alpha_composite(e, (cx - e.width // 2, cy - e.height // 2))
-    return img, (cx - r - 25, cy - r - 20, cx + r + 25, cy + r + 40)
+    return img, (cx - r - 20, cy - r - 15, cx + r + 20, cy + r + 30)
 
-# ---------- emoji badges ----------
-save("badge_ear", *badge("👂", 870, 560))
+# ---------- ear badge (short pop at "السمع") ----------
+save("badge_ear", *circle_badge("👂", 870, 560, 80))
 
-# ---------- "NEW | Audiology Department" card (slides in from the left) ----------
-x0, y0 = 60, 1000
-fl, ft = font(34), font(66)
-title = "Audiology Department"; w = int(ft.getlength(title)) + 100
-img = shadow_shape((x0, y0, x0 + w, y0 + 170), 34, WHITE + (248,))
-d = ImageDraw.Draw(img)
-d.rounded_rectangle((x0, y0, x0 + 14, y0 + 170), 7, fill=BLUE)
-d.rounded_rectangle((x0 + 48, y0 + 24, x0 + 48 + fl.getlength("NEW") + 36, y0 + 72), 24, fill=BLUE)
-d.text((x0 + 66, y0 + 28), "NEW", font=fl, fill=WHITE)
-d.text((x0 + 48, y0 + 80), title, font=ft, fill=PRI)
-save("card_department", img, (x0 - 30, y0 - 20, x0 + w + 30, y0 + 210))
+# ---------- titles ----------
+def title(key, kicker, text, x0, y0, size=72, align="left", line=True):
+    img = Image.new("RGBA", (W, H)); d = ImageDraw.Draw(img)
+    ft, fk = font(size), font(34)
+    tw = ft.getlength(text); x = x0 if align == "left" else (W - tw) / 2
+    y = y0
+    if kicker:
+        d.text((x, y), kicker, font=fk, fill=BLUE); y += 46
+    d.text((x, y), text, font=ft, fill=CARD_BLUE)
+    if line:
+        d.rounded_rectangle((x, y + size + 14, x + min(tw, 260), y + size + 20), 3, fill=BLUE)
+    img = glow(img)
+    bb = img.getbbox(); save(key, img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
+    manifest[key]["line"] = [int(x), int(y + size + 14), int(min(tw, 260)), 6]
+title("title_department", "NEW", "Audiology Department", 70, 1030)
+title("title_hearing_aids", "", "Hearing aids", 0, 1060, size=80, align="center")
 
-# ---------- pills (slide in from the right) ----------
-def pill(key, text, y):
-    f = font(54); w = int(f.getlength(text)) + 80; x1 = 1020; x0 = x1 - w
-    img = shadow_shape((x0, y, x1, y + 96), 48, PRI + (245,))
-    ImageDraw.Draw(img).text((x0 + 40, y + 18), text, font=f, fill=WHITE)
-    save(key, img, (x0 - 30, y - 20, x1 + 30, y + 130))
-pill("pill_audiometry", "AUDIOMETRY", 980)
-pill("pill_tympanometry", "TYMPANOMETRY", 1100)
+def tag(key, text, y, size=54):
+    img = Image.new("RGBA", (W, H)); f = font(size)
+    x = 1010 - f.getlength(text); ImageDraw.Draw(img).text((x, y), text, font=f, fill=CARD_BLUE)
+    img = glow(img); bb = img.getbbox(); save(key, img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
+tag("tag_audiometry", "AUDIOMETRY", 1000)
+tag("tag_tympanometry", "TYMPANOMETRY", 1090)
 
-# ---------- hearing aids card (pops) ----------
-f = font(66); text = "Hearing aids"; w = int(f.getlength(text)) + 230; x0 = (W - w) // 2; y0 = 1010
-img = shadow_shape((x0, y0, x0 + w, y0 + 150), 40, WHITE + (248,))
-e = emoji("🦻", 100); img.alpha_composite(e, (x0 + 50, y0 + 25))
-ImageDraw.Draw(img).text((x0 + 180, y0 + 32), text, font=f, fill=PRI)
-ImageDraw.Draw(img).rounded_rectangle((x0 + 40, y0 + 136, x0 + w - 40, y0 + 142), 3, fill=BLUE)
-save("card_hearing_aids", img, (x0 - 30, y0 - 20, x0 + w + 30, y0 + 190))
+# ---------- custom-molded earplugs (vector illustration, rendered with cairosvg) ----------
+EARPLUG_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 280">
+ <defs>
+  <linearGradient id="sil" x1="0" y1="0" x2="1" y2="1">
+   <stop offset="0" stop-color="#8FDCEC"/><stop offset="0.5" stop-color="#30A4BF"/><stop offset="1" stop-color="#1A6E89"/>
+  </linearGradient>
+  <radialGradient id="gloss" cx="0.35" cy="0.3" r="0.55"><stop offset="0" stop-color="#fff" stop-opacity="0.9"/>
+   <stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#00303F" flood-opacity="0.3"/></filter>
+ </defs>
+ <!-- ear, line art -->
+ <g fill="none" stroke="#285A86" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M52 108 C 50 52, 92 18, 138 24 C 186 30, 204 80, 186 124 C 174 152, 152 160, 146 186
+           C 140 214, 128 254, 92 256 C 66 258, 52 240, 50 220"/>
+  <path d="M86 104 C 88 74, 116 60, 140 70 C 162 80, 166 108, 150 126"/>
+ </g>
+ <!-- custom-molded plug sitting in the concha / canal -->
+ <g filter="url(#sh)">
+  <path fill="url(#sil)" d="M92 150 C 88 126, 108 112, 128 118 C 146 124, 152 144, 144 162
+        C 138 178, 124 190, 108 188 C 94 186, 94 170, 92 150 Z"/>
+  <path fill="url(#sil)" d="M100 140 C 92 136, 80 140, 74 150 C 70 158, 76 164, 84 160 L 102 152 Z"/>
+  <ellipse cx="116" cy="140" rx="20" ry="14" fill="url(#gloss)"/>
+  <circle cx="122" cy="166" r="6" fill="#0F4B60" opacity="0.75"/>
+ </g>
+</svg>"""
+def render_svg(svg, w):
+    return Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=w))).convert("RGBA")
+ear = render_svg(EARPLUG_SVG, 230)
+img = Image.new("RGBA", (W, H)); X, Y = 700, 860
+img.alpha_composite(ear, (X, Y))
+f = font(50); t = "Custom earplugs"; tx = min(1010 - f.getlength(t), X + (ear.width - f.getlength(t)) / 2)
+d = ImageDraw.Draw(img); d.text((tx, Y + ear.height + 10), t, font=f, fill=CARD_BLUE)
+img = glow(img, radius=12, strength=1.6); bb = img.getbbox()
+save("earplugs", img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
+for key, ch, cy in (("badge_noise", "🔊", Y + 60), ("badge_water", "💧", Y + 170)):
+    save(key, *circle_badge(ch, X - 70, cy, 46))
 
-# ---------- earplug card (slides in from the right) + noise / water badges ----------
-def earplug(size=300):
-    """Two foam earplugs (drawn at 4x, downsampled): separate tapered cylinders with flat, slightly
-    rounded ends, cylindrical shading and fine foam grooves."""
-    S = size * 4; im = Image.new("RGBA", (S, S))
-    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
-    def plug(cx, cy, ang, L, R0, R1, base):
-        c, s_ = np.cos(np.radians(ang)), np.sin(np.radians(ang))
-        u = (xx - cx) * c + (yy - cy) * s_; v = -(xx - cx) * s_ + (yy - cy) * c
-        t = np.clip((u + L / 2) / L, 0, 1); r = R0 + (R1 - R0) * t
-        # rounded-rectangle profile: body + small end caps (corner radius 35% of the radius)
-        cr = 0.35 * r
-        body = (np.abs(u) <= L / 2 - cr) & (np.abs(v) <= r)
-        ends = (np.abs(u) <= L / 2) & (np.abs(v) <= r - cr)
-        corner = ((np.abs(u) - (L / 2 - cr)) ** 2 + (np.abs(v) - (r - cr)) ** 2) <= cr ** 2
-        inside = body | ends | corner
-        n = np.clip(v / np.maximum(r, 1), -1, 1)
-        shade = (0.55 + 0.55 * np.sqrt(np.clip(1 - n ** 2, 0, 1)) - 0.15 * n)[..., None]
-        grooves = (1 - 0.06 * (np.sin(u / (S * 0.012)) > 0.6))[..., None]
-        col = np.clip(np.array(base, np.float32) * shade * grooves, 0, 255)
-        edge = np.clip((inside.astype(np.float32)), 0, 1) * 255
-        im.alpha_composite(Image.fromarray(np.dstack([col, edge]).astype(np.uint8), "RGBA"))
-    plug(S * 0.33, S * 0.52, -58, S * 0.50, S * 0.13, S * 0.11, (247, 150, 30))
-    plug(S * 0.66, S * 0.50, -38, S * 0.50, S * 0.13, S * 0.11, (247, 150, 30))
-    out = im.resize((size, size), Image.LANCZOS)
-    sh = Image.new("RGBA", out.size); sh.putalpha(out.getchannel("A").point(lambda a: a * 0.25))
-    base = Image.new("RGBA", out.size); base.alpha_composite(sh.filter(ImageFilter.GaussianBlur(6)), (4, 8))
-    base.alpha_composite(out); return base
-
-X0, Y0, X1, Y1 = 680, 900, 1020, 1290
-img = shadow_shape((X0, Y0, X1, Y1), 40, WHITE + (248,))
-ep = earplug(220); img.alpha_composite(ep, ((X0 + X1 - ep.width) // 2, Y0 + 0))
-f = font(40); t = "Custom earplugs"
-ImageDraw.Draw(img).text(((X0 + X1 - f.getlength(t)) / 2, Y0 + 222), t, font=f, fill=PRI)
-ImageDraw.Draw(img).rounded_rectangle((X0 + 40, Y0 + 280, X1 - 40, Y0 + 285), 3, fill=BLUE)
-save("card_earplugs", img, (X0 - 30, Y0 - 20, X1 + 30, Y1 + 40))
-for key, ch, lab, cx in (("badge_noise", "🔊", "Noise", 790), ("badge_water", "💧", "Water", 910)):
-    r = 40; cy = Y0 + 336
-    b = shadow_shape((cx - r, cy - r, cx + r, cy + r), r, PALE + (255,), blur=8, off=3, alpha=60)
-    e = emoji(ch, 54); b.alpha_composite(e, (cx - e.width // 2, cy - e.height // 2))
-    save(key, b, (cx - r - 12, cy - r - 10, cx + r + 12, cy + r + 20))
-
-# ---------- lower third: Hala, Audiologist (slides in from the left) ----------
-x0, y0 = 60, 1110
-fn, fs = font(66), font(40, bold=False)
-w = int(max(fn.getlength("Hala"), fs.getlength("Audiologist · Laser Vision"))) + 110
-img = shadow_shape((x0, y0, x0 + w, y0 + 170), 30, WHITE + (248,))
-d = ImageDraw.Draw(img)
-d.rounded_rectangle((x0, y0, x0 + 16, y0 + 170), 8, fill=PRI)
-d.text((x0 + 50, y0 + 20), "Hala", font=fn, fill=PRI)
-d.text((x0 + 50, y0 + 100), "Audiologist · Laser Vision", font=fs, fill=BLUE)
-save("lower_third", img, (x0 - 30, y0 - 20, x0 + w + 30, y0 + 210))
+# ---------- name title: Hala / Audiologist · Laser Vision ----------
+img = Image.new("RGBA", (W, H)); d = ImageDraw.Draw(img); x0, y0 = 70, 1080
+d.rounded_rectangle((x0, y0 + 6, x0 + 8, y0 + 150), 4, fill=BLUE)
+d.text((x0 + 30, y0), "Hala", font=font(80), fill=CARD_BLUE)
+d.text((x0 + 32, y0 + 100), "Audiologist · Laser Vision", font=font(40, bold=False), fill=CARD_BLUE)
+img = glow(img); bb = img.getbbox(); save("name_hala", img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
 
 # ---------- LaserVision logo on the wall (composited BEHIND her) ----------
 logo = Image.open(os.path.join(ROOT, "brand/laservision/logo-transparent.png")).convert("RGBA")
@@ -135,28 +124,32 @@ img = Image.new("RGBA", (W, H)); cx, cy = 540, 370
 img.alpha_composite(logo, (cx - LW // 2, cy - logo.height // 2))
 save("logo_wall", img, (cx - LW // 2, cy - logo.height // 2, cx + LW // 2, cy + logo.height // 2), check=False)
 
-# ---------- LaserVision outro (white card, line, logo, WhatsApp) ----------
-import cairosvg
+# ---------- end card (Claudia layout, Arabic line removed), white background ----------
 svg = re.search(r'd="([^"]+)"', open(os.path.join(ROOT, "reels/src/components/WhatsAppIcon.tsx")).read()).group(1)
-LOGO_W, ICON, GAP = 760, 64, 56
+LOGO_W = 772                                   # measured from the reference card (scaled to 1080 wide)
 lg = Image.open(os.path.join(ROOT, "brand/laservision/logo-transparent.png")).convert("RGBA")
 lg = lg.resize((LOGO_W, round(LOGO_W * lg.height / lg.width)), Image.LANCZOS)
-total = 5 + GAP + lg.height + GAP + ICON
-y_line = (H - total) // 2; y_logo = y_line + 5 + GAP; y_wa = y_logo + lg.height + GAP
-img = Image.new("RGBA", (W, H)); ImageDraw.Draw(img).rectangle((330, y_line, 750, y_line + 5), fill=BLUE)
-save("outro_line", img, (330, y_line, 750, y_line + 5))
+# vertical stack: logo, gap, [icon + WhatsApp], gap, number box, gap, branches
+fl, fn, fb = font(38), font(58), font(36)   # number sized to leave the reference padding in the box
+BOX_W, BOX_H = 487, 119
+stack = lg.height + 130 + 40 + 16 + BOX_H + 80 + 36
+y = (H - stack) // 2
+y_logo = y; y_label = y_logo + lg.height + 130; y_box = y_label + 40 + 16; y_br = y_box + BOX_H + 80
 img = Image.new("RGBA", (W, H)); img.alpha_composite(lg, ((W - LOGO_W) // 2, y_logo))
-save("outro_logo", img, ((W - LOGO_W) // 2, y_logo, (W + LOGO_W) // 2, y_logo + lg.height))
+save("end_logo", img, ((W - LOGO_W) // 2, y_logo, (W + LOGO_W) // 2, y_logo + lg.height))
 icon = Image.open(io.BytesIO(cairosvg.svg2png(
-    bytestring=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="{LV_PRIMARY}" d="{svg}"/></svg>'.encode(),
-    output_width=ICON, output_height=ICON))).convert("RGBA")
-fn = font(56, bold=False); num_w = sum(fn.getlength(ch) + 3 for ch in WHATSAPP)
-row_w = ICON + 22 + num_w; x = (W - row_w) / 2
-img = Image.new("RGBA", (W, H)); img.alpha_composite(icon, (int(x), y_wa))
-d = ImageDraw.Draw(img); cx = x + ICON + 22
-for ch in WHATSAPP:
-    d.text((cx, y_wa + ICON / 2), ch, font=fn, fill=PRI, anchor="lm"); cx += fn.getlength(ch) + 3
-save("outro_whatsapp", img, (int(x) - 10, y_wa - 10, int(x + row_w) + 10, y_wa + ICON + 10))
+    bytestring=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#285A86" d="{svg}"/></svg>'.encode(),
+    output_width=42, output_height=42))).convert("RGBA")
+lab = "WhatsApp"; lw = 42 + 12 + fl.getlength(lab); lx = (W - lw) / 2
+img = Image.new("RGBA", (W, H)); img.alpha_composite(icon, (int(lx), y_label))
+ImageDraw.Draw(img).text((lx + 54, y_label + 21), lab, font=fl, fill=CARD_BLUE, anchor="lm")
+bx = (W - BOX_W) // 2
+d = ImageDraw.Draw(img); d.rectangle((bx, y_box, bx + BOX_W, y_box + BOX_H), fill=CARD_BLUE)
+d.text((W / 2, y_box + BOX_H / 2), WHATSAPP, font=fn, fill=WHITE, anchor="mm")
+save("end_whatsapp", img, (bx, y_label, bx + BOX_W, y_box + BOX_H))
+img = Image.new("RGBA", (W, H))
+ImageDraw.Draw(img).text((W / 2, y_br + 18), "Hazmieh · Saida · Tripoli · Hôtel-Dieu", font=fb, fill=CARD_BLUE, anchor="mm")
+bb = img.getbbox(); save("end_branches", img, bb)
 
 json.dump(manifest, open(os.path.join(OUT, "manifest.json"), "w"), indent=1)
 print(len(manifest), "overlays:", ", ".join(manifest))

@@ -44,6 +44,10 @@ Strategy by Tawlé Consultancy. **Rules for all content: `strategy/SUMMARY.md`.*
 Full setup checklist: `NEXT_SESSION_SETUP.md`.
 
 ## Working rules
+- **LaserVision end card = the "Claudia" card** (`brand/references/laservision-endcard-claudia.png`): white, logo, WhatsApp icon + label, number in a #285A86 box, branches "Hazmieh · Saida · Tripoli · Hôtel-Dieu". **Always remove the Arabic sentence** ("استشيروا طبيبكن، وتواصلوا معنا").
+- **Reel overlays:** no notification-style boxes or sliding reminder cards; use clean titles (text + soft glow + thin accent line). Never stack two overlays at once. Pop-ins get a pop sound, slide/rise-ins a swoosh. Keep icon pops short (about 1 s).
+- **Logo behind the speaker** (masked by her head, with a ding): only on the first "Laser Vision", not every mention.
+- **End the video when the speaker stops talking**, then the end card. Few or no zooms.
 - **Every captioned edit ships in two versions:** the final with burned-in captions, plus the same video **without captions** and an editable **`.srt`** caption file (Arabic transcription isn't always 100%, so the user corrects captions herself).
 - One step at a time; don't run ahead into later stages.
 - A consultant strategy document exists (skeleton only); analytics and research fill it in.

@@ -7,7 +7,7 @@ B-roll RIB_0139 (audiometer), RIB_0140 (audiometer screen), RIB_0141 (audiometri
 |---|---|---|
 | `01_transcribe.py` / `01b_words.py` | Whisper large-v3 + manual fixes | `transcripts/`, `transcript.txt` |
 | `02_clean_cut.py` | 0124 (4.37–37.80 s) + 0125 retake, silences >0.4 s cut, takes gain-matched, -14 LUFS | `01_clean.mp4`, `segments.json` |
-| `03_edit_plan.py` | B-roll, overlays (pop -> pop sound, slide -> whoosh), logo moments (ding), outro | `edit_plan.csv` |
+| `03_edit_plan.py` | B-roll, overlays (pop -> pop sound, rise -> whoosh), logo behind her on the first "Laser Vision" (ding), Claudia end card | `edit_plan.csv` |
 | `04_graphics.py` | Overlays in LaserVision colours (Outfit), earplug illustration, outro | `overlays/` |
 | `05_matte.py` | MediaPipe person matte so the logo sits behind her head | `mattes/` |
 | `06_captions.py` | House captions (Tajawal, white, navy glow, #30A4BF keywords, English in CAPS) | `captions.ass`, `captions.srt`, `captions.txt` |

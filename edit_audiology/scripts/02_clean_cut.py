@@ -12,7 +12,7 @@ words = json.load(open(J("transcripts", "words.json")))
 def span(src):
     ws = [w for w in words if w["src"] == src]; return ws[0]["start"], ws[-1]["end"]
 RANGES = [("RIB_0124", 4.37, 37.80),   # 37.80 = dip after "سماعكن", before the first-take "ولأن"
-          ("RIB_0125", 1.88, 8.10)]    # retake; keeps ~0.7 s of her silent hold after "Laser Vision" (chatter starts 8.3 s)
+          ("RIB_0125", 1.88, None)]    # retake; ends 0.1 s after her last word
 
 def silences(path):
     log = subprocess.run(["ffmpeg", "-i", path, "-af", f"silencedetect=n={NOISE_DB}dB:d={MIN_SIL}", "-f", "null", "-"],

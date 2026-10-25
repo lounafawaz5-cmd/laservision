@@ -2,118 +2,94 @@
  "badge_ear": {
   "file": "badge_ear.png",
   "bbox": [
-   759,
-   454,
-   981,
-   686
-  ],
-  "anchor": [
-   870,
-   570
+   770,
+   465,
+   970,
+   670
   ]
  },
- "card_department": {
-  "file": "card_department.png",
+ "title_department": {
+  "file": "title_department.png",
   "bbox": [
-   30,
-   980,
-   885,
-   1210
+   32,
+   1002,
+   865,
+   1209
   ],
-  "anchor": [
-   457,
-   1095
+  "line": [
+   70,
+   1162,
+   260,
+   6
   ]
  },
- "pill_audiometry": {
-  "file": "pill_audiometry.png",
+ "title_hearing_aids": {
+  "file": "title_hearing_aids.png",
   "bbox": [
-   551,
-   960,
-   1050,
-   1110
+   272,
+   1045,
+   809,
+   1201
   ],
-  "anchor": [
-   800,
-   1035
+  "line": [
+   307,
+   1154,
+   260,
+   6
   ]
  },
- "pill_tympanometry": {
-  "file": "pill_tympanometry.png",
+ "tag_audiometry": {
+  "file": "tag_audiometry.png",
   "bbox": [
-   460,
-   1080,
-   1050,
-   1230
-  ],
-  "anchor": [
-   755,
-   1155
+   616,
+   977,
+   1043,
+   1093
   ]
  },
- "card_hearing_aids": {
-  "file": "card_hearing_aids.png",
+ "tag_tympanometry": {
+  "file": "tag_tympanometry.png",
   "bbox": [
-   203,
-   990,
-   876,
-   1200
-  ],
-  "anchor": [
-   539,
-   1095
+   523,
+   1067,
+   1043,
+   1183
   ]
  },
- "card_earplugs": {
-  "file": "card_earplugs.png",
+ "earplugs": {
+  "file": "earplugs.png",
   "bbox": [
-   650,
-   880,
-   1050,
-   1330
-  ],
-  "anchor": [
-   850,
-   1105
+   590,
+   845,
+   1039,
+   1256
   ]
  },
  "badge_noise": {
   "file": "badge_noise.png",
   "bbox": [
-   738,
-   1186,
-   842,
-   1296
-  ],
-  "anchor": [
-   790,
-   1241
+   564,
+   859,
+   696,
+   996
   ]
  },
  "badge_water": {
   "file": "badge_water.png",
   "bbox": [
-   858,
-   1186,
-   962,
-   1296
-  ],
-  "anchor": [
-   910,
-   1241
+   564,
+   969,
+   696,
+   1106
   ]
  },
- "lower_third": {
-  "file": "lower_third.png",
+ "name_hala": {
+  "file": "name_hala.png",
   "bbox": [
    30,
-   1090,
-   637,
-   1320
-  ],
-  "anchor": [
-   333,
-   1205
+   1052,
+   577,
+   1265
   ]
  },
  "logo_wall": {
@@ -123,49 +99,33 @@
    265,
    1040,
    475
-  ],
-  "anchor": [
-   540,
-   370
   ]
  },
- "outro_line": {
-  "file": "outro_line.png",
+ "end_logo": {
+  "file": "end_logo.png",
   "bbox": [
-   330,
-   789,
-   750,
-   794
-  ],
-  "anchor": [
-   540,
-   791
+   154,
+   668,
+   926,
+   831
   ]
  },
- "outro_logo": {
-  "file": "outro_logo.png",
+ "end_whatsapp": {
+  "file": "end_whatsapp.png",
   "bbox": [
-   160,
-   850,
-   920,
-   1010
-  ],
-  "anchor": [
-   540,
-   930
+   296,
+   961,
+   783,
+   1136
   ]
  },
- "outro_whatsapp": {
-  "file": "outro_whatsapp.png",
+ "end_branches": {
+  "file": "end_branches.png",
   "bbox": [
-   259,
-   1056,
-   820,
-   1140
-  ],
-  "anchor": [
-   539,
-   1098
+   248,
+   1219,
+   834,
+   1254
   ]
  }
 }

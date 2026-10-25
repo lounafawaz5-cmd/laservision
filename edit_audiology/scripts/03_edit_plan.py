@@ -13,38 +13,39 @@ def at(word, after=0.0, end=False):
     return round(w["end"] if end else w["start"], 2)
 def line(a, b):
     return " ".join(w["word"] for w in words if a - 1e-3 <= w["start"] < b - 1e-3)
-T = round(duration(), 2); OUTRO = 2.6; END = round(T + OUTRO, 2)
+T = round(duration(), 2); OUTRO = 3.2; END = round(T + OUTRO, 2)
 
 COLS = ["start", "end", "layer", "spoken_line", "asset", "overlay_text", "animation", "sound_effect", "notes"]
 rows = []
 def R(a, b, layer, asset="", text="", anim="", sfx="", notes=""):
     rows.append(dict(zip(COLS, [f"{a:.2f}", f"{b:.2f}", layer, line(a, b), asset, text, anim, sfx, notes])))
 
-# --- LaserVision logo behind her, each "Laser Vision"
-lv = [w["start"] for w in words if w["word"].endswith("Laser")]
-nxt = [at("لنقدم"), at("ولأن"), T]
-for i, (a, b) in enumerate(zip(lv, nxt)):
-    R(a, b if i < 2 else T, "logo", "brand/laservision/logo-transparent.png", "", "pop_in, behind_subject",
-      "ding", "her silhouette masks the logo (MediaPipe matte)")
+# --- LaserVision logo behind her: only the FIRST "Laser Vision"
+lv = next(w["start"] for w in words if w["word"].endswith("Laser"))
+R(lv, at("لنقدم"), "logo", "brand/laservision/logo-transparent.png", "", "pop_in, behind_subject",
+  "ding", "her silhouette masks the logo (MediaPipe matte)")
 
 # --- B-roll
 R(at("لنقدم"), at("عنا", at("بالسمع")) - 0.25, "broll", "RIB_0139", notes="audiometer, wide; from 2.0 s")
 R(at("audiometry") - 0.05, at("باستخدام"), "broll", "RIB_0141", notes="audiometric headphones; from 4.0 s")
 R(at("باستخدام"), at("سماعات") - 0.2, "broll", "RIB_0140", notes="audiometer screen; from 3.0 s")
 
-# --- animated overlays (+ matching SFX)
-R(at("السمع"), at("نحن"), "overlay", "emoji:👂", "", "pop", "pop", "ear, right of her head")
-R(at("A"), at("لنقدم"), "overlay", "card", "NEW|Audiology Department", "slide_left", "whoosh")
-R(at("audiometry"), at("متطورة"), "overlay", "pill", "AUDIOMETRY", "slide_right", "whoosh")
-R(at("tympanometry"), at("متطورة"), "overlay", "pill", "TYMPANOMETRY", "slide_right", "whoosh")
-R(at("سماعات"), at("بالإضافة"), "overlay", "card", "🦻|Hearing aids", "pop", "pop")
-R(at("Customized"), at("audiologist"), "overlay", "earplug", "Custom earplugs", "slide_right", "whoosh")
-R(at("الضجيج"), at("audiologist"), "overlay", "emoji:🔊", "", "pop", "pop", "noise")
-R(at("والماء"), at("audiologist"), "overlay", "emoji:💧", "", "pop", "pop", "water")
-R(at("أنا"), at("ولأن"), "overlay", "lower_third", "Hala|Audiologist", "slide_left", "whoosh")
+# --- animated overlays (+ matching SFX). Clean titles, no notification-style boxes.
+# rise = text rises in with an accent line drawing under it (soft whoosh); pop = scale-in with overshoot (pop)
+R(at("السمع"), at("أساسي"), "overlay", "emoji:👂", "", "pop", "pop", "ear, right of her head; short")
+R(at("A"), at("لنقدم"), "overlay", "title", "NEW|Audiology Department", "rise", "whoosh")
+R(at("audiometry"), at("متطورة"), "overlay", "tag", "AUDIOMETRY", "pop", "pop")
+R(at("tympanometry"), at("متطورة"), "overlay", "tag", "TYMPANOMETRY", "pop", "pop")
+R(at("سماعات"), at("بالإضافة"), "overlay", "title", "|Hearing aids", "pop", "pop")
+ep_end = at("هالا") - 0.12                       # earplugs leave before Hala's title comes in (no overlap)
+R(at("Customized"), ep_end, "overlay", "earplug", "Custom earplugs", "pop", "pop")
+R(at("الضجيج"), ep_end, "overlay", "emoji:🔊", "", "pop", "pop", "noise")
+R(at("والماء"), ep_end, "overlay", "emoji:💧", "", "pop", "pop", "water")
+R(at("هالا"), at("ولأن"), "overlay", "name", "Hala|Audiologist · Laser Vision", "rise", "whoosh")
 
 # --- outro
-R(T, END, "outro", "brand/laservision/logo-transparent.png", f"WhatsApp", "fade_up_stagger", "whoosh")
+R(T, END, "outro", "brand/references/laservision-endcard-claudia.png", "logo|WhatsApp +961 81 54 20 20|branches",
+  "fade_up_stagger", "whoosh", "Claudia end card without the Arabic line")
 rows.sort(key=lambda r: float(r["start"]))
 with open(J("edit_plan.csv"), "w", newline="") as fh:
     w = csv.DictWriter(fh, fieldnames=COLS); w.writeheader(); w.writerows(rows)
