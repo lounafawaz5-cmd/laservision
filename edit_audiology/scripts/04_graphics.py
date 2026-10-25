@@ -67,11 +67,16 @@ title("title_department", "NEW", "Audiology Department", 70, 1030)
 title("title_hearing_aids", "", "Hearing aids", 0, 1060, size=80, align="center")
 
 def tag(key, text, y, size=54):
-    img = Image.new("RGBA", (W, H)); f = font(size)
-    x = 1010 - f.getlength(text); ImageDraw.Draw(img).text((x, y), text, font=f, fill=CARD_BLUE)
-    img = glow(img); bb = img.getbbox(); save(key, img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
-tag("tag_audiometry", "AUDIOMETRY", 1000)
-tag("tag_tympanometry", "TYMPANOMETRY", 1090)
+    """Dark-blue pill behind white text (v1 style, kept by request); captions are hidden while these show."""
+    f = font(size); w = int(f.getlength(text)) + 80; x1 = 1020; x0 = x1 - w
+    img = Image.new("RGBA", (W, H)); sh = Image.new("RGBA", (W, H))
+    ImageDraw.Draw(sh).rounded_rectangle((x0, y + 8, x1, y + 104), 48, fill=(0, 0, 0, 90))
+    img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(20)))
+    ImageDraw.Draw(img).rounded_rectangle((x0, y, x1, y + 96), 48, fill=rgb("#005D83") + (245,))
+    ImageDraw.Draw(img).text((x0 + 40, y + 18), text, font=f, fill=WHITE)
+    save(key, img, (x0 - 30, y - 20, x1 + 30, y + 130))
+tag("tag_audiometry", "AUDIOMETRY", 980)
+tag("tag_tympanometry", "TYMPANOMETRY", 1100)
 
 # ---------- custom-molded earplugs (vector illustration, rendered with cairosvg) ----------
 EARPLUG_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 280">

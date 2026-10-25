@@ -98,7 +98,9 @@ Style: Cap,{FONT},{SIZE},&H00FFFFFF,&H00FFFFFF,{ass_color(LV_NAVY, "00")},{ass_c
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 ev = []
+HIDE = ("audiometry", "tympanometry")      # the on-screen tags already say these; no burned caption under them
 for n, ln in enumerate(lines):
+    if any(h in t["word"].lower() for t in ln for h in HIDE): continue
     a = ln[0]["start"]
     nxt = lines[n + 1][0]["start"] if n + 1 < len(lines) else ln[-1]["end"] + 0.4
     b = min(ln[-1]["end"] + 0.35, nxt, duration() - 0.05)   # never run into the recap

@@ -41,19 +41,19 @@
  "tag_audiometry": {
   "file": "tag_audiometry.png",
   "bbox": [
-   616,
-   977,
-   1043,
-   1093
+   551,
+   960,
+   1050,
+   1110
   ]
  },
  "tag_tympanometry": {
   "file": "tag_tympanometry.png",
   "bbox": [
-   523,
-   1067,
-   1043,
-   1183
+   460,
+   1080,
+   1050,
+   1230
   ]
  },
  "earplugs": {
