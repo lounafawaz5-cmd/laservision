@@ -14,7 +14,7 @@ Run everything: `bash edit/scripts/run_all.sh` (add `--preview` for a fast low-q
 | `04_graphics.py` | Pillow overlays (Outfit font, #00B4D8) + ZVC outro (wordmark, WhatsApp +961 81 47 20 20) | `overlays/*.png`, `overlays/manifest.json` |
 | `05_captions.py` | Arabic ASS captions: house style (Tajawal, white, LaserVision navy shadow, #30A4BF keywords, English in CAPS, fade-in) | `captions.ass` |
 | `06_broll_list.py` | B-roll slots + status | `broll_list.md` |
-| `07a_sfx.py` / `07_assemble.py` | SFX + final assembly | `sfx/*.wav`, `final.mp4` |
+| `07a_sfx.py` / `07_assemble.py` | SFX + final assembly | `sfx/*.wav`, `final.mp4`, `final_no_captions.mp4` |
 | `08_qc.py` | Frames every 3 s + loudness/clipping check | `qc/` |
 | `09_extras.py` | Editor markers + post caption | `markers.csv`, `markers.edl`, `markers_resolve.edl`, `post_caption.md` |
 
@@ -23,3 +23,5 @@ with ducking), `sfx/` (replace `pop.wav`, `buzzer.wav`, `whoosh.wav`). Then re-r
 
 Fonts for caption burn-in live in `edit/fonts/` (Tajawal from Google Fonts, OFL; Outfit from `brand/fonts`).
 v2 review notes: only two slow zooms (hook push-in, "see your eye doctor"), no recap/CTA, ZVC end card.
+
+**Fixing captions yourself:** import `final_no_captions.mp4` and `captions.srt` into CapCut / Premiere / DaVinci, correct the text, and style it there. Or edit `captions.srt`/`captions.ass` and send it back to re-burn.

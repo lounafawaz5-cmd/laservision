@@ -44,6 +44,7 @@ Strategy by Tawlé Consultancy. **Rules for all content: `strategy/SUMMARY.md`.*
 Full setup checklist: `NEXT_SESSION_SETUP.md`.
 
 ## Working rules
+- **Every captioned edit ships in two versions:** the final with burned-in captions, plus the same video **without captions** and an editable **`.srt`** caption file (Arabic transcription isn't always 100%, so the user corrects captions herself).
 - One step at a time; don't run ahead into later stages.
 - A consultant strategy document exists (skeleton only); analytics and research fill it in.
 - Medical claims for LaserVision need care (no guarantees or "painless/perfect" promises). Full rules in `strategy/SUMMARY.md`.

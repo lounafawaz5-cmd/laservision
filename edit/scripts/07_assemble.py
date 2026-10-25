@@ -8,6 +8,7 @@ Video (Python/OpenCV, frame by frame, piped into ffmpeg):
   - blur-to-sharp on "blurry vision"; ZVC outro card (wordmark + WhatsApp) at the end
 ffmpeg: burns captions.ass, mixes voice + SFX (+ ducked music from edit/music/ if present),
 loudness -14 LUFS, H.264 CRF 16 + AAC 256k.
+Also writes final_no_captions.mp4 (same edit, no burned-in captions) to pair with captions.srt.
 Usage: python3 07_assemble.py [--preview]   (--preview = fast low-quality encode)
 """
 import csv, glob, json, math, os, subprocess, sys
@@ -16,6 +17,7 @@ from common import J, W, H, FPS, duration
 
 PREVIEW = "--preview" in sys.argv
 OUT = J("final_preview.mp4" if PREVIEW else "final.mp4")
+OUT_CLEAN = J("final_preview_no_captions.mp4" if PREVIEW else "final_no_captions.mp4")   # for fixing captions yourself
 ROOT = os.path.dirname(J())
 FACE = (540.0, 470.0)               # zoom anchor (her face, measured in Phase 2/3)
 plan = list(csv.DictReader(open(J("edit_plan.csv"))))
@@ -257,16 +259,18 @@ def main():
     # in the encode command input 0 is the raw video pipe, so every audio input index shifts by one
     import re
     afg = re.sub(r"\[(\d+):a\]", lambda mm: f"[{int(mm.group(1)) + 1}:a]", ";".join(fg))
-    afg += f";[mix]{ln},aresample=48000[aout]"
+    afg += f";[mix]{ln},aresample=48000,asplit[aout][aclean]"
     ass = J("captions.ass").replace(":", r"\:")
     fonts = J("fonts")   # Tajawal + Outfit
-    vf = f"[0:v]ass={ass}:fontsdir={fonts},format=yuv420p[vout]"
+    vf = (f"[0:v]split[vc][vn];[vc]ass={ass}:fontsdir={fonts},format=yuv420p[vout];"
+          f"[vn]format=yuv420p[vclean]")
     enc = ["-c:v", "libx264", "-preset", "ultrafast" if PREVIEW else "slow", "-crf", "28" if PREVIEW else "16",
            "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", str(FPS),
            "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart"]
     cmd = (["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
             "-r", str(FPS), "-i", "-"] + inputs +
-           ["-filter_complex", vf + ";" + afg, "-map", "[vout]", "-map", "[aout]"] + enc + ["-t", f"{END:.3f}", OUT])
+           ["-filter_complex", vf + ";" + afg, "-map", "[vout]", "-map", "[aout]"] + enc + ["-t", f"{END:.3f}", OUT,
+            "-map", "[vclean]", "-map", "[aclean]"] + enc + ["-t", f"{END:.3f}", OUT_CLEAN])
     enc_p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 
     src = reader(J("01_clean.mp4"))
@@ -301,7 +305,7 @@ def main():
         if f % 150 == 0: print(f"  frame {f}/{NF}", flush=True)
     enc_p.stdin.close(); enc_p.wait()
     if enc_p.returncode: sys.exit("ffmpeg encode failed")
-    print("wrote", OUT, f"({END:.2f}s, music: {'yes' if has_music else 'none found - skipped'})")
+    print("wrote", OUT, "and", os.path.basename(OUT_CLEAN), f"({END:.2f}s, music: {'yes' if has_music else 'none found - skipped'})")
 
 if __name__ == "__main__":
     main()

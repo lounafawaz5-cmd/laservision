@@ -46,8 +46,8 @@ _tl = ImageFont.truetype(J("fonts", "Tajawal-ExtraBold.ttf"), LATIN_SIZE)
 def _w(text):
     return sum((_tl if x.isascii() else _tf).getlength(x + " ") for x in text.split())
 MAX_PX = 920
-shown = lambda w: " ".join(x.upper() if x.isascii() else x for x in w["word"].rstrip("،.").split())
-fits = lambda ln: _w(" ".join(shown(t) for t in ln)) <= MAX_PX
+caps_text = lambda w: " ".join(x.upper() if x.isascii() else x for x in w["word"].rstrip("،.").split())
+fits = lambda ln: _w(" ".join(caps_text(t) for t in ln)) <= MAX_PX
 lines = []
 for ph in phrases:
     # fewest lines that fit; then the most even split with that many lines
@@ -95,5 +95,17 @@ for n, ln in enumerate(lines):
         parts.append("{" + f"{col}\\alpha&HFF&\\t({rel},{rel+120},\\1a&H00&\\3a&H20&\\4a&H70&)" + "}" + shown)
     ev.append(f"Dialogue: 0,{ts(a)},{ts(b)},Cap,,0,0,0,,{{\\an2\\blur3}}" + " ".join(parts))
 open(J("captions.ass"), "w", encoding="utf-8").write(head + "\n".join(ev) + "\n")
+
+# Editable copy: captions.srt (same lines and timings, plain text) to fix in CapCut / Premiere / DaVinci
+# and lay over final_no_captions.mp4. Highlight colours are not part of SRT.
+def srt_ts(t):
+    ms = int(round(max(0, t) * 1000)); return f"{ms//3600000:02d}:{ms//60000%60:02d}:{ms//1000%60:02d},{ms%1000:03d}"
+srt = []
+for n, ln in enumerate(lines):
+    a = ln[0]["start"]; nxt = lines[n + 1][0]["start"] if n + 1 < len(lines) else ln[-1]["end"] + 0.4
+    b = min(ln[-1]["end"] + 0.35, nxt, duration() - 0.05)
+    text = " ".join(caps_text(t) for t in ln)
+    srt.append(f"{n+1}\n{srt_ts(a)} --> {srt_ts(b)}\n{text}\n")
+open(J("captions.srt"), "w", encoding="utf-8-sig").write("\n".join(srt))
 print(len(ev), "caption lines")
 for ln in lines: print(f"{ln[0]['start']:5.2f}", " ".join(t["word"] for t in ln))
