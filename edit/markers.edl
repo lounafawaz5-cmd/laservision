@@ -8,7 +8,7 @@ FCM: NON-DROP FRAME
  |C:ResolveColorSand |M:Hook - talking: talking |D:41
 
 003  001      V     C        00:00:03:11 00:00:03:12 00:00:03:11 00:00:03:12  
- |C:ResolveColorGreen |M:Tip 1 - zoom: Wash your hands with soap & water |D:33
+ |C:ResolveColorGreen |M:Tip 1 - talking: Wash your hands with soap & water |D:33
 
 004  001      V     C        00:00:04:14 00:00:04:15 00:00:04:14 00:00:04:15  
  |C:ResolveColorGreen |M:Tip 1 - broll [broll_01]: Wash your hands with soap & water |D:36
@@ -17,7 +17,7 @@ FCM: NON-DROP FRAME
  |C:ResolveColorGreen |M:Tip 1 - talking: …and dry them well before putting your lenses in |D:83
 
 006  001      V     C        00:00:08:13 00:00:08:14 00:00:08:13 00:00:08:14  
- |C:ResolveColorRed |M:Tip 2 - zoom [broll_02]: Don't sleep in your lenses |D:33
+ |C:ResolveColorRed |M:Tip 2 - talking [broll_02]: Don't sleep in your lenses |D:33
 
 007  001      V     C        00:00:09:16 00:00:09:18 00:00:09:16 00:00:09:18  
  |C:ResolveColorRed |M:Tip 3 - talking: Don't wash your lenses with water |D:29
@@ -29,10 +29,10 @@ FCM: NON-DROP FRAME
  |C:ResolveColorGreen |M:Tip 4 - talking: Always use contact lens solution |D:19
 
 010  001      V     C        00:00:11:23 00:00:11:24 00:00:11:23 00:00:11:24  
- |C:ResolveColorGreen |M:Tip 4 - zoom [broll_04]: Always use contact lens solution |D:67
+ |C:ResolveColorGreen |M:Tip 4 - talking [broll_04]: Always use contact lens solution |D:67
 
 011  001      V     C        00:00:14:00 00:00:14:01 00:00:14:00 00:00:14:01  
- |C:ResolveColorGreen |M:Tip 4 - zoom: Every time you take them out… |D:59
+ |C:ResolveColorGreen |M:Tip 4 - talking: Every time you take them out… |D:59
 
 012  001      V     C        00:00:15:28 00:00:16:00 00:00:15:28 00:00:16:00  
  |C:ResolveColorGreen |M:Tip 4 - broll [broll_05]: …throw away the old solution |D:43
@@ -59,7 +59,7 @@ FCM: NON-DROP FRAME
  |C:ResolveColorCyan |M:Tip 6 - zoom: Problem doesn't go away? See your eye doctor |D:48
 
 020  001      V     C        00:00:27:18 00:00:27:19 00:00:27:18 00:00:27:19  
- |C:ResolveColorGreen |M:Tip 7 - zoom: Most important: keep your lenses clean |D:17
+ |C:ResolveColorGreen |M:Tip 7 - talking: Most important: keep your lenses clean |D:17
 
 021  001      V     C        00:00:28:05 00:00:28:06 00:00:28:05 00:00:28:06  
  |C:ResolveColorGreen |M:Tip 7 - broll [broll_10]: Most important: keep your lenses clean |D:42
@@ -68,25 +68,4 @@ FCM: NON-DROP FRAME
  |C:ResolveColorGreen |M:Tip 7 - talking: Clean lenses = healthy eyes |D:35
 
 023  001      V     C        00:00:30:22 00:00:30:24 00:00:30:22 00:00:30:24  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 1/7 |D:17
-
-024  001      V     C        00:00:31:09 00:00:31:10 00:00:31:09 00:00:31:10  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 2/7 |D:17
-
-025  001      V     C        00:00:31:26 00:00:31:27 00:00:31:26 00:00:31:27  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 3/7 |D:16
-
-026  001      V     C        00:00:32:12 00:00:32:13 00:00:32:12 00:00:32:13  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 4/7 |D:17
-
-027  001      V     C        00:00:32:29 00:00:33:00 00:00:32:29 00:00:33:00  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 5/7 |D:16
-
-028  001      V     C        00:00:33:15 00:00:33:16 00:00:33:15 00:00:33:16  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 6/7 |D:16
-
-029  001      V     C        00:00:34:01 00:00:34:02 00:00:34:01 00:00:34:02  
- |C:ResolveColorBlue |M:Recap - recap_bg: recap line 7/7 |D:52
-
-030  001      V     C        00:00:35:24 00:00:35:25 00:00:35:24 00:00:35:25  
- |C:ResolveColorBlue |M:CTA - recap_bg: Save this for later 👆 |D:54
+ |C:ResolveColorBlue |M:Outro (ZVC) - outro: ZEISS Vision Center by Laser Vision / WhatsApp +961 81 47 20 20 |D:78

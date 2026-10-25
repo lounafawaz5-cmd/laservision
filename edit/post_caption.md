@@ -1,4 +1,4 @@
-# Post caption (LaserVision)
+# Post caption (ZEISS Vision Center)
 
 Wearing soft contact lenses? Save these 7 habits 👇
 
@@ -10,7 +10,7 @@ Wearing soft contact lenses? Save these 7 habits 👇
 🩺 If the problem doesn't go away, see your eye doctor
 ✅ Clean lenses = healthy eyes
 
-Questions about your lenses? Consult your eye doctor first, then book at LaserVision.
-💬 WhatsApp +961 81 54 20 20
+Questions about your lenses? WhatsApp us: +961 81 47 20 20
+ZEISS Vision Center by Laser Vision, Hazmieh
 
-#ContactLenses #EyeCare #EyeHealth #LaserVision #Lebanon
+#ContactLenses #EyeCare #ZEISSVisionCenter #Hazmieh #Lebanon

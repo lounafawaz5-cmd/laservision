@@ -12,12 +12,12 @@ def tc(sec, base_h=0):
     f = int(round(sec * FPS)); h = base_h + f // (3600 * FPS); f %= 3600 * FPS
     return f"{h:02d}:{f // (60 * FPS):02d}:{f // FPS % 60:02d}:{f % FPS:02d}"
 COLOR = {"hook": "ResolveColorPurple", "do": "ResolveColorGreen", "dont": "ResolveColorRed",
-         "warning": "ResolveColorYellow", "doctor": "ResolveColorCyan", "recap": "ResolveColorBlue"}
+         "warning": "ResolveColorYellow", "doctor": "ResolveColorCyan", "outro": "ResolveColorBlue"}
 rows = list(csv.DictReader(open(J("edit_plan.csv"))))
 
 def name(r):
     t = r["tip_number"]
-    lab = {"0": "Hook", "recap": "Recap", "cta": "CTA"}.get(t, f"Tip {t}")
+    lab = {"0": "Hook", "outro": "Outro (ZVC)"}.get(t, f"Tip {t}")
     return f"{lab} - {r['shot_type']}" + (f" [{r['broll_needed']}]" if r["broll_needed"] else "")
 
 with open(J("markers.csv"), "w", newline="") as fh:
@@ -38,7 +38,7 @@ for fn, base in (("markers.edl", 0), ("markers_resolve.edl", 1)):
         L.append("")
     open(J(fn), "w").write("\n".join(L))
 
-open(J("post_caption.md"), "w").write("""# Post caption (LaserVision)
+open(J("post_caption.md"), "w").write("""# Post caption (ZEISS Vision Center)
 
 Wearing soft contact lenses? Save these 7 habits 👇
 
@@ -50,9 +50,10 @@ Wearing soft contact lenses? Save these 7 habits 👇
 🩺 If the problem doesn't go away, see your eye doctor
 ✅ Clean lenses = healthy eyes
 
-Questions about your lenses? Consult your eye doctor first, then book at LaserVision.
-💬 WhatsApp +961 81 54 20 20
+Questions about your lenses? WhatsApp us: +961 81 47 20 20
+ZEISS Vision Center by Laser Vision, Hazmieh
 
-#ContactLenses #EyeCare #EyeHealth #LaserVision #Lebanon
+#ContactLenses #EyeCare #ZEISSVisionCenter #Hazmieh #Lebanon
 """)
+
 print("wrote markers.csv, markers.edl, markers_resolve.edl, post_caption.md")

@@ -121,33 +121,35 @@ for n in range(1, 8):
     d.text((x0 + 28, y0 + 10), t1, font=f, fill=WHITE); d.text((x0 + 28 + f.getlength(t1), y0 + 10), t2, font=f, fill=ACC)
     save(f"counter_{n}", img, (x0 - 15, y0 - 10, x1 + 15, y0 + 95))
 
-# ---------- recap checklist frames ----------
-RECAP = [("✅", "Wash & dry your hands"), ("❌", "Don't sleep in your lenses"),
-         ("❌", "Don't wash them with water"), ("✅", "Use fresh solution every time"),
-         ("⚠️", "Red, painful, blurry? Take them out"), ("🩺", "Still a problem? See your eye doctor"),
-         ("✅", "Most important: keep lenses clean")]
-X0, X1, Y0, LH = 60, 1020, 280, 112
-PANEL_H = 150 + len(RECAP) * LH + 20
-fr, fl = font(72), font(46)
-for k in range(1, len(RECAP) + 1):
-    img = shadowed((X0, Y0, X1, Y0 + PANEL_H), 48, (255, 255, 255, 240))
-    d = ImageDraw.Draw(img)
-    d.text((X0 + 50, Y0 + 40), "Quick recap", font=fr, fill=INK)
-    d.rounded_rectangle((X0 + 50, Y0 + 128, X0 + 250, Y0 + 136), 4, fill=ACC)
-    for i, (emo, txt) in enumerate(RECAP[:k]):
-        y = Y0 + 160 + i * LH
-        img.alpha_composite(emoji(emo, 64), (X0 + 46, y + 4))
-        ln = wrap(txt, fl, X1 - X0 - 190)
-        for j, l in enumerate(ln[:2]):
-            d.text((X0 + 140, y + (22 if len(ln) == 1 else -2) + j * 50), l, font=fl, fill=INK)
-    save(f"recap_{k}", img, (X0 - 30, Y0 - 20, X1 + 30, Y0 + PANEL_H + 40))
+# ---------- ZVC outro (same layout as the Monogram reel end card, reels/src/templates/BeatAd.tsx) ----------
+# black card, lime line, "ZEISS Vision Center by Laser Vision" wordmark, white WhatsApp glyph + number.
+# Never the blue ZEISS block logo (strategy/SUMMARY.md).
+import io, cairosvg
+ZVC_LIME = (217, 233, 6)
+WHATSAPP = "+961 81 47 20 20"
+svg_path = re.search(r'd="([^"]+)"', open(os.path.join(ROOT, "reels/src/components/WhatsAppIcon.tsx")).read()).group(1)
+LINE_W, LOGO_W, ICON, GAP = 420, 620, 64, 56
+logo = Image.open(os.path.join(ROOT, "brand/zeiss/zvc-wordmark-white.png")).convert("RGBA")
+logo = logo.resize((LOGO_W, round(LOGO_W * logo.height / logo.width)), Image.LANCZOS)
+total = 5 + GAP + logo.height + GAP + ICON
+y_line = (H - total) // 2; y_logo = y_line + 5 + GAP; y_wa = y_logo + logo.height + GAP
 
-# ---------- CTA (under the recap panel) ----------
-f = font(80); txt = "Save this for later 👆"
-w = rich_width(txt, f) + 100; x0 = (W - w) / 2; y0 = Y0 + PANEL_H + 40
-img = shadowed((x0, y0, x0 + w, y0 + 130), 65, ACC + (255,))
-draw_rich(img, (x0 + 50, y0 + 18), txt, f, WHITE)
-save("cta", img, (x0 - 30, y0 - 20, x0 + w + 30, y0 + 170))
+save("outro_bg", Image.new("RGBA", (W, H), (0, 0, 0, 255)), (0, SAFE_Y0, W, SAFE_Y1))
+img = Image.new("RGBA", (W, H)); ImageDraw.Draw(img).rectangle(((W - LINE_W) // 2, y_line, (W + LINE_W) // 2, y_line + 5), fill=ZVC_LIME)
+save("outro_line", img, ((W - LINE_W) // 2, y_line, (W + LINE_W) // 2, y_line + 5))
+img = Image.new("RGBA", (W, H)); img.alpha_composite(logo, ((W - LOGO_W) // 2, y_logo))
+save("outro_logo", img, ((W - LOGO_W) // 2, y_logo, (W + LOGO_W) // 2, y_logo + logo.height))
+icon = Image.open(io.BytesIO(cairosvg.svg2png(
+    bytestring=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#FFFFFF" d="{svg_path}"/></svg>'.encode(),
+    output_width=ICON, output_height=ICON))).convert("RGBA")
+fn = font(56, bold=False)
+num_w = sum(fn.getlength(ch) + 3 for ch in WHATSAPP)                  # letter-spacing 3, as on the Monogram card
+row_w = ICON + 22 + num_w; x = (W - row_w) / 2
+img = Image.new("RGBA", (W, H)); img.alpha_composite(icon, (int(x), y_wa))
+d = ImageDraw.Draw(img); cx = x + ICON + 22
+for ch in WHATSAPP:
+    d.text((cx, y_wa + ICON / 2), ch, font=fn, fill=WHITE, anchor="lm"); cx += fn.getlength(ch) + 3
+save("outro_whatsapp", img, (int(x) - 10, y_wa - 10, int(x + row_w) + 10, y_wa + ICON + 10))
 
 json.dump(manifest, open(os.path.join(OUT, "manifest.json"), "w"), indent=1)
 print(len(manifest), "overlays:", ", ".join(manifest))

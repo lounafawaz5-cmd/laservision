@@ -179,76 +179,40 @@
    363
   ]
  },
- "recap_1": {
-  "file": "recap_1.png",
+ "outro_bg": {
+  "file": "outro_bg.png",
   "bbox": [
-   30,
-   260,
-   1050,
-   1274
+   0,
+   250,
+   1080,
+   1520
   ]
  },
- "recap_2": {
-  "file": "recap_2.png",
+ "outro_line": {
+  "file": "outro_line.png",
   "bbox": [
-   30,
-   260,
-   1050,
-   1274
+   330,
+   826,
+   750,
+   831
   ]
  },
- "recap_3": {
-  "file": "recap_3.png",
+ "outro_logo": {
+  "file": "outro_logo.png",
   "bbox": [
-   30,
-   260,
-   1050,
-   1274
+   230,
+   887,
+   850,
+   974
   ]
  },
- "recap_4": {
-  "file": "recap_4.png",
+ "outro_whatsapp": {
+  "file": "outro_whatsapp.png",
   "bbox": [
-   30,
    260,
-   1050,
-   1274
-  ]
- },
- "recap_5": {
-  "file": "recap_5.png",
-  "bbox": [
-   30,
-   260,
-   1050,
-   1274
-  ]
- },
- "recap_6": {
-  "file": "recap_6.png",
-  "bbox": [
-   30,
-   260,
-   1050,
-   1274
-  ]
- },
- "recap_7": {
-  "file": "recap_7.png",
-  "bbox": [
-   30,
-   260,
-   1050,
-   1274
-  ]
- },
- "cta": {
-  "file": "cta.png",
-  "bbox": [
-   81,
-   1254,
-   998,
-   1444
+   1020,
+   819,
+   1104
   ]
  }
 }

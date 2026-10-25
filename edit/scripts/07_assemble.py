@@ -5,7 +5,7 @@ Video (Python/OpenCV, frame by frame, piped into ffmpeg):
   - eased punch-in zooms anchored on her face; whip (motion-blur + zoom kick) at each tip change
   - B-roll from edit/broll/<slot>.mp4 when present, else the talking shot with an extra slow push-in
   - cards: scale-up + fade in (0.2 s), fade out; ❌ shake, ⚠️ pulse; tip counter top-right
-  - blur-to-sharp on "blurry vision"; recap tail on a blurred freeze-frame, lines build, then CTA
+  - blur-to-sharp on "blurry vision"; ZVC outro card (wordmark + WhatsApp) at the end
 ffmpeg: burns captions.ass, mixes voice + SFX (+ ducked music from edit/music/ if present),
 loudness -14 LUFS, H.264 CRF 16 + AAC 256k.
 Usage: python3 07_assemble.py [--preview]   (--preview = fast low-quality encode)
@@ -47,27 +47,6 @@ def broll_file(r):
         if os.path.exists(p): return p
     return None
 
-def zoom_at(t, _cache={}):
-    """Piecewise eased zoom. Each row eases from the previous row's end value to its target."""
-    z_prev = 1.0
-    for r in plan:
-        if r["shot_type"] == "recap_bg": break
-        a, b = parse_zoom(r["zoom_level"])
-        start = a if a is not None else z_prev
-        tgt = b
-        if r["shot_type"] == "broll" and not broll_file(r):   # empty slot -> extra zoom
-            tgt = max(b, 1.08) + 0.06
-        dur = 0.25 if "fast" in r["zoom_level"] else (0.45 if a is not None else 0.35)
-        if r["zoom_level"].startswith("1.15>1.00"): dur = r["b"] - r["a"]
-        if t < r["b"]:
-            x = (t - r["a"]) / dur
-            z = start + (tgt - start) * ease_io(x)
-            if r["shot_type"] == "broll" and not broll_file(r):   # slow drift while held
-                z += 0.03 * (t - r["a"]) / (r["b"] - r["a"])
-            return z
-        z_prev = tgt + (0.03 if r["shot_type"] == "broll" and not broll_file(r) else 0)
-    return 1.0
-
 TIP_STARTS = sorted({r["a"] for r in plan if "whip_in" in r["animation"]})
 def whip_at(t):
     """returns strength 0..1 for the whip transition around each tip start."""
@@ -75,6 +54,22 @@ def whip_at(t):
         d = t - s
         if -0.10 <= d <= 0.16: return 1 - abs(d) / (0.10 if d < 0 else 0.16)
     return 0.0
+
+def zoom_at(t):
+    """Piecewise zoom. A tip change is a hard cut (no zoom move); "a>b" rows ease slowly; empty B-roll
+    slots simply stay on the talking shot (no extra zoom)."""
+    z_prev = 1.0
+    for r in plan:
+        if r["shot_type"] == "outro": break
+        a, b = parse_zoom(r["zoom_level"])
+        if a is not None:
+            start, dur = a, max(1.2, r["b"] - r["a"]) if "slow" in r["zoom_level"] else 0.45
+        else:
+            start, dur = (b, 1) if r["a"] in TIP_STARTS or abs(b - z_prev) < 1e-3 else (z_prev, 0.6)
+        if t < r["b"]:
+            return start + (b - start) * ease_io((t - r["a"]) / dur)
+        z_prev = b
+    return 1.0
 
 def scale_about(img, z, cx, cy):
     M = np.float32([[z, 0, cx * (1 - z)], [0, z, cy * (1 - z)]])
@@ -172,23 +167,18 @@ def draw_counter(frame, t):
     if n == 7 and b - t < 0.2: al *= max(0, (b - t) / 0.2)
     comp(frame, f"counter_{n}", sc, al)
 
-# ---------------- recap tail ----------------
-recap_rows = [r for r in plan if r["tip_number"] == "recap"]
-cta_row = next(r for r in plan if r["tip_number"] == "cta")
-def draw_recap(frame, t):
-    for k, r in enumerate(recap_rows, 1):
-        if r["a"] <= t < (recap_rows[k]["a"] if k < len(recap_rows) else END):
-            if k == 1:
-                x = (t - r["a"]) / 0.25
-                comp(frame, "recap_1", 0.85 + 0.15 * ease_back(x), ease_out(x))
-            else:   # new line slides in: crossfade from previous frame with a small rise
-                x = (t - r["a"]) / 0.18
-                comp(frame, f"recap_{k-1}", 1, 1)
-                comp(frame, f"recap_{k}", 1, ease_out(x), 0, 18 * (1 - ease_out(x)))
-    if t >= cta_row["a"]:
-        x = (t - cta_row["a"]) / 0.35
-        bob = 6 * math.sin(2 * math.pi * 1.2 * max(0, t - cta_row["a"] - 0.35))
-        comp(frame, "cta", 0.6 + 0.4 * ease_back(x, 2.4), ease_out(x * 1.5), 0, bob)
+# ---------------- ZVC outro (Monogram end-card layout, staggered like its spring animation) ----------------
+OUTRO_STEP = 0.33
+LIME = (217, 233, 6)
+def draw_outro(frame, t):
+    k = t - T_TALK - 0.15
+    sp = lambda i: ease_out((k - i * OUTRO_STEP) / 0.5)          # ~ spring(damping 200)
+    o = OV["outro_line"]; w_full = o["a"].shape[1]; w = int(w_full * sp(0))
+    if w > 1:
+        cx = o["x"] + w_full // 2
+        frame[o["y"]:o["y"] + 5, cx - w // 2:cx + w // 2] = LIME
+    comp(frame, "outro_logo", 1, sp(1), 0, 30 * (1 - sp(1)))
+    comp(frame, "outro_whatsapp", 1, sp(2))
 
 # ---------------- blur-to-sharp ----------------
 words = json.load(open(J("transcript.json")))["words"]
@@ -232,7 +222,7 @@ def build_audio_cmd():
         t = r["a"]
         for i, s in enumerate(sfx.split("+")):
             off = 0.0 if s == "whoosh" else 0.08
-            if s == "whoosh" and r["tip_number"] not in ("0", "recap", "cta"): off = -0.15   # lead into the cut
+            if s == "whoosh" and r["tip_number"] not in ("0", "outro"): off = -0.15   # lead into the cut
             events.append((s, max(0, t + off)))
     vol = {"pop": -15, "buzzer": -19, "whoosh": -20}
     inputs = ["-i", J("01_clean.mp4")]; fg = []; labels = []
@@ -269,7 +259,7 @@ def main():
     afg = re.sub(r"\[(\d+):a\]", lambda mm: f"[{int(mm.group(1)) + 1}:a]", ";".join(fg))
     afg += f";[mix]{ln},aresample=48000[aout]"
     ass = J("captions.ass").replace(":", r"\:")
-    fonts = os.path.join(ROOT, "brand/fonts/Outfit")
+    fonts = J("fonts")   # Tajawal + Outfit
     vf = f"[0:v]ass={ass}:fontsdir={fonts},format=yuv420p[vout]"
     enc = ["-c:v", "libx264", "-preset", "ultrafast" if PREVIEW else "slow", "-crf", "28" if PREVIEW else "16",
            "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", str(FPS),
@@ -280,7 +270,7 @@ def main():
     enc_p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 
     src = reader(J("01_clean.mp4"))
-    last = None; recap_bg = None
+    last = None
     for f in range(NF):
         t = f / FPS
         r = row_at(t)
@@ -294,7 +284,7 @@ def main():
             else:
                 z = zoom_at(t)
                 wv = whip_at(t)
-                img = scale_about(base, z * (1 + 0.07 * wv), *FACE)
+                img = scale_about(base, z, *FACE)   # whip = motion blur only, no zoom kick
                 if wv > 0: img = motion_blur(img, 70 * wv)
             s = blur_sigma(t)
             if s > 0.3: img = cv2.GaussianBlur(img, (0, 0), s)
@@ -302,14 +292,11 @@ def main():
             draw_cards(img, t)
             draw_counter(img, t)
         else:
-            if recap_bg is None:
-                bg = scale_about(last, zoom_at(T_TALK - 1 / FPS), *FACE)
-                recap_bg = (cv2.GaussianBlur(bg, (0, 0), 22).astype(np.float32) * 0.62).astype(np.uint8)
-            x = (t - T_TALK) / (END - T_TALK)
-            img = np.ascontiguousarray(scale_about(recap_bg, 1.0 + 0.05 * x, W / 2, H / 2))
-            # quick whip into the recap
-            if t - T_TALK < 0.15: img = motion_blur(img, 60 * (1 - (t - T_TALK) / 0.15))
-            draw_recap(img, t)
+            # 0.25 s fade from her last frame to black, then the end card builds
+            x = (t - T_TALK) / 0.25
+            img = (last.astype(np.float32) * max(0.0, 1 - ease_out(x))).astype(np.uint8)
+            img = np.ascontiguousarray(img)
+            draw_outro(img, t)
         enc_p.stdin.write(img.tobytes())
         if f % 150 == 0: print(f"  frame {f}/{NF}", flush=True)
     enc_p.stdin.close(); enc_p.wait()

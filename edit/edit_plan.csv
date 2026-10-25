@@ -1,31 +1,24 @@
 start,end,spoken_line,tip_number,shot_type,zoom_level,overlay_text,overlay_style,animation,sound_effect,broll_needed
-0.00,2.00,إذا بتلبسوا soft contact lenses، هود,0,zoom,1.00>1.12 fast,Wearing contacts? Don't make these mistakes 👀,hook,scale_fade,whoosh,
-2.00,3.37,شوية tips مهمية،,0,talking,1.00,,,,,
-3.37,4.47,دايماً غسلوا إيديكن,1,zoom,1.00>1.15 (always),Wash your hands with soap & water,do,"whip_in, scale_fade",whoosh+pop,
-4.47,5.67,بالمي والصابون،,1,broll,1.08,Wash your hands with soap & water,do,,,broll_01
+0.00,2.00,إذا بتلبسوا soft contact lenses، هود,0,zoom,1.00>1.06 slow,Wearing contacts? Don't make these mistakes 👀,hook,scale_fade,whoosh,
+2.00,3.37,شوية tips مهمية،,0,talking,1.06,,,,,
+3.37,4.47,دايماً غسلوا إيديكن,1,talking,1.00,Wash your hands with soap & water,do,"whip_in, scale_fade",whoosh+pop,
+4.47,5.67,بالمي والصابون،,1,broll,1.00,Wash your hands with soap & water,do,,,broll_01
 5.67,8.45,ونشفونه منيح قبل ما تلبسوا ال lenses،,1,talking,1.00,…and dry them well before putting your lenses in,do,text_swap,,
-8.45,9.55,ما تناموا فيهن،,2,zoom,1.00>1.15 (never),Don't sleep in your lenses,dont,"whip_in, scale_fade, shake",whoosh+buzzer,broll_02
-9.55,10.53,وما تغسلوهم بالمي،,3,talking,1.05,Don't wash your lenses with water,dont,"whip_in, scale_fade, shake",whoosh+buzzer,
-10.53,11.15,,3,broll,1.10,Don't wash your lenses with water,dont,,,broll_03
+8.45,9.55,ما تناموا فيهن،,2,talking,1.00,Don't sleep in your lenses,dont,"whip_in, scale_fade, shake",whoosh+buzzer,broll_02
+9.55,10.53,وما تغسلوهم بالمي،,3,talking,1.00,Don't wash your lenses with water,dont,"whip_in, scale_fade, shake",whoosh+buzzer,
+10.53,11.15,,3,broll,1.00,Don't wash your lenses with water,dont,,,broll_03
 11.15,11.77,استعملوا دايماً,4,talking,1.00,Always use contact lens solution,do,"whip_in, scale_fade",whoosh+pop,
-11.77,13.99,ال contact lens solution، وكل,4,zoom,1.00>1.15 (always),Always use contact lens solution,do,,,broll_04
-13.99,15.95,مرة بتشيلوا ال contact lenses،,4,zoom,1.00>1.12 (every time),Every time you take them out…,do,text_swap,pop,
-15.95,17.39,كبوا ال solution لقديم،,4,broll,1.08,…throw away the old solution,do,text_swap,,broll_05
+11.77,13.99,ال contact lens solution، وكل,4,talking,1.00,Always use contact lens solution,do,,,broll_04
+13.99,15.95,مرة بتشيلوا ال contact lenses،,4,talking,1.00,Every time you take them out…,do,text_swap,pop,
+15.95,17.39,كبوا ال solution لقديم،,4,broll,1.00,…throw away the old solution,do,text_swap,,broll_05
 17.39,18.96,وحطوا solution جديد،,4,broll,1.00,…and add fresh solution,do,text_swap,pop,broll_06
 18.96,19.52,وإذا عيونك صاروا,5,talking,1.00,"Red, painful or blurry? Take your lenses out right away",warning,"whip_in, scale_fade, pulse",whoosh+pop,
-19.52,21.62,حمر، أو وجعوك، أو صار,5,broll,1.10,"Red, painful or blurry? Take your lenses out right away",warning,pulse,,broll_07
-21.62,22.76,في blurry vision، شيلوا,5,talking,1.05,"Red, painful or blurry? Take your lenses out right away",warning,"pulse, blur_to_sharp",,
+19.52,21.62,حمر، أو وجعوك، أو صار,5,broll,1.00,"Red, painful or blurry? Take your lenses out right away",warning,pulse,,broll_07
+21.62,22.76,في blurry vision، شيلوا,5,talking,1.00,"Red, painful or blurry? Take your lenses out right away",warning,"pulse, blur_to_sharp",,
 22.76,24.52,ال contact lenses دغري،,5,broll,1.00,"Red, painful or blurry? Take your lenses out right away",warning,pulse,,broll_08
 24.52,26.00,وإذا المشكلة ما راحت، راجعوا,6,broll,1.00,Problem doesn't go away? See your eye doctor,doctor,"whip_in, scale_fade",whoosh+pop,broll_09
-26.00,27.60,حكيم العيون.,6,zoom,1.00>1.15 (doctor),Problem doesn't go away? See your eye doctor,doctor,,,
-27.60,28.17,و أهم شي نضافة,7,zoom,1.00>1.15 (most important),Most important: keep your lenses clean,do,"whip_in, scale_fade",whoosh+pop,
-28.17,29.57,العدسات يعني,7,broll,1.10,Most important: keep your lenses clean,do,,,broll_10
-29.57,30.75,عيون صحية,7,talking,1.15>1.00,Clean lenses = healthy eyes,do,text_swap,pop,
-30.75,31.30,,recap,recap_bg,1.00,recap line 1/7,recap,"panel_scale_fade, line_slide_in",whoosh,
-31.30,31.85,,recap,recap_bg,1.00,recap line 2/7,recap,line_slide_in,pop,
-31.85,32.40,,recap,recap_bg,1.00,recap line 3/7,recap,line_slide_in,pop,
-32.40,32.95,,recap,recap_bg,1.00,recap line 4/7,recap,line_slide_in,pop,
-32.95,33.50,,recap,recap_bg,1.00,recap line 5/7,recap,line_slide_in,pop,
-33.50,34.05,,recap,recap_bg,1.00,recap line 6/7,recap,line_slide_in,pop,
-34.05,35.80,,recap,recap_bg,1.00,recap line 7/7,recap,line_slide_in,pop,
-35.80,37.60,,cta,recap_bg,1.00,Save this for later 👆,recap,"scale_fade, bounce",whoosh,
+26.00,27.60,حكيم العيون.,6,zoom,1.00>1.08 slow (doctor),Problem doesn't go away? See your eye doctor,doctor,,,
+27.60,28.17,و أهم شي نضافة,7,talking,1.08,Most important: keep your lenses clean,do,"whip_in, scale_fade",whoosh+pop,
+28.17,29.57,العدسات يعني,7,broll,1.08,Most important: keep your lenses clean,do,,,broll_10
+29.57,30.75,عيون صحية,7,talking,1.08,Clean lenses = healthy eyes,do,text_swap,pop,
+30.75,33.35,,outro,outro,1.00,ZEISS Vision Center by Laser Vision | WhatsApp +961 81 47 20 20,outro,"line_draw, logo_fade_up, whatsapp_fade (staggered 0.33 s)",whoosh,
