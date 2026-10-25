@@ -63,6 +63,25 @@ for ph in phrases:
             best = min(cands, key=lambda ps: (max(len(x) for x in ps) - min(len(x) for x in ps), -len(ps[0]))); break
     lines += best or [[t] for t in ph]
 
+# Your corrections: if edit/captions_corrected.srt exists, its text replaces the transcript text line by line
+# (same line order as captions.srt). Same word count -> words swapped one-for-one, keeping each word's timing.
+import os, re as _re
+CORR = J("captions_corrected.srt")
+if os.path.exists(CORR):
+    blocks = [b for b in _re.split(r"\n\s*\n", open(CORR, encoding="utf-8-sig").read().strip()) if b.strip()]
+    texts = [" ".join(b.strip().splitlines()[2:]).strip() for b in blocks]
+    assert len(texts) == len(lines), f"captions_corrected.srt has {len(texts)} lines, expected {len(lines)}"
+    for ln, txt in zip(lines, texts):
+        old_words = " ".join(t["word"].rstrip("،.") for t in ln).split()
+        new_words = txt.split()
+        if len(new_words) == len(old_words):
+            it = iter(new_words)
+            for t in ln:
+                t["word"] = " ".join(next(it) for _ in t["word"].rstrip("،.").split())
+        else:   # different word count: whole corrected line appears with the line's first word
+            ln[0]["word"] = txt; del ln[1:]
+    print("applied", CORR)
+
 acc = ass_color(LV_BLUE) + "&"
 head = f"""[Script Info]
 ScriptType: v4.00+
