@@ -40,20 +40,14 @@ for fn, base in (("markers.edl", 0), ("markers_resolve.edl", 1)):
 
 open(J("post_caption.md"), "w").write("""# Post caption (ZEISS Vision Center)
 
-Wearing soft contact lenses? Save these 7 habits 👇
+Contact lens wearers, this one's for you 👀💧
+7 habits for happy eyes. Which one are you guilty of? 👇
 
-✅ Wash and dry your hands well before touching your lenses
-❌ Don't sleep in your lenses
-❌ Don't wash your lenses with water
-✅ Always use contact lens solution: every time you take your lenses out, throw away the old solution and put in fresh
-⚠️ Red, painful or blurry eyes? Take your lenses out right away
-🩺 If the problem doesn't go away, see your eye doctor
-✅ Clean lenses = healthy eyes
-
-Questions about your lenses? WhatsApp us: +961 81 47 20 20
-ZEISS Vision Center by Laser Vision, Hazmieh
+Save it for later 📌
+💬 WhatsApp us: 81 47 20 20
 
 #ContactLenses #EyeCare #ZEISSVisionCenter #Hazmieh #Lebanon
 """)
+
 
 print("wrote markers.csv, markers.edl, markers_resolve.edl, post_caption.md")
