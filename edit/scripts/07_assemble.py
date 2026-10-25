@@ -169,14 +169,14 @@ def draw_counter(frame, t):
 
 # ---------------- ZVC outro (Monogram end-card layout, staggered like its spring animation) ----------------
 OUTRO_STEP = 0.33
-LIME = (217, 233, 6)
+ZEISS_BLUE = (15, 45, 179)   # ZEISS Indigo #0F2DB3
 def draw_outro(frame, t):
     k = t - T_TALK - 0.15
     sp = lambda i: ease_out((k - i * OUTRO_STEP) / 0.5)          # ~ spring(damping 200)
     o = OV["outro_line"]; w_full = o["a"].shape[1]; w = int(w_full * sp(0))
     if w > 1:
         cx = o["x"] + w_full // 2
-        frame[o["y"]:o["y"] + 5, cx - w // 2:cx + w // 2] = LIME
+        frame[o["y"]:o["y"] + 5, cx - w // 2:cx + w // 2] = ZEISS_BLUE
     comp(frame, "outro_logo", 1, sp(1), 0, 30 * (1 - sp(1)))
     comp(frame, "outro_whatsapp", 1, sp(2))
 

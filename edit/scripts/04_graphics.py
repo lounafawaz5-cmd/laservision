@@ -122,10 +122,10 @@ for n in range(1, 8):
     save(f"counter_{n}", img, (x0 - 15, y0 - 10, x1 + 15, y0 + 95))
 
 # ---------- ZVC outro (same layout as the Monogram reel end card, reels/src/templates/BeatAd.tsx) ----------
-# black card, lime line, "ZEISS Vision Center by Laser Vision" wordmark, white WhatsApp glyph + number.
+# black card, ZEISS Indigo line, "ZEISS Vision Center by Laser Vision" wordmark, white WhatsApp glyph + number.
 # Never the blue ZEISS block logo (strategy/SUMMARY.md).
 import io, cairosvg
-ZVC_LIME = (217, 233, 6)
+ZVC_BLUE = (15, 45, 179)    # ZEISS Indigo #0F2DB3 (brand/zeiss/GUIDELINES.md)
 WHATSAPP = "+961 81 47 20 20"
 svg_path = re.search(r'd="([^"]+)"', open(os.path.join(ROOT, "reels/src/components/WhatsAppIcon.tsx")).read()).group(1)
 LINE_W, LOGO_W, ICON, GAP = 420, 620, 64, 56
@@ -135,7 +135,7 @@ total = 5 + GAP + logo.height + GAP + ICON
 y_line = (H - total) // 2; y_logo = y_line + 5 + GAP; y_wa = y_logo + logo.height + GAP
 
 save("outro_bg", Image.new("RGBA", (W, H), (0, 0, 0, 255)), (0, SAFE_Y0, W, SAFE_Y1))
-img = Image.new("RGBA", (W, H)); ImageDraw.Draw(img).rectangle(((W - LINE_W) // 2, y_line, (W + LINE_W) // 2, y_line + 5), fill=ZVC_LIME)
+img = Image.new("RGBA", (W, H)); ImageDraw.Draw(img).rectangle(((W - LINE_W) // 2, y_line, (W + LINE_W) // 2, y_line + 5), fill=ZVC_BLUE)
 save("outro_line", img, ((W - LINE_W) // 2, y_line, (W + LINE_W) // 2, y_line + 5))
 img = Image.new("RGBA", (W, H)); img.alpha_composite(logo, ((W - LOGO_W) // 2, y_logo))
 save("outro_logo", img, ((W - LOGO_W) // 2, y_logo, (W + LOGO_W) // 2, y_logo + logo.height))
