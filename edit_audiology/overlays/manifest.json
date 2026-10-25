@@ -1,0 +1,171 @@
+{
+ "badge_ear": {
+  "file": "badge_ear.png",
+  "bbox": [
+   759,
+   454,
+   981,
+   686
+  ],
+  "anchor": [
+   870,
+   570
+  ]
+ },
+ "card_department": {
+  "file": "card_department.png",
+  "bbox": [
+   30,
+   980,
+   885,
+   1210
+  ],
+  "anchor": [
+   457,
+   1095
+  ]
+ },
+ "pill_audiometry": {
+  "file": "pill_audiometry.png",
+  "bbox": [
+   551,
+   960,
+   1050,
+   1110
+  ],
+  "anchor": [
+   800,
+   1035
+  ]
+ },
+ "pill_tympanometry": {
+  "file": "pill_tympanometry.png",
+  "bbox": [
+   460,
+   1080,
+   1050,
+   1230
+  ],
+  "anchor": [
+   755,
+   1155
+  ]
+ },
+ "card_hearing_aids": {
+  "file": "card_hearing_aids.png",
+  "bbox": [
+   203,
+   990,
+   876,
+   1200
+  ],
+  "anchor": [
+   539,
+   1095
+  ]
+ },
+ "card_earplugs": {
+  "file": "card_earplugs.png",
+  "bbox": [
+   650,
+   880,
+   1050,
+   1330
+  ],
+  "anchor": [
+   850,
+   1105
+  ]
+ },
+ "badge_noise": {
+  "file": "badge_noise.png",
+  "bbox": [
+   738,
+   1186,
+   842,
+   1296
+  ],
+  "anchor": [
+   790,
+   1241
+  ]
+ },
+ "badge_water": {
+  "file": "badge_water.png",
+  "bbox": [
+   858,
+   1186,
+   962,
+   1296
+  ],
+  "anchor": [
+   910,
+   1241
+  ]
+ },
+ "lower_third": {
+  "file": "lower_third.png",
+  "bbox": [
+   30,
+   1090,
+   637,
+   1320
+  ],
+  "anchor": [
+   333,
+   1205
+  ]
+ },
+ "logo_wall": {
+  "file": "logo_wall.png",
+  "bbox": [
+   40,
+   265,
+   1040,
+   475
+  ],
+  "anchor": [
+   540,
+   370
+  ]
+ },
+ "outro_line": {
+  "file": "outro_line.png",
+  "bbox": [
+   330,
+   789,
+   750,
+   794
+  ],
+  "anchor": [
+   540,
+   791
+  ]
+ },
+ "outro_logo": {
+  "file": "outro_logo.png",
+  "bbox": [
+   160,
+   850,
+   920,
+   1010
+  ],
+  "anchor": [
+   540,
+   930
+  ]
+ },
+ "outro_whatsapp": {
+  "file": "outro_whatsapp.png",
+  "bbox": [
+   259,
+   1056,
+   820,
+   1140
+  ],
+  "anchor": [
+   539,
+   1098
+  ]
+ }
+}

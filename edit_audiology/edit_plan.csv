@@ -1,0 +1,17 @@
+start,end,layer,spoken_line,asset,overlay_text,animation,sound_effect,notes
+0.27,3.83,overlay,السمع هو جزء أساسي من صحتكم وجودة حياتكم،,emoji:👂,,pop,pop,"ear, right of her head"
+4.51,7.69,logo,Laser Vision صار عنا A New Audiology Department.,brand/laservision/logo-transparent.png,,"pop_in, behind_subject",ding,her silhouette masks the logo (MediaPipe matte)
+5.71,7.69,overlay,A New Audiology Department.,card,NEW|Audiology Department,slide_left,whoosh,
+7.69,10.93,broll,لنقدم لكم خدمات متكاملة للعناية بالسمع.,RIB_0139,,,,"audiometer, wide; from 2.0 s"
+12.57,14.32,broll,audiometry و tympanometry,RIB_0141,,,,audiometric headphones; from 4.0 s
+12.62,15.54,overlay,audiometry و tympanometry باستخدام أجهزة,pill,AUDIOMETRY,slide_right,whoosh,
+13.64,15.54,overlay,tympanometry باستخدام أجهزة,pill,TYMPANOMETRY,slide_right,whoosh,
+14.32,16.96,broll,باستخدام أجهزة متطورة وحديثة.,RIB_0140,,,,audiometer screen; from 3.0 s
+17.16,21.92,overlay,سماعات طبية بأحدث التقنيات لتناسب احتياجات كل شخص. بالإضافة,card,🦻|Hearing aids,pop,pop,
+22.82,27.69,overlay,Earplugs مخصصة للحماية من الضجيج والماء. أنا هالا، audiologist,earplug,Custom earplugs,slide_right,whoosh,
+25.78,27.69,overlay,والماء. أنا هالا، audiologist,emoji:🔊,,pop,pop,noise
+26.30,27.69,overlay,أنا هالا، audiologist,emoji:💧,,pop,pop,water
+26.82,31.85,overlay,هالا، audiologist بـ Laser Vision ورح كون معكن لاهتم بصحة سماعكن ولأن,lower_third,Hala|Audiologist,slide_left,whoosh,
+28.21,31.85,logo,بـ Laser Vision ورح كون معكن لاهتم بصحة سماعكن ولأن,brand/laservision/logo-transparent.png,,"pop_in, behind_subject",ding,her silhouette masks the logo (MediaPipe matte)
+36.59,38.07,logo,Laser Vision,brand/laservision/logo-transparent.png,,"pop_in, behind_subject",ding,her silhouette masks the logo (MediaPipe matte)
+38.07,40.67,outro,,brand/laservision/logo-transparent.png,WhatsApp,fade_up_stagger,whoosh,

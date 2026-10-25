@@ -1,0 +1,8 @@
+# media + generated heavy files stay out of git (sources live in Google Drive: RIB_0124/0125/0139/0140/0141)
+*.mp4
+*.MP4
+*.wav
+source/
+mattes/
+models/
+qc/probe/
