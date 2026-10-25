@@ -40,14 +40,13 @@ for fn, base in (("markers.edl", 0), ("markers_resolve.edl", 1)):
 
 open(J("post_caption.md"), "w").write("""# Post caption (ZEISS Vision Center)
 
-Contact lens wearers, this one's for you 👀💧
-7 habits for happy eyes. Which one are you guilty of? 👇
+Simple habits for wearing soft contact lenses safely.
 
-Save it for later 📌
-💬 WhatsApp us: 81 47 20 20
+WhatsApp: 81 47 20 20
 
-#ContactLenses #EyeCare #ZEISSVisionCenter #Hazmieh #Lebanon
+#ContactLenses #EyeCare #ZEISSVisionCenter
 """)
+
 
 
 print("wrote markers.csv, markers.edl, markers_resolve.edl, post_caption.md")
