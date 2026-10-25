@@ -1,0 +1,38 @@
+Language: ar (Lebanese Arabic). Times in seconds of the source file.
+
+[  1.18 -   5.18] INTRO
+  AR: إذا بتلبسوا soft contact lenses، هود شوية tips مهمية،
+  EN: Intro: if you wear soft contact lenses, here are some important tips
+
+[  5.18 -  10.60] TIP 1
+  AR: دايماً غسلوا إيديكن بالمي والصابون، ونشفونه منيح قبل ما تلبسوا ال lenses،
+  EN: Always wash your hands with soap and water and dry them well before putting in your lenses
+
+[ 10.60 -  11.96] TIP 2
+  AR: ما تناموا فيهن،
+  EN: Don't sleep in them
+
+[ 11.96 -  13.56] TIP 3
+  AR: وما تغسلوهم بالمي،
+  EN: Don't wash them with water
+
+[ 13.56 -  21.66] TIP 4
+  AR: استعملوا دايماً ال contact lens solution، وكل مرة بتشيلوا ال contact lenses، كبوا ال solution لقديم، وحطوا solution جديد،
+  EN: Always use contact lens solution; every time you take your lenses out, throw away the old solution and put in fresh solution
+
+[ 21.66 -  27.52] TIP 5
+  AR: وإذا عيونك صاروا حمر، أو وجعوك، أو صار في blurry vision، شيلوا ال contact lenses دغري،
+  EN: If your eyes turn red, hurt, or you get blurry vision, take the lenses out right away
+
+[ 27.52 -  30.46] TIP 6
+  AR: وإذا المشكلة ما راحت، راجعوا حكيم العيون.
+  EN: If the problem doesn't go away, see your eye doctor
+
+[ 30.60 -  33.86] TIP 7
+  AR: و أهم شي نضافة العدسات يعني عيون صحية
+  EN: Most important: clean lenses mean healthy eyes
+
+[ 33.86 -  37.56] OUTTAKE
+  AR: أوكي أوكي والقعدة منيحة
+  EN: Outtake (off-camera 'okay', she stands up) - cut
+

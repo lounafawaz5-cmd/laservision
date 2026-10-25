@@ -1,0 +1,254 @@
+{
+ "card_t1_wash_your_hands_with_soap_water": {
+  "file": "card_t1_wash_your_hands_with_soap_water.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t1_and_dry_them_well_before_putting_your_le": {
+  "file": "card_t1_and_dry_them_well_before_putting_your_le.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t2_don_t_sleep_in_your_lenses": {
+  "file": "card_t2_don_t_sleep_in_your_lenses.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1244
+  ]
+ },
+ "card_t3_don_t_wash_your_lenses_with_water": {
+  "file": "card_t3_don_t_wash_your_lenses_with_water.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t4_always_use_contact_lens_solution": {
+  "file": "card_t4_always_use_contact_lens_solution.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t4_every_time_you_take_them_out": {
+  "file": "card_t4_every_time_you_take_them_out.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t4_throw_away_the_old_solution": {
+  "file": "card_t4_throw_away_the_old_solution.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t4_and_add_fresh_solution": {
+  "file": "card_t4_and_add_fresh_solution.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1244
+  ]
+ },
+ "card_t5_red_painful_or_blurry_take_your_lenses_o": {
+  "file": "card_t5_red_painful_or_blurry_take_your_lenses_o.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t6_problem_doesn_t_go_away_see_your_eye_doc": {
+  "file": "card_t6_problem_doesn_t_go_away_see_your_eye_doc.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t7_most_important_keep_your_lenses_clean": {
+  "file": "card_t7_most_important_keep_your_lenses_clean.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1314
+  ]
+ },
+ "card_t7_clean_lenses_healthy_eyes": {
+  "file": "card_t7_clean_lenses_healthy_eyes.png",
+  "bbox": [
+   30,
+   980,
+   1050,
+   1244
+  ]
+ },
+ "hook": {
+  "file": "hook.png",
+  "bbox": [
+   40,
+   840,
+   1040,
+   1286
+  ]
+ },
+ "counter_1": {
+  "file": "counter_1.png",
+  "bbox": [
+   826,
+   258,
+   1045,
+   363
+  ]
+ },
+ "counter_2": {
+  "file": "counter_2.png",
+  "bbox": [
+   817,
+   258,
+   1045,
+   363
+  ]
+ },
+ "counter_3": {
+  "file": "counter_3.png",
+  "bbox": [
+   818,
+   258,
+   1045,
+   363
+  ]
+ },
+ "counter_4": {
+  "file": "counter_4.png",
+  "bbox": [
+   815,
+   258,
+   1045,
+   363
+  ]
+ },
+ "counter_5": {
+  "file": "counter_5.png",
+  "bbox": [
+   818,
+   258,
+   1045,
+   363
+  ]
+ },
+ "counter_6": {
+  "file": "counter_6.png",
+  "bbox": [
+   817,
+   258,
+   1045,
+   363
+  ]
+ },
+ "counter_7": {
+  "file": "counter_7.png",
+  "bbox": [
+   819,
+   258,
+   1045,
+   363
+  ]
+ },
+ "recap_1": {
+  "file": "recap_1.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "recap_2": {
+  "file": "recap_2.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "recap_3": {
+  "file": "recap_3.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "recap_4": {
+  "file": "recap_4.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "recap_5": {
+  "file": "recap_5.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "recap_6": {
+  "file": "recap_6.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "recap_7": {
+  "file": "recap_7.png",
+  "bbox": [
+   30,
+   260,
+   1050,
+   1274
+  ]
+ },
+ "cta": {
+  "file": "cta.png",
+  "bbox": [
+   81,
+   1254,
+   998,
+   1444
+  ]
+ }
+}

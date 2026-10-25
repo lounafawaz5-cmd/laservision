@@ -1,0 +1,6 @@
+duration 37.60s
+integrated loudness -14.0 LUFS (target -14)
+true peak -1.5 dBTP (limit -1.0)
+sample peak -1.468430 dBFS
+clipping: NO
+frames: frame_00s.png, frame_03s.png, frame_06s.png, frame_09s.png, frame_12s.png, frame_15s.png, frame_18s.png, frame_21s.png, frame_24s.png, frame_27s.png, frame_30s.png, frame_33s.png, frame_36s.png

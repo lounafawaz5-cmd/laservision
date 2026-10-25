@@ -1,0 +1,11 @@
+# media stays out of git (originals live in Google Drive: RIB_0123.MP4)
+*.mp4
+*.MP4
+*.mov
+*.wav
+*.m4a
+*.mp3
+source/
+qc/probe/
+qc/frame_*.png
+build.log
