@@ -10,8 +10,10 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from common import J, ACCENT, W, H, SAFE_TOP, SAFE_BOTTOM
 
 ROOT = os.path.dirname(J())
-FONT_B = os.path.join(ROOT, "brand/fonts/Outfit/Outfit-Bold.ttf")
-FONT_M = os.path.join(ROOT, "brand/fonts/Outfit/Outfit-Medium.ttf")
+from common import FONT_BOLD, FONT_IS_GUIDE
+# guide: Montserrat Arabic Bold for all on-screen text (Outfit until the font file is added)
+FONT_B = FONT_BOLD if FONT_IS_GUIDE else os.path.join(ROOT, "brand/fonts/Outfit/Outfit-Bold.ttf")
+FONT_M = FONT_BOLD if FONT_IS_GUIDE else os.path.join(ROOT, "brand/fonts/Outfit/Outfit-Medium.ttf")
 EMOJI = "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"
 OUT = J("overlays"); os.makedirs(OUT, exist_ok=True)
 INK, WHITE = (11, 31, 42), (255, 255, 255)

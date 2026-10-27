@@ -30,3 +30,15 @@ def clean_words():
 
 def duration():
     return segments()[-1]["out_end"]
+
+# ---- Video Editing Guide (brand/Video_Editing_Guide.pdf): one font for ALL on-screen text, glow per account ----
+import glob as _glob
+def _font(patterns, fallback):
+    for p in patterns:
+        hit = sorted(_glob.glob(os.path.join(os.path.dirname(EDIT), "brand", "fonts", "MontserratArabic", p)))
+        if hit: return hit[0]
+    return fallback
+FONT_BOLD = _font(["*Bold.ttf", "*Bold.otf", "*bold*.ttf", "*bold*.otf"],
+                  os.path.join(os.path.dirname(EDIT), "brand", "fonts", "Tajawal", "Tajawal-Bold.ttf"))
+FONT_IS_GUIDE = "Montserrat" in os.path.basename(FONT_BOLD) or "montserrat" in FONT_BOLD.lower()
+GLOW_COLOR = "#005D83"          # Laservision glow (guide: intensity 30, range 58)

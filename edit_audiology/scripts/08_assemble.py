@@ -124,6 +124,21 @@ def audio_graph():
     fg.append(f"[v]{''.join(labels)}amix=inputs={1+len(labels)}:normalize=0:duration=first,atrim=0:{END}[mix]")
     return inputs, fg
 
+class Mix:
+    """Video Editing Guide transition "Mix": a soft crossfade from the last frame before each cut."""
+    def __init__(self, cuts, dur=0.2):
+        self.cuts, self.dur, self.prev, self.freeze, self.at = sorted(cuts), dur, None, None, None
+    def apply(self, img, t):
+        raw = img
+        c = next((c for c in self.cuts if c <= t < c + self.dur), None)
+        if c is not None:
+            if self.at != c: self.freeze, self.at = self.prev, c
+            if self.freeze is not None:
+                x = 0.5 - 0.5 * math.cos(math.pi * min(1, (t - c) / self.dur))
+                img = (self.freeze.astype(np.float32) * (1 - x) + img.astype(np.float32) * x).astype(np.uint8)
+        self.prev = raw
+        return np.ascontiguousarray(img)
+
 def main():
     inputs, fg = audio_graph()
     g = ";".join(fg) + ";[mix]loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json[o]"
@@ -144,6 +159,9 @@ def main():
                        "-map", "[vclean]", "-map", "[aclean]"] + enc + ["-t", f"{END:.3f}", OUT_CLEAN])
     enc_p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     src = reader(J("01_clean.mp4")); last = None
+    cuts = [sg["out_start"] for sg in json.load(open(J("segments.json")))[1:]]
+    cuts += [r["a"] for r in broll_rows] + [r["b"] for r in broll_rows]
+    mix = Mix(cuts)
     for f in range(NF):
         t = f / FPS
         if t < T_TALK:
@@ -153,6 +171,7 @@ def main():
             br = next((r for r in broll_rows if r["a"] <= t < r["b"]), None)
             img = (broll_frame(br, t) if br else base).copy()
             if not br: draw_logo(img, t, f)
+            img = mix.apply(img, t)                     # guide transition "Mix" at every cut / B-roll edge
             for r, k in overlays: draw_overlay(img, r, k, t)
         else:
             x = (t - T_TALK) / 0.3                      # quick fade to the white end card

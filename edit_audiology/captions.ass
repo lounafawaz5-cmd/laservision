@@ -7,35 +7,64 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Tajawal,86,&H00FFFFFF,&H00FFFFFF,&H003F3000,&H603F3000,800,0,0,0,100,100,0,0,1,4,3,2,60,60,440,-1
+Style: Cap,Tajawal,86,&H00FFFFFF,&H00FFFFFF,&H00000000,&HFF000000,-1,0,0,0,100,100,0,0,1,0,0,2,60,60,440,-1
+Style: Glow,Tajawal,86,&HFF000000,&HFF000000,&H00835D00,&HFF000000,-1,0,0,0,100,100,0,0,1,7,0,2,60,60,440,-1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:01.01,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}لأن {\1c&H00BFA430&\alpha&HFF&\t(270,390,\1a&H00&\3a&H00&\4a&H60&)}السمع {\1c&H00FFFFFF&\alpha&HFF&\t(770,890,\1a&H00&\3a&H00&\4a&H60&)}هو
-Dialogue: 0,0:00:01.01,0:00:02.03,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}جزء {\1c&H00FFFFFF&\alpha&HFF&\t(379,499,\1a&H00&\3a&H00&\4a&H60&)}أساسي {\1c&H00FFFFFF&\alpha&HFF&\t(919,1039,\1a&H00&\3a&H00&\4a&H60&)}من
-Dialogue: 0,0:00:02.03,0:00:03.83,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}صحتكن {\1c&H00FFFFFF&\alpha&HFF&\t(580,700,\1a&H00&\3a&H00&\4a&H60&)}وجودة {\1c&H00FFFFFF&\alpha&HFF&\t(1140,1260,\1a&H00&\3a&H00&\4a&H60&)}حياتكن
-Dialogue: 0,0:00:03.83,0:00:05.41,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}نحن {\1c&H00FFFFFF&\alpha&HFF&\t(540,660,\1a&H00&\3a&H00&\4a&H60&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86} {\1c&H00FFFFFF&\alpha&HFF&\t(1139,1259,\1a&H00&\3a&H00&\4a&H60&)}صار
-Dialogue: 0,0:00:05.41,0:00:06.09,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}عنا {\1c&H00FFFFFF&\alpha&HFF&\t(299,419,\1a&H00&\3a&H00&\4a&H60&)}{\fs72}A{\fs86} {\fs72}NEW{\fs86}
-Dialogue: 0,0:00:06.09,0:00:07.56,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}{\fs72}AUDIOLOGY{\fs86} {\1c&H00FFFFFF&\alpha&HFF&\t(759,879,\1a&H00&\3a&H00&\4a&H60&)}{\fs72}DEPARTMENT{\fs86}
-Dialogue: 0,0:00:07.69,0:00:08.40,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}لنقدملكن
-Dialogue: 0,0:00:08.40,0:00:09.74,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}خدمات {\1c&H00FFFFFF&\alpha&HFF&\t(660,780,\1a&H00&\3a&H00&\4a&H60&)}متكاملة
-Dialogue: 0,0:00:09.74,0:00:11.18,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}للعناية {\1c&H00BFA430&\alpha&HFF&\t(740,860,\1a&H00&\3a&H00&\4a&H60&)}بالسمع
-Dialogue: 0,0:00:11.18,0:00:12.62,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}عنا {\1c&H00FFFFFF&\alpha&HFF&\t(278,398,\1a&H00&\3a&H00&\4a&H60&)}فحوصات {\1c&H00BFA430&\alpha&HFF&\t(739,859,\1a&H00&\3a&H00&\4a&H60&)}للسمع
-Dialogue: 0,0:00:14.32,0:00:15.54,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}باستخدام {\1c&H00FFFFFF&\alpha&HFF&\t(800,920,\1a&H00&\3a&H00&\4a&H60&)}أجهزة
-Dialogue: 0,0:00:15.54,0:00:17.16,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}متطورة {\1c&H00FFFFFF&\alpha&HFF&\t(759,879,\1a&H00&\3a&H00&\4a&H60&)}وحديثة
-Dialogue: 0,0:00:17.16,0:00:18.84,Cap,,0,0,0,,{\an2\blur3}{\1c&H00BFA430&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}سماعات {\1c&H00BFA430&\alpha&HFF&\t(477,597,\1a&H00&\3a&H00&\4a&H60&)}طبية {\1c&H00FFFFFF&\alpha&HFF&\t(917,1037,\1a&H00&\3a&H00&\4a&H60&)}بأحدث
-Dialogue: 0,0:00:18.84,0:00:20.52,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}التقنيات {\1c&H00FFFFFF&\alpha&HFF&\t(780,900,\1a&H00&\3a&H00&\4a&H60&)}لتناسب
-Dialogue: 0,0:00:20.52,0:00:21.92,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}احتياجات {\1c&H00FFFFFF&\alpha&HFF&\t(620,740,\1a&H00&\3a&H00&\4a&H60&)}كل {\1c&H00FFFFFF&\alpha&HFF&\t(840,960,\1a&H00&\3a&H00&\4a&H60&)}شخص
-Dialogue: 0,0:00:21.92,0:00:22.64,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}بالإضافة
-Dialogue: 0,0:00:22.64,0:00:24.04,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}لـ {\fs72}CUSTOMIZED{\fs86} {\fs72}EARPLUGS{\fs86}
-Dialogue: 0,0:00:24.04,0:00:25.58,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}مخصصة {\1c&H00FFFFFF&\alpha&HFF&\t(839,959,\1a&H00&\3a&H00&\4a&H60&)}للحماية
-Dialogue: 0,0:00:25.58,0:00:26.82,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}من {\1c&H00BFA430&\alpha&HFF&\t(199,319,\1a&H00&\3a&H00&\4a&H60&)}الضجيج {\1c&H00FFFFFF&\alpha&HFF&\t(719,839,\1a&H00&\3a&H00&\4a&H60&)}والمي
-Dialogue: 0,0:00:26.82,0:00:27.69,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}أنا {\1c&H00FFFFFF&\alpha&HFF&\t(329,449,\1a&H00&\3a&H00&\4a&H60&)}هالة
-Dialogue: 0,0:00:27.69,0:00:28.21,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}{\fs72}AUDIOLOGIST{\fs86}
-Dialogue: 0,0:00:28.21,0:00:28.95,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86}
-Dialogue: 0,0:00:28.95,0:00:30.23,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}ورح {\1c&H00FFFFFF&\alpha&HFF&\t(679,799,\1a&H00&\3a&H00&\4a&H60&)}كون {\1c&H00FFFFFF&\alpha&HFF&\t(899,1019,\1a&H00&\3a&H00&\4a&H60&)}معكن
-Dialogue: 0,0:00:30.23,0:00:31.85,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}لاهتم {\1c&H00FFFFFF&\alpha&HFF&\t(579,699,\1a&H00&\3a&H00&\4a&H60&)}بصحة {\1c&H00FFFFFF&\alpha&HFF&\t(1179,1299,\1a&H00&\3a&H00&\4a&H60&)}سمعكن
-Dialogue: 0,0:00:31.85,0:00:33.13,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}ولأن {\1c&H00BFA430&\alpha&HFF&\t(280,400,\1a&H00&\3a&H00&\4a&H60&)}السمع {\1c&H00BFA430&\alpha&HFF&\t(740,860,\1a&H00&\3a&H00&\4a&H60&)}الأفضل
-Dialogue: 0,0:00:33.13,0:00:34.71,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}ببلش {\1c&H00FFFFFF&\alpha&HFF&\t(460,580,\1a&H00&\3a&H00&\4a&H60&)}بالاهتمام {\1c&H00FFFFFF&\alpha&HFF&\t(1060,1180,\1a&H00&\3a&H00&\4a&H60&)}الصح
-Dialogue: 0,0:00:34.71,0:00:35.93,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}هيدا {\1c&H00FFFFFF&\alpha&HFF&\t(399,519,\1a&H00&\3a&H00&\4a&H60&)}الاهتمام
-Dialogue: 0,0:00:35.93,0:00:37.34,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H00&\4a&H60&)}بتلاقوه {\1c&H00FFFFFF&\alpha&HFF&\t(500,620,\1a&H00&\3a&H00&\4a&H60&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86}
+Dialogue: 0,0:00:00.00,0:00:01.01,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}لأن {\alpha&HFF&\t(270,390,\3a&H40&)}السمع {\alpha&HFF&\t(770,890,\3a&H40&)}هو
+Dialogue: 1,0:00:00.00,0:00:01.01,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}لأن {\alpha&HFF&\t(270,390,\1a&H00&)}السمع {\alpha&HFF&\t(770,890,\1a&H00&)}هو
+Dialogue: 0,0:00:01.01,0:00:02.03,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}جزء {\alpha&HFF&\t(379,499,\3a&H40&)}أساسي {\alpha&HFF&\t(919,1039,\3a&H40&)}من
+Dialogue: 1,0:00:01.01,0:00:02.03,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}جزء {\alpha&HFF&\t(379,499,\1a&H00&)}أساسي {\alpha&HFF&\t(919,1039,\1a&H00&)}من
+Dialogue: 0,0:00:02.03,0:00:03.83,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}صحتكن {\alpha&HFF&\t(580,700,\3a&H40&)}وجودة {\alpha&HFF&\t(1140,1260,\3a&H40&)}حياتكن
+Dialogue: 1,0:00:02.03,0:00:03.83,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}صحتكن {\alpha&HFF&\t(580,700,\1a&H00&)}وجودة {\alpha&HFF&\t(1140,1260,\1a&H00&)}حياتكن
+Dialogue: 0,0:00:03.83,0:00:05.41,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}نحن {\alpha&HFF&\t(540,660,\3a&H40&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86} {\alpha&HFF&\t(1139,1259,\3a&H40&)}صار
+Dialogue: 1,0:00:03.83,0:00:05.41,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}نحن {\alpha&HFF&\t(540,660,\1a&H00&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86} {\alpha&HFF&\t(1139,1259,\1a&H00&)}صار
+Dialogue: 0,0:00:05.41,0:00:06.09,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}عنا {\alpha&HFF&\t(299,419,\3a&H40&)}{\fs72}A{\fs86} {\fs72}NEW{\fs86}
+Dialogue: 1,0:00:05.41,0:00:06.09,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}عنا {\alpha&HFF&\t(299,419,\1a&H00&)}{\fs72}A{\fs86} {\fs72}NEW{\fs86}
+Dialogue: 0,0:00:06.09,0:00:07.56,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}{\fs72}AUDIOLOGY{\fs86} {\alpha&HFF&\t(759,879,\3a&H40&)}{\fs72}DEPARTMENT{\fs86}
+Dialogue: 1,0:00:06.09,0:00:07.56,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}{\fs72}AUDIOLOGY{\fs86} {\alpha&HFF&\t(759,879,\1a&H00&)}{\fs72}DEPARTMENT{\fs86}
+Dialogue: 0,0:00:07.69,0:00:08.40,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}لنقدملكن
+Dialogue: 1,0:00:07.69,0:00:08.40,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}لنقدملكن
+Dialogue: 0,0:00:08.40,0:00:09.74,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}خدمات {\alpha&HFF&\t(660,780,\3a&H40&)}متكاملة
+Dialogue: 1,0:00:08.40,0:00:09.74,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}خدمات {\alpha&HFF&\t(660,780,\1a&H00&)}متكاملة
+Dialogue: 0,0:00:09.74,0:00:11.18,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}للعناية {\alpha&HFF&\t(740,860,\3a&H40&)}بالسمع
+Dialogue: 1,0:00:09.74,0:00:11.18,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}للعناية {\alpha&HFF&\t(740,860,\1a&H00&)}بالسمع
+Dialogue: 0,0:00:11.18,0:00:12.62,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}عنا {\alpha&HFF&\t(278,398,\3a&H40&)}فحوصات {\alpha&HFF&\t(739,859,\3a&H40&)}للسمع
+Dialogue: 1,0:00:11.18,0:00:12.62,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}عنا {\alpha&HFF&\t(278,398,\1a&H00&)}فحوصات {\alpha&HFF&\t(739,859,\1a&H00&)}للسمع
+Dialogue: 0,0:00:14.32,0:00:15.54,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}باستخدام {\alpha&HFF&\t(800,920,\3a&H40&)}أجهزة
+Dialogue: 1,0:00:14.32,0:00:15.54,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}باستخدام {\alpha&HFF&\t(800,920,\1a&H00&)}أجهزة
+Dialogue: 0,0:00:15.54,0:00:17.16,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}متطورة {\alpha&HFF&\t(759,879,\3a&H40&)}وحديثة
+Dialogue: 1,0:00:15.54,0:00:17.16,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}متطورة {\alpha&HFF&\t(759,879,\1a&H00&)}وحديثة
+Dialogue: 0,0:00:17.16,0:00:18.84,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}سماعات {\alpha&HFF&\t(477,597,\3a&H40&)}طبية {\alpha&HFF&\t(917,1037,\3a&H40&)}بأحدث
+Dialogue: 1,0:00:17.16,0:00:18.84,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}سماعات {\alpha&HFF&\t(477,597,\1a&H00&)}طبية {\alpha&HFF&\t(917,1037,\1a&H00&)}بأحدث
+Dialogue: 0,0:00:18.84,0:00:20.52,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}التقنيات {\alpha&HFF&\t(780,900,\3a&H40&)}لتناسب
+Dialogue: 1,0:00:18.84,0:00:20.52,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}التقنيات {\alpha&HFF&\t(780,900,\1a&H00&)}لتناسب
+Dialogue: 0,0:00:20.52,0:00:21.92,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}احتياجات {\alpha&HFF&\t(620,740,\3a&H40&)}كل {\alpha&HFF&\t(840,960,\3a&H40&)}شخص
+Dialogue: 1,0:00:20.52,0:00:21.92,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}احتياجات {\alpha&HFF&\t(620,740,\1a&H00&)}كل {\alpha&HFF&\t(840,960,\1a&H00&)}شخص
+Dialogue: 0,0:00:21.92,0:00:22.64,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}بالإضافة
+Dialogue: 1,0:00:21.92,0:00:22.64,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}بالإضافة
+Dialogue: 0,0:00:22.64,0:00:24.04,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}لـ {\fs72}CUSTOMIZED{\fs86} {\fs72}EARPLUGS{\fs86}
+Dialogue: 1,0:00:22.64,0:00:24.04,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}لـ {\fs72}CUSTOMIZED{\fs86} {\fs72}EARPLUGS{\fs86}
+Dialogue: 0,0:00:24.04,0:00:25.58,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}مخصصة {\alpha&HFF&\t(839,959,\3a&H40&)}للحماية
+Dialogue: 1,0:00:24.04,0:00:25.58,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}مخصصة {\alpha&HFF&\t(839,959,\1a&H00&)}للحماية
+Dialogue: 0,0:00:25.58,0:00:26.82,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}من {\alpha&HFF&\t(199,319,\3a&H40&)}الضجيج {\alpha&HFF&\t(719,839,\3a&H40&)}والمي
+Dialogue: 1,0:00:25.58,0:00:26.82,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}من {\alpha&HFF&\t(199,319,\1a&H00&)}الضجيج {\alpha&HFF&\t(719,839,\1a&H00&)}والمي
+Dialogue: 0,0:00:26.82,0:00:27.69,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}أنا {\alpha&HFF&\t(329,449,\3a&H40&)}هالة
+Dialogue: 1,0:00:26.82,0:00:27.69,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}أنا {\alpha&HFF&\t(329,449,\1a&H00&)}هالة
+Dialogue: 0,0:00:27.69,0:00:28.21,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}{\fs72}AUDIOLOGIST{\fs86}
+Dialogue: 1,0:00:27.69,0:00:28.21,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}{\fs72}AUDIOLOGIST{\fs86}
+Dialogue: 0,0:00:28.21,0:00:28.95,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86}
+Dialogue: 1,0:00:28.21,0:00:28.95,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86}
+Dialogue: 0,0:00:28.95,0:00:30.23,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ورح {\alpha&HFF&\t(679,799,\3a&H40&)}كون {\alpha&HFF&\t(899,1019,\3a&H40&)}معكن
+Dialogue: 1,0:00:28.95,0:00:30.23,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ورح {\alpha&HFF&\t(679,799,\1a&H00&)}كون {\alpha&HFF&\t(899,1019,\1a&H00&)}معكن
+Dialogue: 0,0:00:30.23,0:00:31.85,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}لاهتم {\alpha&HFF&\t(579,699,\3a&H40&)}بصحة {\alpha&HFF&\t(1179,1299,\3a&H40&)}سمعكن
+Dialogue: 1,0:00:30.23,0:00:31.85,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}لاهتم {\alpha&HFF&\t(579,699,\1a&H00&)}بصحة {\alpha&HFF&\t(1179,1299,\1a&H00&)}سمعكن
+Dialogue: 0,0:00:31.85,0:00:33.13,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ولأن {\alpha&HFF&\t(280,400,\3a&H40&)}السمع {\alpha&HFF&\t(740,860,\3a&H40&)}الأفضل
+Dialogue: 1,0:00:31.85,0:00:33.13,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ولأن {\alpha&HFF&\t(280,400,\1a&H00&)}السمع {\alpha&HFF&\t(740,860,\1a&H00&)}الأفضل
+Dialogue: 0,0:00:33.13,0:00:34.71,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ببلش {\alpha&HFF&\t(460,580,\3a&H40&)}بالاهتمام {\alpha&HFF&\t(1060,1180,\3a&H40&)}الصح
+Dialogue: 1,0:00:33.13,0:00:34.71,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ببلش {\alpha&HFF&\t(460,580,\1a&H00&)}بالاهتمام {\alpha&HFF&\t(1060,1180,\1a&H00&)}الصح
+Dialogue: 0,0:00:34.71,0:00:35.93,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}هيدا {\alpha&HFF&\t(399,519,\3a&H40&)}الاهتمام
+Dialogue: 1,0:00:34.71,0:00:35.93,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}هيدا {\alpha&HFF&\t(399,519,\1a&H00&)}الاهتمام
+Dialogue: 0,0:00:35.93,0:00:37.34,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}بتلاقوه {\alpha&HFF&\t(500,620,\3a&H40&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86}
+Dialogue: 1,0:00:35.93,0:00:37.34,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}بتلاقوه {\alpha&HFF&\t(500,620,\1a&H00&)}بـ {\fs72}LASER{\fs86} {\fs72}VISION{\fs86}

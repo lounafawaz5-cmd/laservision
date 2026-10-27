@@ -44,6 +44,7 @@ Strategy by Tawlé Consultancy. **Rules for all content: `strategy/SUMMARY.md`.*
 Full setup checklist: `NEXT_SESSION_SETUP.md`.
 
 ## Working rules
+- **Video Editing Guide = the standard for every reel** (`brand/Video_Editing_Guide.pdf`, Oct 2026). All on-screen text in **Montserrat Arabic Bold** (put the font file in `brand/fonts/MontserratArabic/`; scripts fall back to Tajawal/Outfit until it is there). Captions: white, word-by-word fade, **glow intensity 30 / range 58** in the account colour: **Laservision #005D83**, **ZEISS VISION CENTER #0C188D**. No keyword colouring. Transitions only **Mix** (default), Echo Fade, Film Reject, Acrylic Fades. Sound effects only: swish_whoosh (large), UI Prompt, Buon (Whoosh movie) 1, Pop (lower) telop sound (CapCut library; our generated pop/whoosh/ding stand in until the real files are dropped in `sfx/`).
 - **LaserVision end card = the "Claudia" card** (`brand/references/laservision-endcard-claudia.png`): white, logo, WhatsApp icon + label, number in a #285A86 box, branches "Hazmieh · Saida · Tripoli · Hôtel-Dieu". **Always remove the Arabic sentence** ("استشيروا طبيبكن، وتواصلوا معنا").
 - **Reel overlays:** no notification-style boxes or sliding reminder cards; use clean titles (text + soft glow + thin accent line). Never stack two overlays at once. Pop-ins get a pop sound, slide/rise-ins a swoosh. Keep icon pops short (about 1 s).
 - **Logo behind the speaker** (masked by her head, with a ding): only on the first "Laser Vision", not every mention.

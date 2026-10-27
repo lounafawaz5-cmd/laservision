@@ -49,7 +49,7 @@ def broll_file(r):
         if os.path.exists(p): return p
     return None
 
-TIP_STARTS = sorted({r["a"] for r in plan if "whip_in" in r["animation"]})
+TIP_STARTS = sorted({r["a"] for r in plan if "mix_in" in r["animation"]})
 def whip_at(t):
     """returns strength 0..1 for the whip transition around each tip start."""
     for s in TIP_STARTS:
@@ -247,6 +247,21 @@ def build_audio_cmd():
     fg.append(f"{mix_in}amix=inputs={n}:normalize=0:duration=first,atrim=0:{END}[mix]")
     return inputs, fg, events, bool(music)
 
+class Mix:
+    """Video Editing Guide transition "Mix": a soft crossfade from the last frame before each cut."""
+    def __init__(self, cuts, dur=0.2):
+        self.cuts, self.dur, self.prev, self.freeze, self.at = sorted(cuts), dur, None, None, None
+    def apply(self, img, t):
+        raw = img
+        c = next((c for c in self.cuts if c <= t < c + self.dur), None)
+        if c is not None:
+            if self.at != c: self.freeze, self.at = self.prev, c
+            if self.freeze is not None:
+                x = ease_io((t - c) / self.dur)
+                img = (self.freeze.astype(np.float32) * (1 - x) + img.astype(np.float32) * x).astype(np.uint8)
+        self.prev = raw
+        return np.ascontiguousarray(img)
+
 def main():
     inputs, fg, events, has_music = build_audio_cmd()
     # loudness pass 1 on the mix
@@ -275,6 +290,10 @@ def main():
 
     src = reader(J("01_clean.mp4"))
     last = None
+    cuts = [sg["out_start"] for sg in json.load(open(J("segments.json")))[1:]]
+    cuts += [r["a"] for r in plan if r["shot_type"] == "broll" and broll_file(r)]
+    cuts += [r["b"] for r in plan if r["shot_type"] == "broll" and broll_file(r)]
+    mix = Mix(cuts)
     for f in range(NF):
         t = f / FPS
         r = row_at(t)
@@ -286,13 +305,10 @@ def main():
                 fr = broll_frame(r, t)
                 img = fr if fr is not None else scale_about(base, zoom_at(t), *FACE)
             else:
-                z = zoom_at(t)
-                wv = whip_at(t)
-                img = scale_about(base, z, *FACE)   # whip = motion blur only, no zoom kick
-                if wv > 0: img = motion_blur(img, 70 * wv)
+                img = scale_about(base, zoom_at(t), *FACE)
             s = blur_sigma(t)
             if s > 0.3: img = cv2.GaussianBlur(img, (0, 0), s)
-            img = np.ascontiguousarray(img)
+            img = mix.apply(np.ascontiguousarray(img), t)   # guide transition "Mix" at every cut
             draw_cards(img, t)
             draw_counter(img, t)
         else:

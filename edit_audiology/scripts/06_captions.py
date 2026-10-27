@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Phase 5: edit/captions.ass from word timestamps (Lebanese Arabic, English terms in CAPS).
-House caption style (reels/src/components/Captions.tsx "clean" + references/laservision/REEL_STYLE.md):
-- Tajawal ExtraBold, white, no box, soft dark shadow (LaserVision navy #00303F), quick fade-in per word
-- key words in LaserVision blue #30A4BF; max 4 words per line; bottom-center above the 400px safe zone
-Render with ass=captions.ass:fontsdir=edit/fonts (Tajawal + Outfit).
+Caption style = brand/Video_Editing_Guide.pdf: Montserrat Arabic Bold, white, word-by-word fade,
+glow in the account colour (GLOW_COLOR in common.py; intensity 30 / range 58 approximated with a blurred border).
+Max 4 words per line, bottom-centre above the 400 px safe zone. English terms in CAPS (REEL_STYLE.md).
 """
-from common import J, W, H, clean_words, duration
+from common import J, W, H, clean_words, duration, FONT_BOLD, FONT_IS_GUIDE, GLOW_COLOR
 
 MAXW, MARGIN_V, SIZE = 4, 440, 86
-FONT = "Tajawal"                 # Arabic and the CAPS English terms share one font
+import shutil as _sh
+from PIL import ImageFont as _IF
+_sh.copy(FONT_BOLD, J("fonts", __import__("os").path.basename(FONT_BOLD)))
+FONT = _IF.truetype(FONT_BOLD, 10).getname()[0]      # guide: Montserrat Arabic Bold for all on-screen text
+if not FONT_IS_GUIDE: print("WARNING: Montserrat Arabic not found in brand/fonts/MontserratArabic - using", FONT)
 LATIN_SIZE = 72                  # CAPS English terms look balanced next to Arabic at this size
 LV_BLUE, LV_NAVY = "#30A4BF", "#00303F"   # brand/laservision/GUIDELINES.md
 # soap, water, never/don't, sleep, solution, every time, red, hurts, blurry, doctor, hygienic/cleanliness
@@ -41,8 +44,8 @@ if cur: phrases.append(cur)
 # a line must also fit the frame: measure it in Tajawal (CAPS English is wide) and split further if needed
 import itertools
 from PIL import ImageFont
-_tf = ImageFont.truetype(J("fonts", "Tajawal-ExtraBold.ttf"), SIZE)
-_tl = ImageFont.truetype(J("fonts", "Tajawal-ExtraBold.ttf"), LATIN_SIZE)
+_tf = ImageFont.truetype(FONT_BOLD, SIZE)
+_tl = ImageFont.truetype(FONT_BOLD, LATIN_SIZE)
 def _w(text):
     return sum((_tl if x.isascii() else _tf).getlength(x + " ") for x in text.split())
 MAX_PX = 920
@@ -70,7 +73,17 @@ CORR = J("captions_corrected.srt")
 if os.path.exists(CORR):
     blocks = [b for b in _re.split(r"\n\s*\n", open(CORR, encoding="utf-8-sig").read().strip()) if b.strip()]
     texts = [" ".join(b.strip().splitlines()[2:]).strip() for b in blocks]
-    assert len(texts) == len(lines), f"captions_corrected.srt has {len(texts)} lines, expected {len(lines)}"
+    # line breaks come from YOUR file (its start times), so a font or layout change never misaligns corrections
+    def _sec(x):
+        h, m, r = x.strip().split(":"); sec, ms = r.split(","); return int(h) * 3600 + int(m) * 60 + int(sec) + int(ms) / 1000
+    starts = [_sec(b.strip().splitlines()[1].split("-->")[0]) for b in blocks]
+    toks_all = [t for ln in lines for t in ln]
+    lines = []
+    for i, st in enumerate(starts):
+        en = starts[i + 1] if i + 1 < len(starts) else 1e9
+        grp = [t for t in toks_all if st - 0.05 <= t["start"] < en - 0.05]
+        if grp: lines.append(grp)
+    assert len(texts) == len(lines), f"captions_corrected.srt has {len(texts)} lines, matched {len(lines)}"
     for ln, txt in zip(lines, texts):
         old_words = " ".join(t["word"].rstrip("،.") for t in ln).split()
         new_words = txt.split()
@@ -82,6 +95,7 @@ if os.path.exists(CORR):
             ln[0]["word"] = txt; del ln[1:]
     print("applied", CORR)
 
+GLOW_BORD, GLOW_BLUR, GLOW_ALPHA = 7, 14, "40"   # ~ CapCut glow intensity 30, range 58
 acc = ass_color(LV_BLUE) + "&"
 head = f"""[Script Info]
 ScriptType: v4.00+
@@ -92,7 +106,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,{FONT},{SIZE},&H00FFFFFF,&H00FFFFFF,{ass_color(LV_NAVY, "00")},{ass_color(LV_NAVY, "60")},800,0,0,0,100,100,0,0,1,4,3,2,60,60,{MARGIN_V},-1
+Style: Cap,{FONT},{SIZE},&H00FFFFFF,&H00FFFFFF,&H00000000,&HFF000000,-1,0,0,0,100,100,0,0,1,0,0,2,60,60,{MARGIN_V},-1
+Style: Glow,{FONT},{SIZE},&HFF000000,&HFF000000,{ass_color(GLOW_COLOR, "00")},&HFF000000,-1,0,0,0,100,100,0,0,1,{GLOW_BORD},0,2,60,60,{MARGIN_V},-1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -104,17 +119,16 @@ for n, ln in enumerate(lines):
     a = ln[0]["start"]
     nxt = lines[n + 1][0]["start"] if n + 1 < len(lines) else ln[-1]["end"] + 0.4
     b = min(ln[-1]["end"] + 0.35, nxt, duration() - 0.05)   # never run into the recap
-    parts = []
+    parts, glows = [], []
     for t in ln:
         rel = int((t["start"] - a) * 1000)
         txt = t["word"].rstrip("،.")
-        nxt_w = ln[ln.index(t) + 1]["word"] if t is not ln[-1] else ""
-        is_key = any(k.strip("،.") in KEY for k in txt.split())
-        col = f"\\1c{acc}" if is_key else "\\1c&H00FFFFFF&"
         shown = " ".join("{\\fs%d}%s{\\fs%d}" % (LATIN_SIZE, x.upper(), SIZE) if x.isascii() else x
                          for x in txt.split())    # English terms in CAPS, a touch smaller
-        parts.append("{" + f"{col}\\alpha&HFF&\\t({rel},{rel+120},\\1a&H00&\\3a&H00&\\4a&H60&)" + "}" + shown)
-    ev.append(f"Dialogue: 0,{ts(a)},{ts(b)},Cap,,0,0,0,,{{\\an2\\blur3}}" + " ".join(parts))
+        parts.append("{" + f"\\alpha&HFF&\\t({rel},{rel+120},\\1a&H00&)" + "}" + shown)
+        glows.append("{" + f"\\alpha&HFF&\\t({rel},{rel+120},\\3a&H{GLOW_ALPHA}&)" + "}" + shown)
+    ev.append(f"Dialogue: 0,{ts(a)},{ts(b)},Glow,,0,0,0,,{{\\an2\\blur{GLOW_BLUR}}}" + " ".join(glows))
+    ev.append(f"Dialogue: 1,{ts(a)},{ts(b)},Cap,,0,0,0,,{{\\an2}}" + " ".join(parts))
 open(J("captions.ass"), "w", encoding="utf-8").write(head + "\n".join(ev) + "\n")
 
 # Editable copy: captions.srt (same lines and timings, plain text) to fix in CapCut / Premiere / DaVinci

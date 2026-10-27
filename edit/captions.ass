@@ -7,33 +7,60 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Tajawal,86,&H00FFFFFF,&H00FFFFFF,&H203F3000,&H703F3000,800,0,0,0,100,100,0,0,1,3,3,2,60,60,440,-1
+Style: Cap,Tajawal,86,&H00FFFFFF,&H00FFFFFF,&H00000000,&HFF000000,-1,0,0,0,100,100,0,0,1,0,0,2,60,60,440,-1
+Style: Glow,Tajawal,86,&HFF000000,&HFF000000,&H008D180C,&HFF000000,-1,0,0,0,100,100,0,0,1,7,0,2,60,60,440,-1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:00.57,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}إذا {\1c&H00FFFFFF&\alpha&HFF&\t(190,310,\1a&H00&\3a&H20&\4a&H70&)}بتلبسوا
-Dialogue: 0,0:00:00.57,0:00:01.79,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}{\fs72}SOFT{\fs86} {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86}
-Dialogue: 0,0:00:01.79,0:00:03.37,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}هول {\1c&H00FFFFFF&\alpha&HFF&\t(319,439,\1a&H00&\3a&H20&\4a&H70&)}شوية {\1c&H00FFFFFF&\alpha&HFF&\t(680,800,\1a&H00&\3a&H20&\4a&H70&)}{\fs72}TIPS{\fs86} {\1c&H00FFFFFF&\alpha&HFF&\t(919,1039,\1a&H00&\3a&H20&\4a&H70&)}مهمين
-Dialogue: 0,0:00:03.37,0:00:04.47,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}دايماً {\1c&H00FFFFFF&\alpha&HFF&\t(359,479,\1a&H00&\3a&H20&\4a&H70&)}غسلوا {\1c&H00FFFFFF&\alpha&HFF&\t(660,780,\1a&H00&\3a&H20&\4a&H70&)}إيديكن
-Dialogue: 0,0:00:04.47,0:00:05.67,Cap,,0,0,0,,{\an2\blur3}{\1c&H00BFA430&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}بالمي {\1c&H00BFA430&\alpha&HFF&\t(540,660,\1a&H00&\3a&H20&\4a&H70&)}والصابون
-Dialogue: 0,0:00:05.67,0:00:07.09,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}ونشفوهن {\1c&H00FFFFFF&\alpha&HFF&\t(679,799,\1a&H00&\3a&H20&\4a&H70&)}منيح {\1c&H00FFFFFF&\alpha&HFF&\t(1099,1219,\1a&H00&\3a&H20&\4a&H70&)}قبل
-Dialogue: 0,0:00:07.09,0:00:08.45,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}ما {\1c&H00FFFFFF&\alpha&HFF&\t(100,220,\1a&H00&\3a&H20&\4a&H70&)}تلبسوا {\1c&H00FFFFFF&\alpha&HFF&\t(520,640,\1a&H00&\3a&H20&\4a&H70&)}ال {\fs72}LENSES{\fs86}
-Dialogue: 0,0:00:08.45,0:00:09.55,Cap,,0,0,0,,{\an2\blur3}{\1c&H00BFA430&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}ما {\1c&H00BFA430&\alpha&HFF&\t(198,318,\1a&H00&\3a&H20&\4a&H70&)}تناموا {\1c&H00FFFFFF&\alpha&HFF&\t(598,718,\1a&H00&\3a&H20&\4a&H70&)}فيهن
-Dialogue: 0,0:00:09.55,0:00:11.15,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}وما {\1c&H00FFFFFF&\alpha&HFF&\t(439,559,\1a&H00&\3a&H20&\4a&H70&)}تغسلوهن {\1c&H00BFA430&\alpha&HFF&\t(980,1100,\1a&H00&\3a&H20&\4a&H70&)}بالمي
-Dialogue: 0,0:00:11.15,0:00:12.21,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}استعملوا {\1c&H00FFFFFF&\alpha&HFF&\t(620,740,\1a&H00&\3a&H20&\4a&H70&)}دايماً
-Dialogue: 0,0:00:12.21,0:00:13.05,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENS{\fs86}
-Dialogue: 0,0:00:13.05,0:00:13.99,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}{\fs72}SOLUTION{\fs86}
-Dialogue: 0,0:00:13.99,0:00:14.91,Cap,,0,0,0,,{\an2\blur3}{\1c&H00BFA430&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}وكل {\1c&H00BFA430&\alpha&HFF&\t(301,421,\1a&H00&\3a&H20&\4a&H70&)}مرة {\1c&H00FFFFFF&\alpha&HFF&\t(561,681,\1a&H00&\3a&H20&\4a&H70&)}بتشيلوا
-Dialogue: 0,0:00:14.91,0:00:15.95,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86}
-Dialogue: 0,0:00:15.95,0:00:17.39,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}كبوا {\1c&H00FFFFFF&\alpha&HFF&\t(319,439,\1a&H00&\3a&H20&\4a&H70&)}ال {\fs72}SOLUTION{\fs86} {\1c&H00FFFFFF&\alpha&HFF&\t(740,860,\1a&H00&\3a&H20&\4a&H70&)}لقديم
-Dialogue: 0,0:00:17.39,0:00:18.96,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}وحطوا {\1c&H00FFFFFF&\alpha&HFF&\t(500,620,\1a&H00&\3a&H20&\4a&H70&)}{\fs72}SOLUTION{\fs86} {\1c&H00FFFFFF&\alpha&HFF&\t(740,860,\1a&H00&\3a&H20&\4a&H70&)}جديد
-Dialogue: 0,0:00:18.96,0:00:20.28,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}وإذا {\1c&H00FFFFFF&\alpha&HFF&\t(216,336,\1a&H00&\3a&H20&\4a&H70&)}عيونك {\1c&H00FFFFFF&\alpha&HFF&\t(556,676,\1a&H00&\3a&H20&\4a&H70&)}صاروا {\1c&H00BFA430&\alpha&HFF&\t(856,976,\1a&H00&\3a&H20&\4a&H70&)}حمر
-Dialogue: 0,0:00:20.28,0:00:21.44,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}أو {\1c&H00BFA430&\alpha&HFF&\t(359,479,\1a&H00&\3a&H20&\4a&H70&)}وجعوك
-Dialogue: 0,0:00:21.44,0:00:22.76,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}أو {\1c&H00FFFFFF&\alpha&HFF&\t(179,299,\1a&H00&\3a&H20&\4a&H70&)}صار {\1c&H00FFFFFF&\alpha&HFF&\t(419,539,\1a&H00&\3a&H20&\4a&H70&)}في {\1c&H00FFFFFF&\alpha&HFF&\t(500,620,\1a&H00&\3a&H20&\4a&H70&)}{\fs72}BLURRY{\fs86} {\fs72}VISION{\fs86}
-Dialogue: 0,0:00:22.76,0:00:23.22,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}شيلوا
-Dialogue: 0,0:00:23.22,0:00:24.52,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86} {\1c&H00FFFFFF&\alpha&HFF&\t(720,840,\1a&H00&\3a&H20&\4a&H70&)}دغري
-Dialogue: 0,0:00:24.52,0:00:26.00,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}وإذا {\1c&H00FFFFFF&\alpha&HFF&\t(500,620,\1a&H00&\3a&H20&\4a&H70&)}المشكلة {\1c&H00FFFFFF&\alpha&HFF&\t(940,1060,\1a&H00&\3a&H20&\4a&H70&)}ما {\1c&H00FFFFFF&\alpha&HFF&\t(1039,1159,\1a&H00&\3a&H20&\4a&H70&)}راحت
-Dialogue: 0,0:00:26.00,0:00:27.60,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}راجعوا {\1c&H00BFA430&\alpha&HFF&\t(719,839,\1a&H00&\3a&H20&\4a&H70&)}حكيم {\1c&H00BFA430&\alpha&HFF&\t(1140,1260,\1a&H00&\3a&H20&\4a&H70&)}العيون
-Dialogue: 0,0:00:27.60,0:00:28.17,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}و {\1c&H00FFFFFF&\alpha&HFF&\t(48,168,\1a&H00&\3a&H20&\4a&H70&)}أهم {\1c&H00FFFFFF&\alpha&HFF&\t(368,488,\1a&H00&\3a&H20&\4a&H70&)}شي
-Dialogue: 0,0:00:28.17,0:00:29.57,Cap,,0,0,0,,{\an2\blur3}{\1c&H00BFA430&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}نضافة {\1c&H00FFFFFF&\alpha&HFF&\t(739,859,\1a&H00&\3a&H20&\4a&H70&)}العدسات
-Dialogue: 0,0:00:29.57,0:00:30.70,Cap,,0,0,0,,{\an2\blur3}{\1c&H00FFFFFF&\alpha&HFF&\t(0,120,\1a&H00&\3a&H20&\4a&H70&)}يعني {\1c&H00FFFFFF&\alpha&HFF&\t(260,380,\1a&H00&\3a&H20&\4a&H70&)}عيون {\1c&H00FFFFFF&\alpha&HFF&\t(640,760,\1a&H00&\3a&H20&\4a&H70&)}صحية
+Dialogue: 0,0:00:00.00,0:00:00.57,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}إذا {\alpha&HFF&\t(190,310,\3a&H40&)}بتلبسوا
+Dialogue: 1,0:00:00.00,0:00:00.57,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}إذا {\alpha&HFF&\t(190,310,\1a&H00&)}بتلبسوا
+Dialogue: 0,0:00:00.57,0:00:01.79,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}{\fs72}SOFT{\fs86} {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86}
+Dialogue: 1,0:00:00.57,0:00:01.79,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}{\fs72}SOFT{\fs86} {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86}
+Dialogue: 0,0:00:01.79,0:00:03.37,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}هول {\alpha&HFF&\t(319,439,\3a&H40&)}شوية {\alpha&HFF&\t(680,800,\3a&H40&)}{\fs72}TIPS{\fs86} {\alpha&HFF&\t(919,1039,\3a&H40&)}مهمين
+Dialogue: 1,0:00:01.79,0:00:03.37,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}هول {\alpha&HFF&\t(319,439,\1a&H00&)}شوية {\alpha&HFF&\t(680,800,\1a&H00&)}{\fs72}TIPS{\fs86} {\alpha&HFF&\t(919,1039,\1a&H00&)}مهمين
+Dialogue: 0,0:00:03.37,0:00:04.47,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}دايماً {\alpha&HFF&\t(359,479,\3a&H40&)}غسلوا {\alpha&HFF&\t(660,780,\3a&H40&)}إيديكن
+Dialogue: 1,0:00:03.37,0:00:04.47,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}دايماً {\alpha&HFF&\t(359,479,\1a&H00&)}غسلوا {\alpha&HFF&\t(660,780,\1a&H00&)}إيديكن
+Dialogue: 0,0:00:04.47,0:00:05.67,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}بالمي {\alpha&HFF&\t(540,660,\3a&H40&)}والصابون
+Dialogue: 1,0:00:04.47,0:00:05.67,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}بالمي {\alpha&HFF&\t(540,660,\1a&H00&)}والصابون
+Dialogue: 0,0:00:05.67,0:00:07.09,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ونشفوهن {\alpha&HFF&\t(679,799,\3a&H40&)}منيح {\alpha&HFF&\t(1099,1219,\3a&H40&)}قبل
+Dialogue: 1,0:00:05.67,0:00:07.09,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ونشفوهن {\alpha&HFF&\t(679,799,\1a&H00&)}منيح {\alpha&HFF&\t(1099,1219,\1a&H00&)}قبل
+Dialogue: 0,0:00:07.09,0:00:08.45,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ما {\alpha&HFF&\t(100,220,\3a&H40&)}تلبسوا {\alpha&HFF&\t(520,640,\3a&H40&)}ال {\fs72}LENSES{\fs86}
+Dialogue: 1,0:00:07.09,0:00:08.45,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ما {\alpha&HFF&\t(100,220,\1a&H00&)}تلبسوا {\alpha&HFF&\t(520,640,\1a&H00&)}ال {\fs72}LENSES{\fs86}
+Dialogue: 0,0:00:08.45,0:00:09.55,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ما {\alpha&HFF&\t(198,318,\3a&H40&)}تناموا {\alpha&HFF&\t(598,718,\3a&H40&)}فيهن
+Dialogue: 1,0:00:08.45,0:00:09.55,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ما {\alpha&HFF&\t(198,318,\1a&H00&)}تناموا {\alpha&HFF&\t(598,718,\1a&H00&)}فيهن
+Dialogue: 0,0:00:09.55,0:00:11.15,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}وما {\alpha&HFF&\t(439,559,\3a&H40&)}تغسلوهن {\alpha&HFF&\t(980,1100,\3a&H40&)}بالمي
+Dialogue: 1,0:00:09.55,0:00:11.15,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}وما {\alpha&HFF&\t(439,559,\1a&H00&)}تغسلوهن {\alpha&HFF&\t(980,1100,\1a&H00&)}بالمي
+Dialogue: 0,0:00:11.15,0:00:12.21,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}استعملوا {\alpha&HFF&\t(620,740,\3a&H40&)}دايماً
+Dialogue: 1,0:00:11.15,0:00:12.21,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}استعملوا {\alpha&HFF&\t(620,740,\1a&H00&)}دايماً
+Dialogue: 0,0:00:12.21,0:00:13.05,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENS{\fs86}
+Dialogue: 1,0:00:12.21,0:00:13.05,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENS{\fs86}
+Dialogue: 0,0:00:13.05,0:00:13.99,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}{\fs72}SOLUTION{\fs86}
+Dialogue: 1,0:00:13.05,0:00:13.99,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}{\fs72}SOLUTION{\fs86}
+Dialogue: 0,0:00:13.99,0:00:14.91,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}وكل {\alpha&HFF&\t(301,421,\3a&H40&)}مرة {\alpha&HFF&\t(561,681,\3a&H40&)}بتشيلوا
+Dialogue: 1,0:00:13.99,0:00:14.91,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}وكل {\alpha&HFF&\t(301,421,\1a&H00&)}مرة {\alpha&HFF&\t(561,681,\1a&H00&)}بتشيلوا
+Dialogue: 0,0:00:14.91,0:00:15.95,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86}
+Dialogue: 1,0:00:14.91,0:00:15.95,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86}
+Dialogue: 0,0:00:15.95,0:00:17.39,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}كبوا {\alpha&HFF&\t(319,439,\3a&H40&)}ال {\fs72}SOLUTION{\fs86} {\alpha&HFF&\t(740,860,\3a&H40&)}لقديم
+Dialogue: 1,0:00:15.95,0:00:17.39,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}كبوا {\alpha&HFF&\t(319,439,\1a&H00&)}ال {\fs72}SOLUTION{\fs86} {\alpha&HFF&\t(740,860,\1a&H00&)}لقديم
+Dialogue: 0,0:00:17.39,0:00:18.96,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}وحطوا {\alpha&HFF&\t(500,620,\3a&H40&)}{\fs72}SOLUTION{\fs86} {\alpha&HFF&\t(740,860,\3a&H40&)}جديد
+Dialogue: 1,0:00:17.39,0:00:18.96,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}وحطوا {\alpha&HFF&\t(500,620,\1a&H00&)}{\fs72}SOLUTION{\fs86} {\alpha&HFF&\t(740,860,\1a&H00&)}جديد
+Dialogue: 0,0:00:18.96,0:00:20.28,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}وإذا {\alpha&HFF&\t(216,336,\3a&H40&)}عيونك {\alpha&HFF&\t(556,676,\3a&H40&)}صاروا {\alpha&HFF&\t(856,976,\3a&H40&)}حمر
+Dialogue: 1,0:00:18.96,0:00:20.28,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}وإذا {\alpha&HFF&\t(216,336,\1a&H00&)}عيونك {\alpha&HFF&\t(556,676,\1a&H00&)}صاروا {\alpha&HFF&\t(856,976,\1a&H00&)}حمر
+Dialogue: 0,0:00:20.28,0:00:21.44,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}أو {\alpha&HFF&\t(359,479,\3a&H40&)}وجعوك
+Dialogue: 1,0:00:20.28,0:00:21.44,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}أو {\alpha&HFF&\t(359,479,\1a&H00&)}وجعوك
+Dialogue: 0,0:00:21.44,0:00:22.76,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}أو {\alpha&HFF&\t(179,299,\3a&H40&)}صار {\alpha&HFF&\t(419,539,\3a&H40&)}في {\alpha&HFF&\t(500,620,\3a&H40&)}{\fs72}BLURRY{\fs86} {\fs72}VISION{\fs86}
+Dialogue: 1,0:00:21.44,0:00:22.76,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}أو {\alpha&HFF&\t(179,299,\1a&H00&)}صار {\alpha&HFF&\t(419,539,\1a&H00&)}في {\alpha&HFF&\t(500,620,\1a&H00&)}{\fs72}BLURRY{\fs86} {\fs72}VISION{\fs86}
+Dialogue: 0,0:00:22.76,0:00:23.22,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}شيلوا
+Dialogue: 1,0:00:22.76,0:00:23.22,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}شيلوا
+Dialogue: 0,0:00:23.22,0:00:24.52,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86} {\alpha&HFF&\t(720,840,\3a&H40&)}دغري
+Dialogue: 1,0:00:23.22,0:00:24.52,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}ال {\fs72}CONTACT{\fs86} {\fs72}LENSES{\fs86} {\alpha&HFF&\t(720,840,\1a&H00&)}دغري
+Dialogue: 0,0:00:24.52,0:00:26.00,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}وإذا {\alpha&HFF&\t(500,620,\3a&H40&)}المشكلة {\alpha&HFF&\t(940,1060,\3a&H40&)}ما {\alpha&HFF&\t(1039,1159,\3a&H40&)}راحت
+Dialogue: 1,0:00:24.52,0:00:26.00,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}وإذا {\alpha&HFF&\t(500,620,\1a&H00&)}المشكلة {\alpha&HFF&\t(940,1060,\1a&H00&)}ما {\alpha&HFF&\t(1039,1159,\1a&H00&)}راحت
+Dialogue: 0,0:00:26.00,0:00:27.60,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}راجعوا {\alpha&HFF&\t(719,839,\3a&H40&)}حكيم {\alpha&HFF&\t(1140,1260,\3a&H40&)}العيون
+Dialogue: 1,0:00:26.00,0:00:27.60,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}راجعوا {\alpha&HFF&\t(719,839,\1a&H00&)}حكيم {\alpha&HFF&\t(1140,1260,\1a&H00&)}العيون
+Dialogue: 0,0:00:27.60,0:00:28.17,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}و {\alpha&HFF&\t(48,168,\3a&H40&)}أهم {\alpha&HFF&\t(368,488,\3a&H40&)}شي
+Dialogue: 1,0:00:27.60,0:00:28.17,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}و {\alpha&HFF&\t(48,168,\1a&H00&)}أهم {\alpha&HFF&\t(368,488,\1a&H00&)}شي
+Dialogue: 0,0:00:28.17,0:00:29.57,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}نضافة {\alpha&HFF&\t(739,859,\3a&H40&)}العدسات
+Dialogue: 1,0:00:28.17,0:00:29.57,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}نضافة {\alpha&HFF&\t(739,859,\1a&H00&)}العدسات
+Dialogue: 0,0:00:29.57,0:00:30.70,Glow,,0,0,0,,{\an2\blur14}{\alpha&HFF&\t(0,120,\3a&H40&)}يعني {\alpha&HFF&\t(260,380,\3a&H40&)}عيون {\alpha&HFF&\t(640,760,\3a&H40&)}صحية
+Dialogue: 1,0:00:29.57,0:00:30.70,Cap,,0,0,0,,{\an2}{\alpha&HFF&\t(0,120,\1a&H00&)}يعني {\alpha&HFF&\t(260,380,\1a&H00&)}عيون {\alpha&HFF&\t(640,760,\1a&H00&)}صحية
