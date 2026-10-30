@@ -2,8 +2,8 @@
 """Phase 4: overlays for the audiology reel (transparent 1080x1920 PNGs + manifest with bboxes).
 Style (v2 review): clean titles, no notification-style boxes. Text in LaserVision blue with a soft white glow
 so it reads on her white coat and on the B-roll; a thin accent line under titles.
-End card = the "Claudia" LaserVision card (brand/references/laservision-endcard-claudia.png) WITHOUT the
-Arabic sentence: logo, WhatsApp label + icon, number box, four branches.
+End card = the standard LaserVision outro: logo, WhatsApp icon with the number next to it, the four branches
+under it (no Arabic sentence, no box).
 """
 import io, json, os, re
 import cairosvg
@@ -125,35 +125,32 @@ d.text((x0 + 32, y0 + 100), "Audiologist · Laser Vision", font=font(40, bold=Fa
 img = glow(img); bb = img.getbbox(); save("name_hala", img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
 
 # ---------- LaserVision logo on the wall (composited BEHIND her) ----------
-logo = Image.open(os.path.join(ROOT, "brand/laservision/logo-transparent.png")).convert("RGBA")
-LW = 1000; logo = logo.resize((LW, round(LW * logo.height / logo.width)), Image.LANCZOS)
+# logo-hires.png = the primary logo rendered from the vector brand guidelines (5989 px), so it stays sharp
+LOGO_SRC = os.path.join(ROOT, "brand/laservision/logo-hires.png")
+def logo_at(width):
+    lg = Image.open(LOGO_SRC).convert("RGBA")
+    return lg.resize((width, round(width * lg.height / lg.width)), Image.LANCZOS)
+logo = logo_at(1000); LW = logo.width
 img = Image.new("RGBA", (W, H)); cx, cy = 540, 370
 img.alpha_composite(logo, (cx - LW // 2, cy - logo.height // 2))
 save("logo_wall", img, (cx - LW // 2, cy - logo.height // 2, cx + LW // 2, cy + logo.height // 2), check=False)
 
-# ---------- end card (Claudia layout, Arabic line removed), white background ----------
+# ---------- LaserVision outro (the one standard): logo / WhatsApp icon + number / four branches ----------
 svg = re.search(r'd="([^"]+)"', open(os.path.join(ROOT, "reels/src/components/WhatsAppIcon.tsx")).read()).group(1)
-LOGO_W = 772                                   # measured from the reference card (scaled to 1080 wide)
-lg = Image.open(os.path.join(ROOT, "brand/laservision/logo-transparent.png")).convert("RGBA")
-lg = lg.resize((LOGO_W, round(LOGO_W * lg.height / lg.width)), Image.LANCZOS)
-# vertical stack: logo, gap, [icon + WhatsApp], gap, number box, gap, branches
-fl, fn, fb = font(38), font(58), font(36)   # number sized to leave the reference padding in the box
-BOX_W, BOX_H = 487, 119
-stack = lg.height + 130 + 40 + 16 + BOX_H + 80 + 36
-y = (H - stack) // 2
-y_logo = y; y_label = y_logo + lg.height + 130; y_box = y_label + 40 + 16; y_br = y_box + BOX_H + 80
+LOGO_W, ICON, GAP1, GAP2 = 780, 60, 120, 70
+lg = logo_at(LOGO_W)
+fn, fb = font(60), font(36)
+stack = lg.height + GAP1 + ICON + GAP2 + 40
+y_logo = (H - stack) // 2; y_wa = y_logo + lg.height + GAP1; y_br = y_wa + ICON + GAP2
 img = Image.new("RGBA", (W, H)); img.alpha_composite(lg, ((W - LOGO_W) // 2, y_logo))
 save("end_logo", img, ((W - LOGO_W) // 2, y_logo, (W + LOGO_W) // 2, y_logo + lg.height))
 icon = Image.open(io.BytesIO(cairosvg.svg2png(
     bytestring=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#285A86" d="{svg}"/></svg>'.encode(),
-    output_width=42, output_height=42))).convert("RGBA")
-lab = "WhatsApp"; lw = 42 + 12 + fl.getlength(lab); lx = (W - lw) / 2
-img = Image.new("RGBA", (W, H)); img.alpha_composite(icon, (int(lx), y_label))
-ImageDraw.Draw(img).text((lx + 54, y_label + 21), lab, font=fl, fill=CARD_BLUE, anchor="lm")
-bx = (W - BOX_W) // 2
-d = ImageDraw.Draw(img); d.rectangle((bx, y_box, bx + BOX_W, y_box + BOX_H), fill=CARD_BLUE)
-d.text((W / 2, y_box + BOX_H / 2), WHATSAPP, font=fn, fill=WHITE, anchor="mm")
-save("end_whatsapp", img, (bx, y_label, bx + BOX_W, y_box + BOX_H))
+    output_width=ICON, output_height=ICON))).convert("RGBA")
+row_w = ICON + 22 + fn.getlength(WHATSAPP); x = (W - row_w) / 2
+img = Image.new("RGBA", (W, H)); img.alpha_composite(icon, (int(x), y_wa))
+ImageDraw.Draw(img).text((x + ICON + 22, y_wa + ICON / 2), WHATSAPP, font=fn, fill=CARD_BLUE, anchor="lm")
+save("end_whatsapp", img, (int(x) - 6, y_wa - 10, int(x + row_w) + 6, y_wa + ICON + 10))
 img = Image.new("RGBA", (W, H))
 ImageDraw.Draw(img).text((W / 2, y_br + 18), "Hazmieh · Saida · Tripoli · Hôtel-Dieu", font=fb, fill=CARD_BLUE, anchor="mm")
 bb = img.getbbox(); save("end_branches", img, bb)

@@ -96,36 +96,36 @@
   "file": "logo_wall.png",
   "bbox": [
    40,
-   265,
+   266,
    1040,
-   475
+   474
   ]
  },
  "end_logo": {
   "file": "end_logo.png",
   "bbox": [
-   154,
-   668,
-   926,
-   831
+   150,
+   733,
+   930,
+   896
   ]
  },
  "end_whatsapp": {
   "file": "end_whatsapp.png",
   "bbox": [
-   296,
-   961,
-   783,
-   1136
+   271,
+   1006,
+   808,
+   1086
   ]
  },
  "end_branches": {
   "file": "end_branches.png",
   "bbox": [
    248,
-   1219,
+   1149,
    834,
-   1254
+   1184
   ]
  }
 }
