@@ -52,7 +52,7 @@ def comp(frame, key, scale=1.0, alpha=1.0, dx=0.0, dy=0.0, mask=None):
 def keys_for(r):
     a, t = r["asset"], r["overlay_text"]
     if a == "title":
-        return ["title_department"] if "Audiology" in t else ["title_earplugs"] if "earplugs" in t else ["title_hearing_aids"]
+        return ["title_department"] if "Audiology" in t else ["title_hearing_aids"]
     if a == "tag": return ["tag_audiometry"] if t == "AUDIOMETRY" else ["tag_tympanometry"]
     return {"emoji:👂": ["badge_ear"], "earplug": ["earplugs"], "emoji:🔊": ["badge_noise"],
             "emoji:💧": ["badge_water"], "name": ["name_hala"]}[a]

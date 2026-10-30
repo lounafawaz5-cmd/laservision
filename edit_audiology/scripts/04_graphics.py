@@ -67,7 +67,6 @@ def title(key, kicker, text, x0, y0, size=72, align="left", line=True):
     manifest[key]["line"] = [int(x), int(y + size + 14), int(min(tw, 260)), 6]
 title("title_department", "NEW", "Audiology Department", 70, 1030)
 title("title_hearing_aids", "", "Hearing aids", 0, 1060, size=80, align="center")
-title("title_earplugs", "", "Custom earplugs", 0, 1020, size=80, align="center")
 
 def tag(key, text, y, size=54):
     """Dark-blue pill behind white text (v1 style, kept by request); captions are hidden while these show."""
@@ -115,8 +114,8 @@ f = font(50); t = "Custom earplugs"; tx = min(1010 - f.getlength(t), X + (ear.wi
 d = ImageDraw.Draw(img); d.text((tx, Y + ear.height + 10), t, font=f, fill=CARD_BLUE)
 img = glow(img, radius=12, strength=1.6); bb = img.getbbox()
 save("earplugs", img, (bb[0] - 4, bb[1] - 4, bb[2] + 4, bb[3] + 4))
-for key, ch, cx in (("badge_noise", "🔊", 470), ("badge_water", "💧", 610)):   # under the "Custom earplugs" title
-    save(key, *circle_badge(ch, cx, 1215, 50))
+for key, ch, cy in (("badge_noise", "🔊", Y + 60), ("badge_water", "💧", Y + 170)):
+    save(key, *circle_badge(ch, X - 70, cy, 46))
 
 # ---------- name title: Hala / Audiologist · Laser Vision ----------
 img = Image.new("RGBA", (W, H)); d = ImageDraw.Draw(img); x0, y0 = 70, 1080

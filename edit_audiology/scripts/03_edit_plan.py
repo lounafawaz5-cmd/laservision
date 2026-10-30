@@ -42,11 +42,11 @@ R(at("السمع"), at("أساسي"), "overlay", "emoji:👂", "", "pop", "pop",
 R(at("A"), at("لنقدم"), "overlay", "title", "NEW|Audiology Department", "rise", "whoosh")
 R(at("audiometry"), at("متطورة"), "overlay", "tag", "AUDIOMETRY", "pop", "pop")
 R(at("tympanometry"), at("متطورة"), "overlay", "tag", "TYMPANOMETRY", "pop", "pop")
+# hearing-aid footage (RIB_0135, Beltone hearing-aid colour display) under "سماعات طبية"
+R(at("سماعات"), at("بالإضافة"), "broll", "RIB_0135", notes="Beltone hearing aids; from 4.0 s")
 R(at("سماعات"), at("بالإضافة"), "overlay", "title", "|Hearing aids", "pop", "pop")
 ep_end = at("هالا") - 0.12                       # earplugs leave before Hala's title comes in (no overlap)
-# real earplug footage (RIB_0135, earmold colour display) from "Earplugs"; a clean title + noise/water badges over it
-R(at("Earplugs"), at("أنا"), "broll", "RIB_0135", notes="Beltone custom earmold colours; from 4.0 s")
-R(at("Earplugs"), ep_end, "overlay", "title", "|Custom earplugs", "rise", "")
+R(at("Customized"), ep_end, "overlay", "earplug", "Custom earplugs", "pop", "")
 R(at("الضجيج"), ep_end, "overlay", "emoji:🔊", "", "pop", "", "noise")
 R(at("والماء"), ep_end, "overlay", "emoji:💧", "", "pop", "", "water")
 R(at("هالا"), at("ولأن"), "overlay", "name", "Hala|Audiologist · Laser Vision", "rise", "whoosh")
