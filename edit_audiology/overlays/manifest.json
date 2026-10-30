@@ -38,6 +38,21 @@
    6
   ]
  },
+ "title_earplugs": {
+  "file": "title_earplugs.png",
+  "bbox": [
+   195,
+   1004,
+   885,
+   1161
+  ],
+  "line": [
+   231,
+   1114,
+   260,
+   6
+  ]
+ },
  "tag_audiometry": {
   "file": "tag_audiometry.png",
   "bbox": [
@@ -68,19 +83,19 @@
  "badge_noise": {
   "file": "badge_noise.png",
   "bbox": [
-   564,
-   859,
-   696,
-   996
+   400,
+   1150,
+   540,
+   1295
   ]
  },
  "badge_water": {
   "file": "badge_water.png",
   "bbox": [
-   564,
-   969,
-   696,
-   1106
+   540,
+   1150,
+   680,
+   1295
   ]
  },
  "name_hala": {

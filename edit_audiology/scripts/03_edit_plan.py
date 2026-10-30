@@ -44,15 +44,18 @@ R(at("audiometry"), at("متطورة"), "overlay", "tag", "AUDIOMETRY", "pop", "
 R(at("tympanometry"), at("متطورة"), "overlay", "tag", "TYMPANOMETRY", "pop", "pop")
 R(at("سماعات"), at("بالإضافة"), "overlay", "title", "|Hearing aids", "pop", "pop")
 ep_end = at("هالا") - 0.12                       # earplugs leave before Hala's title comes in (no overlap)
-R(at("Customized"), ep_end, "overlay", "earplug", "Custom earplugs", "pop", "pop")
-R(at("الضجيج"), ep_end, "overlay", "emoji:🔊", "", "pop", "pop", "noise")
-R(at("والماء"), ep_end, "overlay", "emoji:💧", "", "pop", "pop", "water")
+# real earplug footage (RIB_0135, earmold colour display) from "Earplugs"; a clean title + noise/water badges over it
+R(at("Earplugs"), at("أنا"), "broll", "RIB_0135", notes="Beltone custom earmold colours; from 4.0 s")
+R(at("Earplugs"), ep_end, "overlay", "title", "|Custom earplugs", "rise", "")
+R(at("الضجيج"), ep_end, "overlay", "emoji:🔊", "", "pop", "", "noise")
+R(at("والماء"), ep_end, "overlay", "emoji:💧", "", "pop", "", "water")
 R(at("هالا"), at("ولأن"), "overlay", "name", "Hala|Audiologist · Laser Vision", "rise", "whoosh")
 
 # --- outro
 R(T, END, "outro", "brand/references/laservision-endcard-claudia.png", "logo|WhatsApp +961 81 54 20 20|branches",
   "fade_up_stagger", "whoosh", "Claudia end card without the Arabic line")
 rows.sort(key=lambda r: float(r["start"]))
+for r in rows: r["sound_effect"] = ""          # review: no sound effects on this reel (voice only)
 with open(J("edit_plan.csv"), "w", newline="") as fh:
     w = csv.DictWriter(fh, fieldnames=COLS); w.writeheader(); w.writerows(rows)
 print(f"{len(rows)} rows, 0 -> {END}s")
