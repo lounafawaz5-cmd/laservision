@@ -407,6 +407,12 @@ const Outro: React.FC<{ logo: string; storeLogo: string; line: string; whatsapp:
   );
 };
 
+const FadeIn: React.FC<{ frames: number; children: React.ReactNode }> = ({ frames, children }) => {
+  const frame = useCurrentFrame();
+  const opacity = frames ? interpolate(frame, [0, frames], [0, 1], { extrapolateRight: "clamp" }) : 1;
+  return <AbsoluteFill style={{ opacity }}>{children}</AbsoluteFill>;
+};
+
 export const BeatAd: React.FC<BeatAdProps> = (props) => {
   const { fps, durationInFrames } = useVideoConfig();
   const brand = brands[props.brand];
@@ -452,22 +458,29 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
           <Text text={t.text} style={t.style} beatLen={beatLen} accent={brand.colors.accent} calm={calm} />
         </Sequence>
       ))}
-      <Sequence from={f(mainBeats)}>
-        <Outro
+      <Sequence from={f(mainBeats) - (calm ? Math.round(dissolve / 2) : 0)}>
+        <FadeIn frames={calm ? dissolve : 0}>
+          <Outro
           logo={props.outroLogo}
           storeLogo={brand.logo}
           line={props.outroLine}
           whatsapp={props.whatsapp}
           beatLen={beatLen}
           accent={brand.colors.accent}
-        />
+          />
+        </FadeIn>
       </Sequence>
       {props.audio ? (
         <Audio
           src={staticFile(props.audio)}
           trimBefore={Math.round(props.audioStartSec * fps)}
           // Song is cut mid-track, so fade the last beat and a half out instead of stopping dead.
-          volume={(fr) => interpolate(fr, [durationInFrames - beatLen * 1.5, durationInFrames - 1], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
+          volume={(fr) =>
+            Math.min(
+              interpolate(fr, [0, 4], [0, 1], { extrapolateRight: "clamp" }),
+              interpolate(fr, [durationInFrames - beatLen * (calm ? 3 : 1.5), durationInFrames - 1], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            )
+          }
         />
       ) : null}
     </AbsoluteFill>

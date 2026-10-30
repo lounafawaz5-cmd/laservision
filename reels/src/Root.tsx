@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { TalkingHead, talkingHeadSchema, TalkingHeadProps } from "./templates/TalkingHead";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
+import { monogramCalm } from "./edits/monogram-calm";
 
 const FPS = 30;
 
@@ -74,6 +75,17 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={600}
+    />
+    <Composition
+      id="MonogramCalm-ZVC"
+      component={BeatAd}
+      schema={beatAdSchema}
+      defaultProps={monogramCalm}
+      calculateMetadata={({ props }: { props: BeatAdProps }) => ({ durationInFrames: beatAdDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={900}
     />
   </>
 );
