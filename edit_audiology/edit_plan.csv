@@ -2,8 +2,8 @@ start,end,layer,spoken_line,asset,overlay_text,animation,sound_effect,notes
 0.27,1.39,overlay,السمع هو جزء,emoji:👂,,pop,,"ear, right of her head; short"
 4.51,7.69,logo,Laser Vision صار عنا A New Audiology Department.,brand/laservision/logo-transparent.png,,"pop_in, behind_subject",,her silhouette masks the logo (MediaPipe matte)
 5.71,7.69,overlay,A New Audiology Department.,title,NEW|Audiology Department,rise,,
-7.69,10.93,broll,لنقدم لكم خدمات متكاملة للعناية بالسمع.,RIB_0139,,,,B-roll at ~8 s
-12.57,13.64,broll,audiometry و,RIB_0141,,,,B-roll on 'audiometry'
+7.69,10.93,broll,لنقدم لكم خدمات متكاملة للعناية بالسمع.,RIB_2811,,,,B-roll at ~8 s
+12.57,13.64,broll,audiometry و,RIB_2818,,,,B-roll on 'audiometry'
 12.62,15.54,overlay,audiometry و tympanometry باستخدام أجهزة,tag,AUDIOMETRY,pop,,
 13.64,15.12,broll,tympanometry باستخدام,RIB_2836,,,,"tympanometer, requested for 'tympanometry'; from 2.0 s"
 13.64,15.54,overlay,tympanometry باستخدام أجهزة,tag,TYMPANOMETRY,pop,,
