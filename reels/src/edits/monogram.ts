@@ -9,6 +9,7 @@ const c = (n: string) => `footage/monogram/RIB_${n}.MP4`;
 
 export const monogram: BeatAdProps = {
   brand: "zvc",
+  look: "energetic",
   audio: "audio/mimosa-2000.mp3",
   audioStartSec: 139.848,
   beatTimesMs: [],

@@ -28,6 +28,9 @@ const move = z.enum(["punch", "push", "pull", "slideL", "slideR", "spin"]);
 
 export const beatAdSchema = z.object({
   brand: z.enum(["laservision", "zvc"]),
+  // "energetic": hard cuts with zoom hits, flashes, beat pulses and the frame-line overlay.
+  // "calm": dissolves, slow drifts, quiet text fades, no overlay. Moves map to their gentle versions.
+  look: z.enum(["energetic", "calm"]),
   // Song in public/, empty = silent preview. audioStartSec = where in the song the edit starts.
   audio: z.string(),
   audioStartSec: z.number(),
@@ -98,9 +101,33 @@ const Shot: React.FC<{
   move: z.infer<typeof move>;
   flash: boolean;
   beatFrames: number[];
-}> = ({ src, at, rate, move, flash, beatFrames }) => {
+  calm: boolean;
+  fadeIn: number;
+}> = ({ src, at, rate, move, flash, beatFrames, calm, fadeIn }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames: d, width } = useVideoConfig();
+
+  if (calm) {
+    // Slow, even camera moves; the shot dissolves in over the previous one.
+    const t = frame / Math.max(1, d - 1);
+    const drift = move === "slideL" ? -1 : move === "slideR" ? 1 : 0;
+    const scale = move === "pull" ? interpolate(t, [0, 1], [1.14, 1.04]) : drift ? 1.1 : interpolate(t, [0, 1], [1.04, 1.14]);
+    const x = drift * interpolate(t, [0, 1], [-45, 45]);
+    const opacity = fadeIn ? interpolate(frame, [0, fadeIn], [0, 1], { extrapolateRight: "clamp", easing: Easing.inOut(Easing.quad) }) : 1;
+    return (
+      <AbsoluteFill style={{ overflow: "hidden", opacity }}>
+        <AbsoluteFill style={{ transform: `translateX(${x}px) scale(${scale})`, filter: "contrast(1.04)" }}>
+          <OffthreadVideo
+            src={staticFile(src)}
+            muted
+            trimBefore={Math.round(at * fps)}
+            playbackRate={rate}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </AbsoluteFill>
+      </AbsoluteFill>
+    );
+  }
 
   // Hit at the cut: quick zoom/blur settle, the "punch" of ad edits.
   const hit = spring({ frame, fps, config: { damping: 18, stiffness: 260, mass: 0.6 } });
@@ -156,16 +183,20 @@ const Scrim: React.FC<{ y: string; opacity: number }> = ({ y, opacity }) => (
   <AbsoluteFill style={{ background: `radial-gradient(ellipse 75% 16% at 50% ${y}, rgba(0,0,0,0.55), transparent)`, opacity }} />
 );
 
-const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"]; beatLen: number; accent: string }> = ({
+const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"]; beatLen: number; accent: string; calm: boolean }> = ({
   text,
   style,
   beatLen,
   accent,
+  calm,
 }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames: d } = useVideoConfig();
-  const inn = spring({ frame, fps, config: { damping: 14, stiffness: 300, mass: 0.5 } });
-  const out = interpolate(frame, [d - 3, d], [1, 0], { extrapolateLeft: "clamp" });
+  const inn = calm
+    ? interpolate(frame, [0, Math.round(0.8 * fps)], [0, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) })
+    : spring({ frame, fps, config: { damping: 14, stiffness: 300, mass: 0.5 } });
+  const outLen = calm ? Math.round(0.5 * fps) : 3;
+  const out = interpolate(frame, [d - outLen, d], [1, 0], { extrapolateLeft: "clamp" });
   const shadow = "0 6px 30px rgba(0,0,0,0.45)";
 
   if (style === "letters") {
@@ -185,7 +216,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
   }
   if (style === "logo") {
     // Wipe the logo on left to right over the first beat, then let it breathe.
-    const wipe = interpolate(frame, [0, beatLen], [0, 100], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+    const wipe = interpolate(frame, [0, calm ? Math.round(1.2 * fps) : beatLen], [0, 100], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
     return (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
         <Scrim y="50%" opacity={interpolate(frame, [0, beatLen], [0, 1], { extrapolateRight: "clamp" })} />
@@ -381,6 +412,8 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
   const brand = brands[props.brand];
   const f = (beat: number) => beatToFrame(props, beat, fps);
   const beatLen = Math.round((60 / props.bpm) * fps);
+  const calm = props.look === "calm";
+  const dissolve = Math.round(0.7 * fps);
 
   let beat = 0;
   const shots = props.shots.map((s, i) => {
@@ -388,10 +421,23 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
     beat += s.beats;
     const from = f(start);
     const beatFrames = Array.from({ length: Math.ceil(s.beats) }, (_, k) => f(start + k) - from);
+    // Calm: each shot starts its dissolve half a dissolve early and runs past its cut, so the
+    // midpoint of every dissolve sits on the beat.
+    const pre = calm && i > 0 ? Math.round(dissolve / 2) : 0;
+    const post = calm ? Math.round(dissolve / 2) : 0;
     return (
-      <Sequence key={i} from={from} durationInFrames={f(beat) - from}>
-        <Shot src={s.src} at={s.at} rate={s.rate} move={s.move} flash={s.flash ?? false} beatFrames={beatFrames} />
-        <Hud index={i} total={props.shots.length} logo={props.hudLogo} />
+      <Sequence key={i} from={from - pre} durationInFrames={f(beat) - from + pre + post}>
+        <Shot
+          src={s.src}
+          at={Math.max(0, s.at - (pre / fps) * s.rate)}
+          rate={s.rate}
+          move={s.move}
+          flash={s.flash ?? false}
+          beatFrames={beatFrames}
+          calm={calm}
+          fadeIn={pre * 2}
+        />
+        {calm ? null : <Hud index={i} total={props.shots.length} logo={props.hudLogo} />}
       </Sequence>
     );
   });
@@ -403,7 +449,7 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
       <AbsoluteFill style={{ background: "radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45) 100%)" }} />
       {props.texts.map((t, i) => (
         <Sequence key={i} from={f(t.beat)} durationInFrames={f(t.beat + t.beats) - f(t.beat)}>
-          <Text text={t.text} style={t.style} beatLen={beatLen} accent={brand.colors.accent} />
+          <Text text={t.text} style={t.style} beatLen={beatLen} accent={brand.colors.accent} calm={calm} />
         </Sequence>
       ))}
       <Sequence from={f(mainBeats)}>
