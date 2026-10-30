@@ -26,15 +26,17 @@ R(lv, at("لنقدم"), "logo", "brand/laservision/logo-transparent.png", "", "p
   "ding", "her silhouette masks the logo (MediaPipe matte)")
 
 # --- B-roll
-R(at("لنقدم"), at("عنا", at("بالسمع")) - 0.25, "broll", "RIB_0139", notes="audiometer, wide; from 2.0 s")
+import os as _os
+_b8 = "RIB_2811" if _os.path.exists(J("source", "RIB_2811.MP4")) else "RIB_0139"   # review: 2811 replaces 0139 at ~8 s
+R(at("لنقدم"), at("عنا", at("بالسمع")) - 0.25, "broll", _b8, notes="B-roll at ~8 s")
 import os as _os
 if _os.path.exists(J("source", "RIB_2836.MP4")):   # tympanometer footage replaces the B-roll from "tympanometry"
-    R(at("audiometry") - 0.05, at("tympanometry"), "broll", "RIB_0141", notes="audiometric headphones; from 4.0 s")
+    _ba = "RIB_2818" if _os.path.exists(J("source", "RIB_2818.MP4")) else "RIB_0141"   # review: 2818 on "audiometry"
+    R(at("audiometry") - 0.05, at("tympanometry"), "broll", _ba, notes="B-roll on 'audiometry'")
     R(at("tympanometry"), at("أجهزة"), "broll", "RIB_2836", notes="tympanometer, requested for 'tympanometry'; from 2.0 s")
 else:
     R(at("audiometry") - 0.05, at("باستخدام"), "broll", "RIB_0141", notes="audiometric headphones; from 4.0 s")
-R(at("أجهزة") if _os.path.exists(J("source", "RIB_2836.MP4")) else at("باستخدام"), at("سماعات") - 0.2,
-  "broll", "RIB_0140", notes="audiometer screen; from 3.0 s")
+# review: no screen B-roll after "tympanometry" (RIB_0140 removed); back to her until "سماعات"
 
 # --- animated overlays (+ matching SFX). Clean titles, no notification-style boxes.
 # rise = text rises in with an accent line drawing under it (soft whoosh); pop = scale-in with overshoot (pop)

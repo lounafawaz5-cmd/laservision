@@ -107,9 +107,18 @@ EARPLUG_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 280">
 </svg>"""
 def render_svg(svg, w):
     return Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=w))).convert("RGBA")
-ear = render_svg(EARPLUG_SVG, 230)
+ear = render_svg(EARPLUG_SVG, 230)             # kept only for its footprint: the photo takes the same box
+# review: the drawn ear is replaced by the real custom earplug photo (assets/earplugs_photo.png), same size/place
+photo = Image.open(J("assets", "earplugs_photo.png")).convert("RGBA")
+sc = min(ear.width / photo.width, ear.height / photo.height)
+photo = photo.resize((round(photo.width * sc), round(photo.height * sc)), Image.LANCZOS)
 img = Image.new("RGBA", (W, H)); X, Y = 700, 860
-img.alpha_composite(ear, (X, Y))
+px, py = X + (ear.width - photo.width) // 2, Y + (ear.height - photo.height) // 2
+sh = Image.new("RGBA", (W, H)); shape = Image.new("RGBA", photo.size, (0, 48, 63, 0))
+shape.putalpha(photo.getchannel("A").point(lambda v: int(v * 0.45)))
+sh.alpha_composite(shape, (px + 3, py + 8))
+img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(9)))   # soft navy shadow: clear silicone reads on the white coat
+img.alpha_composite(photo, (px, py))
 f = font(50); t = "Custom earplugs"; tx = min(1010 - f.getlength(t), X + (ear.width - f.getlength(t)) / 2)
 d = ImageDraw.Draw(img); d.text((tx, Y + ear.height + 10), t, font=f, fill=CARD_BLUE)
 img = glow(img, radius=12, strength=1.6); bb = img.getbbox()

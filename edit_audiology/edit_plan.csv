@@ -2,12 +2,11 @@ start,end,layer,spoken_line,asset,overlay_text,animation,sound_effect,notes
 0.27,1.39,overlay,السمع هو جزء,emoji:👂,,pop,,"ear, right of her head; short"
 4.51,7.69,logo,Laser Vision صار عنا A New Audiology Department.,brand/laservision/logo-transparent.png,,"pop_in, behind_subject",,her silhouette masks the logo (MediaPipe matte)
 5.71,7.69,overlay,A New Audiology Department.,title,NEW|Audiology Department,rise,,
-7.69,10.93,broll,لنقدم لكم خدمات متكاملة للعناية بالسمع.,RIB_0139,,,,"audiometer, wide; from 2.0 s"
-12.57,13.64,broll,audiometry و,RIB_0141,,,,audiometric headphones; from 4.0 s
+7.69,10.93,broll,لنقدم لكم خدمات متكاملة للعناية بالسمع.,RIB_0139,,,,B-roll at ~8 s
+12.57,13.64,broll,audiometry و,RIB_0141,,,,B-roll on 'audiometry'
 12.62,15.54,overlay,audiometry و tympanometry باستخدام أجهزة,tag,AUDIOMETRY,pop,,
 13.64,15.12,broll,tympanometry باستخدام,RIB_2836,,,,"tympanometer, requested for 'tympanometry'; from 2.0 s"
 13.64,15.54,overlay,tympanometry باستخدام أجهزة,tag,TYMPANOMETRY,pop,,
-15.12,16.96,broll,أجهزة متطورة وحديثة.,RIB_0140,,,,audiometer screen; from 3.0 s
 17.16,21.92,broll,سماعات طبية بأحدث التقنيات لتناسب احتياجات كل شخص. بالإضافة,RIB_0135,,,,Beltone hearing aids; from 4.0 s
 17.16,21.92,overlay,سماعات طبية بأحدث التقنيات لتناسب احتياجات كل شخص. بالإضافة,title,|Hearing aids,pop,,
 22.82,27.03,overlay,Earplugs مخصصة للحماية من الضجيج والماء. أنا,earplug,Custom earplugs,pop,,
