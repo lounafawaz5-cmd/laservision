@@ -89,7 +89,7 @@ def reader(path, start=0.0, fps=FPS):
         if len(buf) < W * H * 3: break
         yield np.frombuffer(buf, np.uint8).reshape(H, W, 3)
 
-BROLL_FROM = {"RIB_0139": 2.0, "RIB_0141": 4.0, "RIB_0140": 3.0, "RIB_2836": 0.5}
+BROLL_FROM = {"RIB_0139": 2.0, "RIB_0141": 4.0, "RIB_0140": 3.0, "RIB_2836": 2.0}
 broll_rows = [r for r in plan if r["layer"] == "broll"]
 broll_frames = {}
 def broll_frame(r, t):

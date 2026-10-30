@@ -30,10 +30,11 @@ R(at("لنقدم"), at("عنا", at("بالسمع")) - 0.25, "broll", "RIB_0139"
 import os as _os
 if _os.path.exists(J("source", "RIB_2836.MP4")):   # tympanometer footage replaces the B-roll from "tympanometry"
     R(at("audiometry") - 0.05, at("tympanometry"), "broll", "RIB_0141", notes="audiometric headphones; from 4.0 s")
-    R(at("tympanometry"), at("باستخدام"), "broll", "RIB_2836", notes="tympanometer, requested for 'tympanometry'")
+    R(at("tympanometry"), at("أجهزة"), "broll", "RIB_2836", notes="tympanometer, requested for 'tympanometry'; from 2.0 s")
 else:
     R(at("audiometry") - 0.05, at("باستخدام"), "broll", "RIB_0141", notes="audiometric headphones; from 4.0 s")
-R(at("باستخدام"), at("سماعات") - 0.2, "broll", "RIB_0140", notes="audiometer screen; from 3.0 s")
+R(at("أجهزة") if _os.path.exists(J("source", "RIB_2836.MP4")) else at("باستخدام"), at("سماعات") - 0.2,
+  "broll", "RIB_0140", notes="audiometer screen; from 3.0 s")
 
 # --- animated overlays (+ matching SFX). Clean titles, no notification-style boxes.
 # rise = text rises in with an accent line drawing under it (soft whoosh); pop = scale-in with overshoot (pop)
