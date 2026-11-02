@@ -28,7 +28,8 @@ export type Brand = {
   // "clean": white bold words with a shadow, no box (LaserVision house style).
   // "box": text on a solid caption box.
   captionStyle: "clean" | "box";
-  outroLine: string;
+  // On screen this is always the WhatsApp icon + the number, never the word "WhatsApp".
+  whatsapp: string;
 };
 
 // Colors: brand/laservision/GUIDELINES.md and brand/zeiss/GUIDELINES.md.
@@ -49,7 +50,7 @@ export const brands: Record<BrandId, Brand> = {
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "clean",
-    outroLine: "WhatsApp +961 81 54 20 20",
+    whatsapp: "+961 81 54 20 20",
   },
   zvc: {
     // Store name is fine on screen; the blue ZEISS block logo is not. Use the "by Laser Vision" wordmark.
@@ -65,7 +66,7 @@ export const brands: Record<BrandId, Brand> = {
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "box",
-    outroLine: "WhatsApp us your prescription\n81 47 20 20",
+    whatsapp: "81 47 20 20",
   },
 };
 

@@ -1,5 +1,6 @@
 import { AbsoluteFill, Img, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { Brand, fontFor } from "../brands";
+import { Brand } from "../brands";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export const Outro: React.FC<{ brand: Brand }> = ({ brand }) => {
   const frame = useCurrentFrame();
@@ -27,16 +28,17 @@ export const Outro: React.FC<{ brand: Brand }> = ({ brand }) => {
       <div
         style={{
           opacity: enter,
-          fontFamily: fontFor(brand, brand.outroLine),
-          fontSize: 50,
-          textAlign: "center",
-          whiteSpace: "pre-line",
-          lineHeight: 1.4,
+          display: "flex",
+          alignItems: "center",
+          gap: 20,
+          fontFamily: `"${brand.fonts.latin}", sans-serif`,
+          fontSize: 52,
           fontWeight: 700,
           color: brand.colors.background === "#FFFFFF" ? brand.colors.primary : brand.colors.text,
         }}
       >
-        {brand.outroLine}
+        <WhatsAppIcon size={56} color={brand.colors.background === "#FFFFFF" ? brand.colors.primary : brand.colors.text} />
+        {brand.whatsapp}
       </div>
     </AbsoluteFill>
   );

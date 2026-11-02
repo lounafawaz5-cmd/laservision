@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { brands } from "../brands";
+import { WhatsAppIcon } from "../components/WhatsAppIcon";
 
 // Standalone end card, appended to finished edits (e.g. CapCut exports) with scripts/append-outro.sh.
 export const brandOutroSchema = z.object({
@@ -46,8 +47,9 @@ export const BrandOutro: React.FC<z.infer<typeof brandOutroSchema>> = ({ brand: 
             {LV_BRANCHES.join("  ·  ")}
           </div>
         ) : null}
-        <div style={{ marginTop: 34, fontSize: 56, fontWeight: 700, whiteSpace: "pre-line", lineHeight: 1.35 }}>
-          {isLv ? "WhatsApp +961 81 54 20 20" : brand.outroLine}
+        <div style={{ marginTop: 34, display: "flex", alignItems: "center", justifyContent: "center", gap: 22 }}>
+          <WhatsAppIcon size={60} />
+          <div style={{ fontSize: 56, fontWeight: 700, letterSpacing: 1 }}>{brand.whatsapp}</div>
         </div>
       </div>
     </AbsoluteFill>
