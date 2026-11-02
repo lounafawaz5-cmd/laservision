@@ -4,6 +4,7 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { snob } from "./edits/snob";
 
 const FPS = 30;
 
@@ -107,6 +108,17 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={900}
+    />
+    <Composition
+      id="Snob-ZVC"
+      component={BeatAd}
+      schema={beatAdSchema}
+      defaultProps={snob}
+      calculateMetadata={({ props }: { props: BeatAdProps }) => ({ durationInFrames: beatAdDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={600}
     />
   </>
 );
