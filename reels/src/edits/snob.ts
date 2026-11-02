@@ -5,7 +5,7 @@ import { EditorialProps } from "../templates/Editorial";
 // v2 (review 2 Nov): its own editorial template, no beat pulses. Silent until the song is chosen.
 // v3: unboxing (RIB_0154) removed; Luna edits it herself and links it. Standard brand end card.
 // v4: the bag handover (RIB_0153) back in as the closing shot.
-// v5: no corner labels; video and end card delivered as two files.
+// v5: no corner labels; video and end card delivered as two files. Luna's unboxing edit after the hook.
 const c = (n: string) => `footage/snob/RIB_${n}.MP4`;
 
 export const snob: EditorialProps = {
@@ -14,6 +14,8 @@ export const snob: EditorialProps = {
   shots: [
     // Hook: the model in the sunglasses, slow motion.
     { src: c("0164"), at: 1.7, rate: 0.6, sec: 2.0 },
+    // Luna's own unboxing edit (Drive, CapCut export), used as cut: bag, box, case, frame + clip-on.
+    { src: "footage/snob/unboxing.mp4", at: 0, rate: 1, sec: 13.3 },
     // Details: the temple, macro.
     { src: c("0161"), at: 2.0, rate: 0.6, sec: 1.6 },
     { src: c("0160"), at: 1.3, rate: 1, sec: 0.9 },
@@ -28,7 +30,7 @@ export const snob: EditorialProps = {
   ],
   titles: [
     { text: "Snob\nMilano", sub: "SUN & OPTICAL", at: 0.2, sec: 1.8 },
-    { text: "Two looks.\nOne frame.", sub: "SNOB MILANO", at: 9.2, sec: 1.9 },
+    { text: "Two looks.\nOne frame.", sub: "SNOB MILANO", at: 22.5, sec: 1.9 },
   ],
   cornerLeft: "",
   cornerRight: "",
