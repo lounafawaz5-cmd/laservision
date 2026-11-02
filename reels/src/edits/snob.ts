@@ -1,42 +1,39 @@
-import { BeatAdProps } from "../templates/BeatAd";
+import { EditorialProps } from "../templates/Editorial";
 
 // ZVC · Snob Milano fashion edit. Teal frame with a clip-on sun lens: sunglasses and optical in one.
-// Footage: Drive "Videos" folder (Sept 29), RIB_0153–0164 (0154 and 0164 pending: over the connector's 10 MB limit).
-// Draft v1: silent, on an even 120 BPM grid (1 beat = 0.5 s). Swap in the song + its bpm/start once chosen.
+// Footage: Drive "Videos" folder (Sept 29), RIB_0153–0164. All sources are 1080×1920, 50 fps.
+// v2 (review 2 Nov): its own editorial template, no beat pulses. Silent until the song is chosen.
 const c = (n: string) => `footage/snob/RIB_${n}.MP4`;
 
-export const snob: BeatAdProps = {
-  brand: "zvc",
-  look: "energetic",
+export const snob: EditorialProps = {
   audio: "",
   audioStartSec: 0,
-  beatTimesMs: [],
-  bpm: 120,
   shots: [
-    // The bag lands on the counter.
-    { src: c("0153"), at: 0.2, beats: 5.5, rate: 1, move: "push" },
-    // Flat-lay: the sunglasses.
-    { src: c("0157"), at: 0, beats: 3, rate: 1, move: "punch", flash: true },
+    // Hook: the model in the sunglasses, slow motion.
+    { src: c("0164"), at: 1.7, rate: 0.6, sec: 2.0 },
+    // Unboxing, top-down: bag, box, the case opening on the frame.
+    { src: c("0154"), at: 0.4, rate: 1, sec: 1.1 },
+    { src: c("0154"), at: 3.3, rate: 1, sec: 1.0 },
+    { src: c("0154"), at: 10.2, rate: 1, sec: 1.4 },
+    // Frame and clip-on side by side.
+    { src: c("0154"), at: 15.9, rate: 0.6, sec: 1.3 },
     // Details: the temple, macro.
-    { src: c("0161"), at: 2.0, beats: 3, rate: 1, move: "slideL" },
-    { src: c("0160"), at: 1.4, beats: 1.5, rate: 1, move: "punch" },
-    // Sun → optical: the clip-on comes off.
-    { src: c("0163"), at: 0, beats: 4, rate: 1, move: "push", flash: true },
-    { src: c("0158"), at: 0, beats: 3, rate: 1, move: "slideR" },
-    // Optical: the Snob logo on the lens.
-    { src: c("0159"), at: 0, beats: 4, rate: 1, move: "push" },
-    // And back to sun.
-    { src: c("0163"), at: 2.6, beats: 2, rate: 1, move: "punch", flash: true },
+    { src: c("0161"), at: 2.0, rate: 0.6, sec: 1.6 },
+    { src: c("0160"), at: 1.3, rate: 1, sec: 0.9 },
+    // Sun | optical.
+    { src: c("0157"), at: 0, rate: 1, sec: 1.8, split: { src: c("0159"), at: 0, rate: 1 }, labels: ["SUN", "OPTICAL"] },
+    // The clip-on comes off.
+    { src: c("0158"), at: 0, rate: 1, sec: 1.4 },
+    // Payoff: she flips the clip-on up, slow motion.
+    { src: c("0164"), at: 2.7, rate: 0.6, sec: 3.4 },
   ],
-  texts: [
-    { text: "SNOB MILANO", beat: 0, beats: 2.5, style: "word" },
-    { text: "SUN", beat: 13, beats: 1.5, style: "word" },
-    { text: "OPTICAL", beat: 20, beats: 3.5, style: "word" },
-    { text: "ONE FRAME", beat: 24, beats: 2, style: "word" },
+  titles: [
+    { text: "Snob\nMilano", sub: "SUN & OPTICAL", at: 0.2, sec: 1.8 },
+    { text: "Two looks.\nOne frame.", sub: "SNOB MILANO", at: 14.0, sec: 1.9 },
   ],
-  hudLogo: "",
-  outroBeats: 6,
-  outroLogo: "",
-  outroLine: "HAZMIEH",
+  cornerLeft: "ZEISS VISION CENTER",
+  cornerRight: "HAZMIEH",
+  endSec: 3,
+  endLine: "HAZMIEH",
   whatsapp: "81 47 20 20",
 };

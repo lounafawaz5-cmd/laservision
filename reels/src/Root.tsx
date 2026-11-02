@@ -5,6 +5,7 @@ import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/B
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { snob } from "./edits/snob";
+import { Editorial, editorialSchema, EditorialProps, editorialDuration } from "./templates/Editorial";
 
 const FPS = 30;
 
@@ -111,10 +112,10 @@ export const RemotionRoot: React.FC = () => (
     />
     <Composition
       id="Snob-ZVC"
-      component={BeatAd}
-      schema={beatAdSchema}
+      component={Editorial}
+      schema={editorialSchema}
       defaultProps={snob}
-      calculateMetadata={({ props }: { props: BeatAdProps }) => ({ durationInFrames: beatAdDuration(props, FPS) })}
+      calculateMetadata={({ props }: { props: EditorialProps }) => ({ durationInFrames: editorialDuration(props, FPS) })}
       fps={FPS}
       width={1080}
       height={1920}
