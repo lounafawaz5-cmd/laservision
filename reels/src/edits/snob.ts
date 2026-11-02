@@ -5,6 +5,7 @@ import { EditorialProps } from "../templates/Editorial";
 // v2 (review 2 Nov): its own editorial template, no beat pulses. Silent until the song is chosen.
 // v3: unboxing (RIB_0154) removed; Luna edits it herself and links it. Standard brand end card.
 // v4: the bag handover (RIB_0153) back in as the closing shot.
+// v5: no corner labels; video and end card delivered as two files.
 const c = (n: string) => `footage/snob/RIB_${n}.MP4`;
 
 export const snob: EditorialProps = {
@@ -29,6 +30,8 @@ export const snob: EditorialProps = {
     { text: "Snob\nMilano", sub: "SUN & OPTICAL", at: 0.2, sec: 1.8 },
     { text: "Two looks.\nOne frame.", sub: "SNOB MILANO", at: 9.2, sec: 1.9 },
   ],
-  cornerLeft: "ZEISS VISION CENTER",
-  cornerRight: "HAZMIEH",
+  cornerLeft: "",
+  cornerRight: "",
+  // End card rendered separately: Outro-ZVC-Snob.
+  outro: false,
 };

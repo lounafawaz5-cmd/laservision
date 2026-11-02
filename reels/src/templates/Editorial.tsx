@@ -43,14 +43,17 @@ export const editorialSchema = z.object({
   // Large thin title at the bottom of the frame; at/sec in seconds of the edit.
   titles: z.array(z.object({ text: z.string(), sub: z.string(), at: z.number(), sec: z.number() })),
   // Small running label top-left / top-right on every shot.
+  // Small labels top-left / top-right on every shot; empty = none.
   cornerLeft: z.string(),
   cornerRight: z.string(),
+  // false = render the edit alone; the end card is then rendered on its own (Outro-* compositions).
+  outro: z.boolean(),
 });
 
 export type EditorialProps = z.infer<typeof editorialSchema>;
 
 export const editorialDuration = (p: EditorialProps, fps: number) =>
-  Math.round((p.shots.reduce((s, x) => s + x.sec, 0) + OUTRO_SECONDS) * fps);
+  Math.round((p.shots.reduce((s, x) => s + x.sec, 0) + (p.outro ? OUTRO_SECONDS : 0)) * fps);
 
 const THIN = `"Outfit", sans-serif`;
 // Type is black: this footage is bright (white wall, white dress, grey table), so ink reads like a magazine page.
@@ -172,17 +175,19 @@ export const Editorial: React.FC<EditorialProps> = (p) => {
     <AbsoluteFill style={{ background: "#fff" }}>
       {shots}
       <Sequence durationInFrames={s2f(mainEnd)}>
-        <Label text={p.cornerLeft} style={{ top: 150, left: 80 }} />
-        <Label text={p.cornerRight} style={{ top: 150, right: 80, marginRight: "-0.35em" }} />
+        {p.cornerLeft ? <Label text={p.cornerLeft} style={{ top: 150, left: 80 }} /> : null}
+        {p.cornerRight ? <Label text={p.cornerRight} style={{ top: 150, right: 80, marginRight: "-0.35em" }} /> : null}
       </Sequence>
       {p.titles.map((x, i) => (
         <Sequence key={i} from={s2f(x.at)} durationInFrames={s2f(x.sec)}>
           <Title text={x.text} sub={x.sub} />
         </Sequence>
       ))}
-      <Sequence from={s2f(mainEnd)}>
-        <BrandOutro brand="zvc" />
-      </Sequence>
+      {p.outro ? (
+        <Sequence from={s2f(mainEnd)}>
+          <BrandOutro brand="zvc" partnerLogo="" />
+        </Sequence>
+      ) : null}
       {p.audio ? (
         <Audio
           src={staticFile(p.audio)}

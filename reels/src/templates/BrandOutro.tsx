@@ -10,11 +10,13 @@ export const OUTRO_SECONDS = 2.5;
 
 export const brandOutroSchema = z.object({
   brand: z.enum(["laservision", "zvc"]),
+  // Optional brand logo (white, in public/) above the store logo, for brand-led posts (e.g. Snob Milano). Empty = none.
+  partnerLogo: z.string(),
 });
 
 const LV_BRANCHES = ["Hazmieh", "Saida", "Tripoli", "Hôtel-Dieu"];
 
-export const BrandOutro: React.FC<z.infer<typeof brandOutroSchema>> = ({ brand: brandId }) => {
+export const BrandOutro: React.FC<z.infer<typeof brandOutroSchema>> = ({ brand: brandId, partnerLogo }) => {
   const brand = brands[brandId];
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -34,6 +36,12 @@ export const BrandOutro: React.FC<z.infer<typeof brandOutroSchema>> = ({ brand: 
         color: "#FFFFFF",
       }}
     >
+      {partnerLogo ? (
+        <Img
+          src={staticFile(partnerLogo)}
+          style={{ width: 640, marginBottom: 110, opacity: logoIn, transform: `translateY(${(1 - logoIn) * 30}px)` }}
+        />
+      ) : null}
       <Img
         src={staticFile(isLv ? "brand/laservision-logo-white.png" : brand.logo)}
         style={{ width: 780, opacity: logoIn, transform: `translateY(${(1 - logoIn) * 30}px)` }}

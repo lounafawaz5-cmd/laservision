@@ -72,7 +72,7 @@ export const RemotionRoot: React.FC = () => (
       id="Outro-LaserVision"
       component={BrandOutro}
       schema={brandOutroSchema}
-      defaultProps={{ brand: "laservision" as const }}
+      defaultProps={{ brand: "laservision" as const, partnerLogo: "" }}
       fps={FPS}
       width={1080}
       height={1920}
@@ -82,7 +82,17 @@ export const RemotionRoot: React.FC = () => (
       id="Outro-ZVC"
       component={BrandOutro}
       schema={brandOutroSchema}
-      defaultProps={{ brand: "zvc" as const }}
+      defaultProps={{ brand: "zvc" as const, partnerLogo: "" }}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={Math.round(OUTRO_SECONDS * FPS)}
+    />
+    <Composition
+      id="Outro-ZVC-Snob"
+      component={BrandOutro}
+      schema={brandOutroSchema}
+      defaultProps={{ brand: "zvc" as const, partnerLogo: "brand/snob-logo-white.png" }}
       fps={FPS}
       width={1080}
       height={1920}
