@@ -1,5 +1,6 @@
 import { Composition } from "remotion";
 import { TalkingHead, talkingHeadSchema, TalkingHeadProps } from "./templates/TalkingHead";
+import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 
 const FPS = 30;
 
@@ -61,6 +62,26 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={300}
+    />
+      <Composition
+      id="Outro-LaserVision"
+      component={BrandOutro}
+      schema={brandOutroSchema}
+      defaultProps={{ brand: "laservision" as const }}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={Math.round(2.5 * FPS)}
+    />
+    <Composition
+      id="Outro-ZVC"
+      component={BrandOutro}
+      schema={brandOutroSchema}
+      defaultProps={{ brand: "zvc" as const }}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={Math.round(2.5 * FPS)}
     />
   </>
 );

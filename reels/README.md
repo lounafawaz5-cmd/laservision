@@ -26,10 +26,18 @@ npx remotion render src/index.ts TalkingHead-Zeiss out/reel.mp4 --props=props.js
 ## Templates
 | Template | Status | What it is |
 |---|---|---|
+| BrandOutro | Ready | 2.5 s end card: LaserVision = navy, white logo, branches, WhatsApp. ZVC = black, wordmark, WhatsApp. |
 | TalkingHead | Starter | Footage + timed captions; optional hook card and end card. LaserVision preset matches the reference reel (no cards, word-by-word subtitles). |
 
 The full template list (doctor Q&A, patient story, before/after, product showcase, listicle,
 trend formats…) is decided together in Step 8, then built here.
+
+## Adding the end card to a finished edit (e.g. a CapCut export)
+```
+scripts/append-outro.sh path/to/export.mp4 laservision out/final.mp4   # or: zvc
+```
+Renders the brand end card (`Outro-LaserVision` / `Outro-ZVC`, 2.5 s), matches it to the video's size and
+frame rate, adds silence under it, and joins the two.
 
 ## Per-reel flow
 1. Clips go in Google Drive `Footage/<Brand>/<date topic>/`
