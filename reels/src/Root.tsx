@@ -1,6 +1,9 @@
 import { Composition } from "remotion";
 import { TalkingHead, talkingHeadSchema, TalkingHeadProps } from "./templates/TalkingHead";
 import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
+import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
+import { monogram } from "./edits/monogram";
+import { monogramCalm } from "./edits/monogram-calm";
 
 const FPS = 30;
 
@@ -63,7 +66,7 @@ export const RemotionRoot: React.FC = () => (
       height={1920}
       durationInFrames={300}
     />
-      <Composition
+    <Composition
       id="Outro-LaserVision"
       component={BrandOutro}
       schema={brandOutroSchema}
@@ -82,6 +85,28 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={Math.round(2.5 * FPS)}
+    />
+    <Composition
+      id="Monogram-ZVC"
+      component={BeatAd}
+      schema={beatAdSchema}
+      defaultProps={monogram}
+      calculateMetadata={({ props }: { props: BeatAdProps }) => ({ durationInFrames: beatAdDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={600}
+    />
+    <Composition
+      id="MonogramCalm-ZVC"
+      component={BeatAd}
+      schema={beatAdSchema}
+      defaultProps={monogramCalm}
+      calculateMetadata={({ props }: { props: BeatAdProps }) => ({ durationInFrames: beatAdDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={900}
     />
   </>
 );
