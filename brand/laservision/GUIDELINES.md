@@ -13,4 +13,4 @@ Colors only, from `LaserVision_Brand_Guidelines.pdf` (Dec 2025). Nothing else fr
 
 Primary colors dominate; secondary colors are accents.
 
-Logo files: `logo.png`, `logo-transparent.png`, `logo-white.png`.
+Logo files (vector, from the guidelines PDF): `logo.svg`, `logo-white.svg`; high-res PNGs (3230 px): `logo-transparent.png`, `logo-white.png`. `logo.png` is the original low-res upload; don't use it.
