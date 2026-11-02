@@ -11,7 +11,7 @@ MIN_SIL, PAD, NOISE_DB = 0.4, 0.1, -35
 words = json.load(open(J("transcripts", "words.json")))
 def span(src):
     ws = [w for w in words if w["src"] == src]; return ws[0]["start"], ws[-1]["end"]
-RANGES = [("RIB_0124", 4.37, 37.80),   # 37.80 = dip after "سماعكن", before the first-take "ولأن"
+RANGES = [("RIB_0124", 4.37, 38.30),   # review: +0.5 s so "سمعكن" is not clipped; first-take "ولأن" starts at 38.40
           ("RIB_0125", 1.88, None)]    # retake; ends 0.1 s after her last word
 
 def silences(path):
