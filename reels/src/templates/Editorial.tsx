@@ -3,7 +3,6 @@ import {
   AbsoluteFill,
   Audio,
   Easing,
-  Img,
   interpolate,
   OffthreadVideo,
   Sequence,
@@ -12,13 +11,13 @@ import {
   useVideoConfig,
 } from "remotion";
 import { loadFont } from "@remotion/fonts";
-import { WhatsAppIcon } from "../components/WhatsAppIcon";
+import { BrandOutro, OUTRO_SECONDS } from "./BrandOutro";
 
 for (const [weight, file] of [["300", "Light"], ["500", "Medium"]]) {
   loadFont({ family: "Outfit", url: staticFile(`fonts/Outfit-${file}.ttf`), weight });
 }
 
-// Fashion-editorial edit: hard cuts, real slow motion, a split screen, magazine type, white end card.
+// Fashion-editorial edit: hard cuts, real slow motion, a split screen, magazine type, then the standard brand end card.
 // No beat pulses, flashes or overlays. Timing is in seconds, so it works with or without music.
 
 const clip = z.object({
@@ -46,15 +45,12 @@ export const editorialSchema = z.object({
   // Small running label top-left / top-right on every shot.
   cornerLeft: z.string(),
   cornerRight: z.string(),
-  endSec: z.number(),
-  endLine: z.string(),
-  whatsapp: z.string(),
 });
 
 export type EditorialProps = z.infer<typeof editorialSchema>;
 
 export const editorialDuration = (p: EditorialProps, fps: number) =>
-  Math.round((p.shots.reduce((s, x) => s + x.sec, 0) + p.endSec) * fps);
+  Math.round((p.shots.reduce((s, x) => s + x.sec, 0) + OUTRO_SECONDS) * fps);
 
 const THIN = `"Outfit", sans-serif`;
 // Type is black: this footage is bright (white wall, white dress, grey table), so ink reads like a magazine page.
@@ -158,29 +154,6 @@ const Title: React.FC<{ text: string; sub: string }> = ({ text, sub }) => {
   );
 };
 
-// White end card: dark wordmark, green WhatsApp icon + number. Never the word "WhatsApp".
-const EndCard: React.FC<{ line: string; whatsapp: string }> = ({ line, whatsapp }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const step = (s: number) =>
-    interpolate(frame, [s * fps, (s + 0.6) * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
-  const a = step(0.1);
-  const b = step(0.5);
-  return (
-    <AbsoluteFill style={{ background: "#fff", justifyContent: "center", alignItems: "center", gap: 60 }}>
-      <Img src={staticFile("brand/zvc-wordmark-dark.png")} style={{ width: 640, opacity: a, transform: `translateY(${(1 - a) * 20}px)` }} />
-      <div style={{ width: interpolate(b, [0, 1], [0, 120]), height: 2, background: "#000" }} />
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, opacity: b }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <WhatsAppIcon size={56} color="#25D366" />
-          <div style={{ fontFamily: THIN, fontWeight: 500, fontSize: 52, letterSpacing: "0.08em", color: "#000" }}>{whatsapp}</div>
-        </div>
-        <div style={{ fontFamily: THIN, fontWeight: 300, fontSize: 34, letterSpacing: "0.4em", marginRight: "-0.4em", color: "#000" }}>{line}</div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
 export const Editorial: React.FC<EditorialProps> = (p) => {
   const { fps, durationInFrames } = useVideoConfig();
   const s2f = (s: number) => Math.round(s * fps);
@@ -208,7 +181,7 @@ export const Editorial: React.FC<EditorialProps> = (p) => {
         </Sequence>
       ))}
       <Sequence from={s2f(mainEnd)}>
-        <EndCard line={p.endLine} whatsapp={p.whatsapp} />
+        <BrandOutro brand="zvc" />
       </Sequence>
       {p.audio ? (
         <Audio

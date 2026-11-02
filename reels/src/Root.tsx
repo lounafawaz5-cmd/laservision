@@ -1,6 +1,6 @@
 import { Composition } from "remotion";
 import { TalkingHead, talkingHeadSchema, TalkingHeadProps } from "./templates/TalkingHead";
-import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
+import { BrandOutro, brandOutroSchema, OUTRO_SECONDS } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
@@ -76,7 +76,7 @@ export const RemotionRoot: React.FC = () => (
       fps={FPS}
       width={1080}
       height={1920}
-      durationInFrames={Math.round(2.5 * FPS)}
+      durationInFrames={Math.round(OUTRO_SECONDS * FPS)}
     />
     <Composition
       id="Outro-ZVC"
@@ -86,7 +86,7 @@ export const RemotionRoot: React.FC = () => (
       fps={FPS}
       width={1080}
       height={1920}
-      durationInFrames={Math.round(2.5 * FPS)}
+      durationInFrames={Math.round(OUTRO_SECONDS * FPS)}
     />
     <Composition
       id="Monogram-ZVC"

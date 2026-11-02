@@ -3,7 +3,11 @@ import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, us
 import { brands } from "../brands";
 import { WhatsAppIcon } from "../components/WhatsAppIcon";
 
-// Standalone end card, appended to finished edits (e.g. CapCut exports) with scripts/append-outro.sh.
+// THE end card for both brands (decided 2 Nov). Every edit ends on this, unchanged: templates render
+// <BrandOutro> for OUTRO_SECONDS; finished exports (e.g. CapCut) get it via scripts/append-outro.sh.
+// Never build another end card.
+export const OUTRO_SECONDS = 2.5;
+
 export const brandOutroSchema = z.object({
   brand: z.enum(["laservision", "zvc"]),
 });
