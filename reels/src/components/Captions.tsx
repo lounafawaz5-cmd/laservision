@@ -10,7 +10,7 @@ export type Caption = { text: string; startMs: number; endMs: number; words?: nu
 export const captionWordStyle = (brand: Brand, word: string): React.CSSProperties => ({
   fontFamily: `"${REEL_FONT}", sans-serif`,
   fontWeight: 700,
-  fontSize: /^[\x00-\x7F]+$/.test(word) ? 72 : 86,
+  fontSize: /^[\x00-\x7F]+$/.test(word) ? 54 : 64, // the guide sets no size; 64 px reads at chest height without crowding
   color: "#FFFFFF",
   textShadow: textGlow(brand),
 });
@@ -33,7 +33,7 @@ export const CaptionLine: React.FC<{ caption: Caption; brand: Brand; nowMs: numb
   return (
     <div
       dir={isArabic(caption.text) ? "rtl" : "ltr"}
-      style={{ width, lineHeight: 1.3, textAlign: "center", display: "flex", flexWrap: nowrap ? "nowrap" : "wrap", justifyContent: "center", columnGap: 22 }}
+      style={{ width, lineHeight: 1.3, textAlign: "center", display: "flex", flexWrap: nowrap ? "nowrap" : "wrap", justifyContent: "center", columnGap: 16 }}
     >
       {caption.text.split(" ").map((w, i) => (
         <span key={i} style={{ ...captionWordStyle(brand, w), opacity: interpolate(nowMs - starts[i], [0, 120], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}>

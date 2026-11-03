@@ -20,7 +20,7 @@ export const ListReveal: React.FC<{ items: ListItem[]; brand: Brand; top: number
             key={item.text}
             brand={brand}
             nowMs={nowMs}
-            width={1040}
+            width={960}
             nowrap
             caption={{ text: item.text, startMs: item.atMs, endMs: item.atMs + 400 }}
           />
