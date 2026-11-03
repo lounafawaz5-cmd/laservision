@@ -4,6 +4,8 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { CapcutFinish, capcutFinishSchema, CapcutFinishProps, capcutFinishDuration } from "./templates/CapcutFinish";
+import { octAngiography } from "./edits/oct-angiography";
 
 const FPS = 30;
 
@@ -107,6 +109,17 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={900}
+    />
+    <Composition
+      id="OctAngiography-LaserVision"
+      component={CapcutFinish}
+      schema={capcutFinishSchema}
+      defaultProps={octAngiography}
+      calculateMetadata={({ props }: { props: CapcutFinishProps }) => ({ durationInFrames: capcutFinishDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={1430}
     />
   </>
 );
