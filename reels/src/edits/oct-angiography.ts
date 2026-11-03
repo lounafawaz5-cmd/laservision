@@ -13,10 +13,9 @@ export const octAngiography: CapcutFinishProps = {
   brand: "laservision",
   video: "footage/1103/1103.mp4",
   // The list is said twice; the second take (25.05–31.30, between two pauses) is removed.
-  // A slight punch-in after the cut hides the jump.
   keep: [
     { from: 0, to: 25.05 },
-    { from: 31.3, to: 53.833, zoom: 1.07 },
+    { from: 31.3, to: 53.833 },
   ],
   // Arabic subtitles, 1–3 words, English terms in English (REEL_STYLE.md).
   captions: [
