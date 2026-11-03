@@ -1,8 +1,48 @@
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { Brand, fontFor, isArabic } from "../brands";
+import { Brand, REEL_FONT, isArabic, textGlow } from "../brands";
 
-// Same shape Whisper transcripts get converted to.
-export type Caption = { text: string; startMs: number; endMs: number };
+// Same shape Whisper transcripts get converted to. `words` = each word's start (ms) for the
+// word-by-word fade; without it the words are spread over the line.
+export type Caption = { text: string; startMs: number; endMs: number; words?: number[] };
+
+// House captions (brand/Video_Editing_Guide.pdf): Montserrat Arabic Bold, white, word-by-word fade,
+// glow in the account colour. English terms in CAPS, a touch smaller next to the Arabic.
+export const captionWordStyle = (brand: Brand, word: string): React.CSSProperties => ({
+  fontFamily: `"${REEL_FONT}", sans-serif`,
+  fontWeight: 700,
+  fontSize: /^[\x00-\x7F]+$/.test(word) ? 72 : 86,
+  color: "#FFFFFF",
+  textShadow: textGlow(brand),
+});
+
+export const wordStarts = (c: Caption) => {
+  const n = c.text.split(" ").length;
+  return c.words && c.words.length === n
+    ? c.words
+    : Array.from({ length: n }, (_, i) => c.startMs + (i * Math.min(c.endMs - c.startMs, 900)) / n);
+};
+
+export const CaptionLine: React.FC<{ caption: Caption; brand: Brand; nowMs: number; width?: number; nowrap?: boolean }> = ({
+  caption,
+  brand,
+  nowMs,
+  width = 920,
+  nowrap = false,
+}) => {
+  const starts = wordStarts(caption);
+  return (
+    <div
+      dir={isArabic(caption.text) ? "rtl" : "ltr"}
+      style={{ width, lineHeight: 1.3, textAlign: "center", display: "flex", flexWrap: nowrap ? "nowrap" : "wrap", justifyContent: "center", columnGap: 22 }}
+    >
+      {caption.text.split(" ").map((w, i) => (
+        <span key={i} style={{ ...captionWordStyle(brand, w), opacity: interpolate(nowMs - starts[i], [0, 120], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}>
+          {/^[\x00-\x7F]+$/.test(w) && w !== "LaserVision" ? w.toUpperCase() : w}
+        </span>
+      ))}
+    </div>
+  );
+};
 
 export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ captions, brand }) => {
   const frame = useCurrentFrame();
@@ -10,32 +50,10 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ capt
   const nowMs = (frame / fps) * 1000;
   const current = captions.find((c) => nowMs >= c.startMs && nowMs < c.endMs);
   if (!current) return null;
-
-  const clean = brand.captionStyle === "clean";
-  const fadeIn = interpolate(nowMs - current.startMs, [0, 120], [0, 1], { extrapolateRight: "clamp" });
-
+  // Chest height (~60% down), clear of the face (REEL_STYLE.md).
   return (
-    // Clean captions sit at chest height (~60% down); boxed ones sit lower.
-    <AbsoluteFill style={{ alignItems: "center", paddingTop: clean ? 1120 : 1380 }}>
-      <div
-        dir={isArabic(current.text) ? "rtl" : "ltr"}
-        style={{
-          opacity: clean ? fadeIn : 1,
-          maxWidth: 900,
-          padding: clean ? 0 : "18px 32px",
-          borderRadius: 20,
-          background: clean ? "transparent" : brand.colors.captionBg,
-          color: brand.colors.captionText,
-          textShadow: clean ? "0 2px 12px rgba(0,0,0,0.55)" : "none",
-          fontFamily: fontFor(brand, current.text),
-          fontWeight: clean ? 800 : 700,
-          fontSize: clean ? 66 : 58,
-          lineHeight: 1.25,
-          textAlign: "center",
-        }}
-      >
-        {current.text}
-      </div>
+    <AbsoluteFill style={{ alignItems: "center", paddingTop: 1110 }}>
+      <CaptionLine caption={current} brand={brand} nowMs={nowMs} />
     </AbsoluteFill>
   );
 };

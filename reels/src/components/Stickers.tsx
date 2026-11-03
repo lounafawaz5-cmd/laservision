@@ -3,7 +3,7 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 // Flat illustrated stickers for medical terms. Not realistic on purpose: they only need to say
 // "this is the OCT machine" / "this is an angiography" at a glance. LaserVision colors only.
 const C = { navy: "#00303F", blue: "#005D83", cyan: "#30A4BF", ice: "#B6DFE5", light: "#F1F2F2" };
-const LABEL_FONT = '"Inter", sans-serif';
+const LABEL_FONT = "\"Montserrat Arabic\", sans-serif"; // brand/Video_Editing_Guide.pdf: all on-screen text
 
 export type StickerKind = "oct" | "angiography";
 
@@ -50,7 +50,7 @@ const Label: React.FC<{ text: string; width: number }> = ({ text, width }) => (
       textAnchor="middle"
       fill="#fff"
       fontFamily={LABEL_FONT}
-      fontWeight={800}
+      fontWeight={700}
       fontSize={28}
       letterSpacing={2}
     >

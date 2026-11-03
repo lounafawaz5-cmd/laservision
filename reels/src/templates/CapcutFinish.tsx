@@ -15,7 +15,7 @@ export const capcutFinishSchema = z.object({
   video: z.string(),
   // Parts of the export to keep, in order. `zoom` > 1 punches in to hide a jump cut.
   keep: z.array(z.object({ from: sec, to: sec, zoom: z.number().optional() })),
-  captions: z.array(z.object({ text: z.string(), startMs: z.number(), endMs: z.number() })),
+  captions: z.array(z.object({ text: z.string(), startMs: z.number(), endMs: z.number(), words: z.array(z.number()).optional() })),
   lists: z.array(
     z.object({
       items: z.array(z.object({ text: z.string(), atMs: z.number() })),
@@ -37,7 +37,7 @@ export const capcutFinishSchema = z.object({
     }),
   ),
   logoGlow: z
-    .object({ startMs: z.number(), maskDir: z.string(), maskFrames: z.number(), top: z.number(), height: z.number() })
+    .object({ startMs: z.number(), dir: z.string(), frames: z.number(), top: z.number(), height: z.number() })
     .nullable(),
 });
 
@@ -72,7 +72,12 @@ export const CapcutFinish: React.FC<CapcutFinishProps> = (p) => {
   });
 
   const captions = p.captions
-    .map((c) => ({ text: c.text, startMs: toOut(p.keep, c.startMs), endMs: toOut(p.keep, c.endMs) }))
+    .map((c) => ({
+      text: c.text,
+      startMs: toOut(p.keep, c.startMs),
+      endMs: toOut(p.keep, c.endMs),
+      words: c.words?.map((w) => toOut(p.keep, w)),
+    }))
     .filter((c) => c.endMs > c.startMs);
 
   return (
@@ -88,7 +93,7 @@ export const CapcutFinish: React.FC<CapcutFinishProps> = (p) => {
       ))}
 
       {p.logoGlow ? (
-        <Sequence from={f(p.logoGlow.startMs)} durationInFrames={p.logoGlow.maskFrames}>
+        <Sequence from={f(p.logoGlow.startMs)} durationInFrames={p.logoGlow.frames}>
           <LogoGlow {...p.logoGlow} />
         </Sequence>
       ) : null}
