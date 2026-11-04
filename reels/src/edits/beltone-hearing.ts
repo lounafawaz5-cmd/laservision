@@ -70,8 +70,8 @@ export const beltoneHearing: TalkingHeadProps = {
     endMs: Math.round((e - TRIM) * 1000),
   })),
   broll: [
-    // "ضحكة حدا بتحبّوا، حكي الأصحاب"
-    { src: `${dir}stock-42583.mp4`, from: 4.68, to: 7.7, at: 3, focusX: 80 },
+    // "ضحكة حدا بتحبّوا، حكي الأصحاب": family laughing at home
+    { src: `${dir}stock-36780.mp4`, from: 4.68, to: 7.7, at: 2, focusX: 50 },
     // "وصوت التلفزيون"
     { src: `${dir}stock-26092.mp4`, from: 7.7, to: 9.58, at: 2, focusX: 16 },
     // "حديث بمطعم مليان ناس"
