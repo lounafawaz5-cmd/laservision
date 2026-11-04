@@ -79,8 +79,8 @@ export const octAngiography: CapcutFinishProps = {
       ],
       endMs: 18420,
       top: 1040,
-      sfx: "sfx/ding.wav",
-      sfxVolume: 0.35,
+      sfx: "sfx/pop.wav",
+      sfxVolume: 0.18,
     },
   ],
   stickers: [
