@@ -4,7 +4,13 @@ import { Brand, fontFor, isArabic } from "../brands";
 // Same shape Whisper transcripts get converted to.
 export type Caption = { text: string; startMs: number; endMs: number };
 
-export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ captions, brand }) => {
+// size: font size in px (0 = brand default). outline: thin dark edge so white words stay readable on light sets.
+export const Captions: React.FC<{ captions: Caption[]; brand: Brand; size?: number; outline?: boolean }> = ({
+  captions,
+  brand,
+  size = 0,
+  outline = false,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const nowMs = (frame / fps) * 1000;
@@ -26,10 +32,12 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ capt
           borderRadius: 20,
           background: clean ? "transparent" : brand.colors.captionBg,
           color: brand.colors.captionText,
-          textShadow: clean ? "0 2px 12px rgba(0,0,0,0.55)" : "none",
+          textShadow: clean ? (outline ? "0 3px 14px rgba(0,48,63,0.6)" : "0 2px 12px rgba(0,0,0,0.55)") : "none",
+          WebkitTextStroke: outline ? `${Math.round((size || 66) / 9)}px #00303F` : undefined,
+          paintOrder: outline ? "stroke fill" : undefined,
           fontFamily: fontFor(brand, current.text),
           fontWeight: clean ? 800 : 700,
-          fontSize: clean ? 66 : 58,
+          fontSize: size || (clean ? 66 : 58),
           lineHeight: 1.25,
           textAlign: "center",
         }}

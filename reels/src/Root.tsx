@@ -4,6 +4,7 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { beltoneHearing } from "./edits/beltone-hearing";
 
 const FPS = 30;
 
@@ -39,7 +40,8 @@ const sampleZvc: TalkingHeadProps = {
 // Duration follows the props, so each reel's length comes from its footage plan.
 const calc = ({ props }: { props: TalkingHeadProps }) => {
   const lastCaption = Math.max(props.hook ? props.hookSeconds * 1000 : 0, ...props.captions.map((c) => c.endMs));
-  return { durationInFrames: Math.ceil((lastCaption / 1000 + props.outroSeconds) * FPS) };
+  const main = props.mainSec || lastCaption / 1000;
+  return { durationInFrames: Math.ceil((main + props.outroSeconds) * FPS) };
 };
 
 export const RemotionRoot: React.FC = () => (
@@ -60,6 +62,17 @@ export const RemotionRoot: React.FC = () => (
       component={TalkingHead}
       schema={talkingHeadSchema}
       defaultProps={sampleZvc}
+      calculateMetadata={calc}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={300}
+    />
+    <Composition
+      id="BeltoneHearing-LaserVision"
+      component={TalkingHead}
+      schema={talkingHeadSchema}
+      defaultProps={beltoneHearing}
       calculateMetadata={calc}
       fps={FPS}
       width={1080}
