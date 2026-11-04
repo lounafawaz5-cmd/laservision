@@ -70,7 +70,7 @@ export const beltoneHearing: TalkingHeadProps = {
   })),
   broll: [
     // "ضحكة حدا بتحبّوا، حكي الأصحاب": family gathering laughing in a garden, shot from across the yard
-    { src: `${dir}stock-23135.mp4`, from: 4.68, to: 7.7, at: 3, focusX: 50, fit: true, sfx: true },
+    { src: `${dir}stock-23135.mp4`, from: 4.68, to: 7.7, at: 3, focusX: 48, sfx: true },
     // "وصوت التلفزيون"
     { src: `${dir}stock-26092.mp4`, from: 7.7, to: 9.58, at: 2, focusX: 16, sfx: true },
     // "حديث بمطعم مليان ناس"
