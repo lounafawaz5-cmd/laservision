@@ -8,7 +8,7 @@ const TRIM = 2.2;
 
 // Lines are timed on the raw clip (seconds), from the Whisper word timings, then shifted by TRIM.
 const lines: [string, number, number][] = [
-  ["كم من الأصوات", 2.2, 3.52],
+  ["ادي من الأصوات", 2.2, 3.52],
   ["بحياتكم اليومية", 3.52, 4.82],
   ["بتمرق", 4.82, 5.58],
   ["بدون ما تنتبهولا؟", 5.58, 6.88],
@@ -26,8 +26,9 @@ const lines: [string, number, number][] = [
   ["الأصوات المهمّة", 19.48, 20.64],
   ["بوضوح أكتر", 20.64, 21.74],
   ["وبتخفف تأثير", 21.74, 23.08],
-  ["الأصوات المزعجة", 23.08, 24.3],
-  ["تصميم عملي", 24.98, 26.48],
+  ["الأصوات المزعجة", 23.08, 24.45],
+  ["حواليك", 24.45, 25.05],
+  ["تصميم عملي", 25.1, 26.48],
   ["وتكنولوجيا ذكية", 26.48, 27.84],
   ["وتجربة سمع", 27.84, 29.62],
   ["بتتكيّف مع يومك", 29.62, 30.88],
@@ -62,22 +63,20 @@ export const beltoneHearing: TalkingHeadProps = {
   hookSeconds: 0,
   outroSeconds: 2.5,
   outroStyle: "brand",
-  captionSize: 52,
-  captionOutline: true,
   captions: lines.map(([text, s, e]) => ({
     text,
     startMs: Math.round((s - TRIM) * 1000),
     endMs: Math.round((e - TRIM) * 1000),
   })),
   broll: [
-    // "ضحكة حدا بتحبّوا، حكي الأصحاب": family laughing at home
-    { src: `${dir}stock-36780.mp4`, from: 4.68, to: 7.7, at: 2, focusX: 50 },
+    // "ضحكة حدا بتحبّوا، حكي الأصحاب": family gathering laughing in a garden, shot from across the yard
+    { src: `${dir}stock-23135.mp4`, from: 4.68, to: 7.7, at: 3, focusX: 50, fit: true, sfx: true },
     // "وصوت التلفزيون"
-    { src: `${dir}stock-26092.mp4`, from: 7.7, to: 9.58, at: 2, focusX: 16 },
+    { src: `${dir}stock-26092.mp4`, from: 7.7, to: 9.58, at: 2, focusX: 16, sfx: true },
     // "حديث بمطعم مليان ناس"
-    { src: `${dir}stock-4043.mp4`, from: 9.58, to: 12.0, at: 2, focusX: 50 },
+    { src: `${dir}stock-4043.mp4`, from: 9.58, to: 12.0, at: 2, focusX: 50, sfx: true },
     // "مع Beltone…": the two Beltone shots from Drive
-    { src: `${dir}RIB_0138.mp4`, from: 12.0, to: 14.4, at: 2, focusX: 50 },
+    { src: `${dir}RIB_0138.mp4`, from: 12.0, to: 14.4, at: 2, focusX: 50, sfx: true },
     { src: `${dir}RIB_0136.mp4`, from: 14.4, to: 16.8, at: 1, focusX: 50 },
   ],
   overlays: [

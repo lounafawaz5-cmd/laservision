@@ -9,6 +9,10 @@ Read before any work in this repo. These are Luna's decisions; don't re-ask them
 - **ZVC:** the store name "ZEISS Vision Center" is fine; never the blue ZEISS block logo. Use the "by Laser Vision" wordmark (`brand/zeiss/`).
 - **Carousels:** English only, font Outfit, house style in `references/laservision/CAROUSEL_STYLE.md`.
 - **Reels:** Arabic subtitles on both accounts. LaserVision house style in `references/laservision/REEL_STYLE.md`.
+- **Video editing guide (both accounts): `references/VIDEO_EDITING_GUIDE.pdf`. Always apply it.** Captions in Montserrat Arabic Bold, word-by-word fade,
+  glow intensity 30 / range 58 in #005D83 (LaserVision) or #0C188D (ZVC). Transitions: Mix, Echo Fade, Film Reject, Acrylic Fades.
+  Sound effects: whoosh on transitions, pop on text pop-ups. Implemented in `reels/src/components/Captions.tsx`.
+- **B-roll:** keep it professional (no party or nightlife shots).
 
 ## Content
 - Rules for what each brand says and never says: `strategy/SUMMARY.md`.

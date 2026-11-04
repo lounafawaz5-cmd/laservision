@@ -5,6 +5,8 @@ import { staticFile } from "remotion";
 // Swap for each brand's own font files once the brand kits arrive.
 const LATIN = "Inter";
 const ARABIC_FONT = "Noto Sans Arabic";
+// House font for all on-screen text (references/VIDEO_EDITING_GUIDE.md). OFL, github.com/typeagm/Montserrat-Arabic.
+loadFont({ family: "Montserrat Arabic", url: staticFile("fonts/Montserrat-Arabic-Bold.woff2"), weight: "700" });
 for (const weight of ["400", "700", "800"]) {
   loadFont({ family: LATIN, url: staticFile(`fonts/inter-latin-${weight}-normal.woff2`), weight });
   loadFont({ family: ARABIC_FONT, url: staticFile(`fonts/noto-sans-arabic-arabic-${weight}-normal.woff2`), weight });
@@ -23,6 +25,8 @@ export type Brand = {
     text: string;
     captionBg: string;
     captionText: string;
+    // Caption glow, per the editing guide.
+    glow: string;
   };
   fonts: { latin: string; arabic: string };
   // "clean": white bold words with a shadow, no box (LaserVision house style).
@@ -47,6 +51,7 @@ export const brands: Record<BrandId, Brand> = {
       text: "#FFFFFF",
       captionBg: "#005D83",
       captionText: "#FFFFFF",
+      glow: "#005D83",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "clean",
@@ -63,6 +68,7 @@ export const brands: Record<BrandId, Brand> = {
       text: "#FFFFFF",
       captionBg: "#FFFFFF",
       captionText: "#000000",
+      glow: "#0C188D",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "box",
