@@ -28,6 +28,7 @@ npx remotion render src/index.ts TalkingHead-Zeiss out/reel.mp4 --props=props.js
 |---|---|---|
 | BrandOutro | Ready | 2.5 s end card: LaserVision = navy, white logo, branches, WhatsApp icon + number. ZVC = black, wordmark, WhatsApp icon + number. |
 | CapcutFinish | Ready | Finishing pass on a CapCut export: remove sections (times in the export's own timeline), Arabic subtitles, on-screen lists with a ding per item, illustrated stickers (OCT, angiography), glow on a burned-in logo (`scripts/logo-mask.py`). First use: `src/edits/oct-angiography.ts`. |
+| MultiTake | Ready | One talking head built from several takes of the same set-up: best delivery of each line, short Mix on each join, B-roll cut-ins (labelled placeholder until the clip exists), illustrated overlays with a pop (field-of-view eye, rocking brain, squinting eyes, logo with halo), house captions. Word timings: `scripts/multitake-words.py`. First use: `src/edits/visual-field.ts`. |
 | TalkingHead | Starter | Footage + timed captions; optional hook card and end card. LaserVision preset matches the reference reel (no cards, word-by-word subtitles). |
 
 The full template list (doctor Q&A, patient story, before/after, product showcase, listicle,

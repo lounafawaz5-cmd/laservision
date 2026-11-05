@@ -6,6 +6,8 @@ import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { CapcutFinish, capcutFinishSchema, CapcutFinishProps, capcutFinishDuration } from "./templates/CapcutFinish";
 import { octAngiography } from "./edits/oct-angiography";
+import { MultiTake, multiTakeSchema, MultiTakeProps, multiTakeDuration } from "./templates/MultiTake";
+import { visualField } from "./edits/visual-field";
 
 const FPS = 30;
 
@@ -120,6 +122,17 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={1430}
+    />
+    <Composition
+      id="VisualField-LaserVision"
+      component={MultiTake}
+      schema={multiTakeSchema}
+      defaultProps={visualField}
+      calculateMetadata={({ props }: { props: MultiTakeProps }) => ({ durationInFrames: multiTakeDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={1640}
     />
   </>
 );
