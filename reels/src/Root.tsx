@@ -132,7 +132,7 @@ export const RemotionRoot: React.FC = () => (
       fps={FPS}
       width={1080}
       height={1920}
-      durationInFrames={1640}
+      durationInFrames={1715}
     />
   </>
 );

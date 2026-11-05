@@ -28,25 +28,26 @@ export const visualField: MultiTakeProps = {
     { src: take("0029"), from: 71.5, to: 77.4, note: "line 9" }, // out 48.75–54.65
   ],
   broll: [
-    // No visual field (perimeter) footage in the Drive folder: the patient clips there are the Lenstar,
-    // the Sirius topographer and a black-head device, none of them a perimeter. Drop the clip in as
-    // footage/visual-field/broll-vf.mp4 and set src (from = where in the clip to start).
-    { src: "", from: 0, atMs: 12100, durMs: 3600, label: "B-ROLL NEEDED\nVisual field machine, patient only" },
+    // No visual field footage exists (Luna, 5 Nov), so this is an animated scene: the patient from behind at the
+    // bowl perimeter, dots flashing, clicking the response button. Real footage later: set src, drop `scene`.
+    { src: "", from: 0, atMs: 12100, durMs: 3600, label: "Visual field test", scene: "visualField" },
   ],
   overlays: [
     // Eye pops on "العين", lines run out on "على الجوانب" (out 20.5 s), hold through "من دون ما نحرّك عينينا".
-    { kind: "fieldEye", atMs: 17500, durMs: 5500, y: 870, spreadAtMs: 3000 },
+    // Bottom of the frame, under the subtitles (Luna, 5 Nov; same for the squinting eyes and the logo).
+    { kind: "fieldEye", atMs: 17500, durMs: 5500, y: 1490, spreadAtMs: 3000 },
     // "المرتبطة بالدماغ": right of her head, where the background is clear.
     { kind: "brain", atMs: 32150, durMs: 3000, x: 925, y: 400, size: 270 },
-    // "صحة العين": on the scrubs between chin and subtitles.
-    { kind: "squintEyes", atMs: 47700, durMs: 2300, y: 860, eyeWidth: 210 },
-    // "بـ LaserVision Tripoli": the logo holds to the last frame.
-    { kind: "logo", atMs: 52650, durMs: 3000, y: 860, width: 660, src: "brand/laservision-logo-white.png" },
+    // "صحة العين"
+    { kind: "squintEyes", atMs: 47700, durMs: 2300, y: 1500, eyeWidth: 210 },
+    // "بـ LaserVision Tripoli": holds until the end card.
+    { kind: "logo", atMs: 52650, durMs: 2000, y: 1490, width: 660, src: "brand/laservision-logo-white.png" },
   ],
+  outroSeconds: 2.5, // the standard LaserVision end card
   popSfx: "sfx/pop.wav",
   popVolume: 0.18,
   captions: [
-    s("ممكن تكون شايفة", 140, 1660, [140, 900, 1280]),
+    s("ممكن تكون شايف", 140, 1660, [140, 900, 1280]),
     s("منيح", 1660, 2220, [1660]),
     s("ومع هيك", 2220, 2800, [2220, 2480]),
     s("يكون عندك نقص", 2800, 3820, [2800, 3040, 3480]),

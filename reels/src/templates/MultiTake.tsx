@@ -3,6 +3,8 @@ import { AbsoluteFill, Audio, interpolate, OffthreadVideo, Sequence, staticFile,
 import { brands, REEL_FONT } from "../brands";
 import { Captions } from "../components/Captions";
 import { FieldEye, LogoPop, RockingBrain, SquintEyes } from "../components/Overlays";
+import { VisualFieldScene } from "../components/BrollScenes";
+import { BrandOutro } from "./BrandOutro";
 
 // Talking head assembled from several takes of the same set-up: pick the best delivery of each line,
 // join them with a short Mix (the guide's default transition), cut in B-roll, add overlays and subtitles.
@@ -12,8 +14,11 @@ export const multiTakeSchema = z.object({
   // Mix crossfade on each join between segments, in frames (0 = hard cut).
   mixFrames: z.number(),
   segments: z.array(z.object({ src: z.string(), from: z.number(), to: z.number(), note: z.string().optional() })),
-  // B-roll over the speaker (her audio keeps playing). Empty src = a labelled placeholder until the clip exists.
-  broll: z.array(z.object({ src: z.string(), from: z.number(), atMs: z.number(), durMs: z.number(), label: z.string() })),
+  // B-roll over the speaker (her audio keeps playing). `scene` = an animated scene from BrollScenes.tsx instead of
+  // footage; empty src and no scene = a labelled placeholder until the clip exists.
+  broll: z.array(
+    z.object({ src: z.string(), from: z.number(), atMs: z.number(), durMs: z.number(), label: z.string(), scene: z.enum(["visualField"]).optional() }),
+  ),
   overlays: z.array(
     z.discriminatedUnion("kind", [
       z.object({ kind: z.literal("fieldEye"), atMs: z.number(), durMs: z.number(), y: z.number(), spreadAtMs: z.number() }),
@@ -26,12 +31,15 @@ export const multiTakeSchema = z.object({
   popSfx: z.string(),
   popVolume: z.number(),
   captions: z.array(z.object({ text: z.string(), startMs: z.number(), endMs: z.number(), words: z.array(z.number()).optional() })),
+  // The standard brand end card (BrandOutro) after the last segment; 0 = none.
+  outroSeconds: z.number(),
 });
 
 export type MultiTakeProps = z.infer<typeof multiTakeSchema>;
 
-export const multiTakeDuration = (p: MultiTakeProps, fps: number) =>
-  p.segments.reduce((s, g) => s + Math.round((g.to - g.from) * fps), 0);
+const mainFrames = (p: MultiTakeProps, fps: number) => p.segments.reduce((s, g) => s + Math.round((g.to - g.from) * fps), 0);
+
+export const multiTakeDuration = (p: MultiTakeProps, fps: number) => mainFrames(p, fps) + Math.round(p.outroSeconds * fps);
 
 export const MultiTake: React.FC<MultiTakeProps> = (p) => {
   const brand = brands[p.brand];
@@ -75,6 +83,12 @@ export const MultiTake: React.FC<MultiTakeProps> = (p) => {
       ))}
 
       <Captions captions={p.captions} brand={brand} />
+
+      {p.outroSeconds > 0 ? (
+        <Sequence from={mainFrames(p, fps)}>
+          <BrandOutro brand={p.brand} />
+        </Sequence>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -97,14 +111,16 @@ const Segment: React.FC<{ src: string; startFrom: number; len: number; fadeIn: n
 };
 
 // B-roll cut-in with a quick Mix in and out. No clip yet → a clearly labelled placeholder so the slot is visible in review.
-const Broll: React.FC<{ src: string; from: number; durMs: number; label: string }> = ({ src, from, durMs, label }) => {
+const Broll: React.FC<{ src: string; from: number; durMs: number; label: string; scene?: "visualField" }> = ({ src, from, durMs, label, scene }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const len = Math.round((durMs / 1000) * fps);
   const opacity = interpolate(frame, [0, 5, len - 5, len], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <AbsoluteFill style={{ opacity }}>
-      {src ? (
+      {scene === "visualField" ? (
+        <VisualFieldScene />
+      ) : src ? (
         <OffthreadVideo src={staticFile(src)} startFrom={Math.round(from * fps)} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       ) : (
         <AbsoluteFill style={{ background: "linear-gradient(170deg, #00303F, #005D83)", alignItems: "center", justifyContent: "center" }}>
