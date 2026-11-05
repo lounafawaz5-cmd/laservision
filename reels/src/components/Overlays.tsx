@@ -16,11 +16,11 @@ const shadow = "drop-shadow(0 12px 20px rgba(0,30,45,0.35))";
 
 // "Not just what the eye sees in front of it, but also on the sides": a cartoon eye at chest height,
 // then two lines leave the pupil and run out horizontally to the left and right edges of the frame.
-export const FieldEye: React.FC<{ y: number; spreadAtMs: number }> = ({ y, spreadAtMs }) => {
+export const FieldEye: React.FC<{ y: number; spreadAtMs: number; eyeWidth?: number }> = ({ y, spreadAtMs, eyeWidth = 300 }) => {
   const { scale, frame, fps, durationInFrames } = usePop();
   const { width } = useVideoConfig();
   const cx = width / 2;
-  const eyeW = 300;
+  const eyeW = eyeWidth;
   // Lines leave the pupil on "على الجوانب" (`spreadAtMs` after the eye pops) and reach the edges in ~0.7 s.
   const s0 = (spreadAtMs / 1000) * fps;
   const reach = interpolate(frame, [s0, s0 + 0.7 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });

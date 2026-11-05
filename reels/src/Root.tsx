@@ -8,6 +8,8 @@ import { CapcutFinish, capcutFinishSchema, CapcutFinishProps, capcutFinishDurati
 import { octAngiography } from "./edits/oct-angiography";
 import { MultiTake, multiTakeSchema, MultiTakeProps, multiTakeDuration } from "./templates/MultiTake";
 import { visualField } from "./edits/visual-field";
+import { ExportPatch, exportPatchSchema, ExportPatchProps } from "./templates/ExportPatch";
+import { visualFieldFinal } from "./edits/visual-field-final";
 
 const FPS = 30;
 
@@ -133,6 +135,17 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={1715}
+    />
+    <Composition
+      id="VisualFieldFinal-LaserVision"
+      component={ExportPatch}
+      schema={exportPatchSchema}
+      defaultProps={visualFieldFinal}
+      calculateMetadata={({ props }: { props: ExportPatchProps }) => ({ durationInFrames: Math.round(props.durationSec * FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={1670}
     />
   </>
 );
