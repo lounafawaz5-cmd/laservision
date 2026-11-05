@@ -56,7 +56,8 @@ const dir = "footage/rib0129/";
 
 export const beltoneHearing: TalkingHeadProps = {
   brand: "laservision",
-  video: `${dir}RIB_0129.mp4`,
+  // RIB_0129_fixed: "Beltone" re-pronounced (bel-tin → bell-tone) with scripts/fix-word.py, her own "-ōn" from تلفزيون.
+  video: `${dir}RIB_0129_fixed.mp4`,
   trimStartSec: TRIM,
   mainSec: 49.3,
   hook: "",
