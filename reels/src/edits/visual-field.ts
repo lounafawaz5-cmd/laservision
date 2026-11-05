@@ -4,7 +4,7 @@ import { MultiTakeProps } from "../templates/MultiTake";
 // Three takes from Drive (same set-up): RIB_0026 (150 s, many restarts), RIB_0027 (106 s, stops after
 // "glaucoma"), RIB_0029 (79 s, nearly complete). Put them in public/footage/visual-field/.
 // Best delivery of each line (all joins are on pauses in the speech):
-//   1–3  opening, intro          RIB_0027  the only take where "وما تنتبه" is clear
+//   1–3  opening, intro          RIB_0027  clearest "وما تنتبه" (RIB_0029 swallows it)
 //   4    "الـ visual field test…" RIB_0029  RIB_0027 slurs "فحص"
 //   5–8  sides → eye health      RIB_0029  her redo at 0:28.6 (the 0:18–0:28 attempt is cut)
 //   9    call to action           RIB_0029  second version (0:71): "إذا طبيبك طلب منك…", ends on a smile
@@ -46,7 +46,7 @@ export const visualField: MultiTakeProps = {
   popSfx: "sfx/pop.wav",
   popVolume: 0.18,
   captions: [
-    s("ممكن تكون شايف", 140, 1660, [140, 900, 1280]),
+    s("ممكن تكون شايفة", 140, 1660, [140, 900, 1280]),
     s("منيح", 1660, 2220, [1660]),
     s("ومع هيك", 2220, 2800, [2220, 2480]),
     s("يكون عندك نقص", 2800, 3820, [2800, 3040, 3480]),
