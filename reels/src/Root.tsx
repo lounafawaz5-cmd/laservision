@@ -6,6 +6,8 @@ import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { CapcutFinish, capcutFinishSchema, CapcutFinishProps, capcutFinishDuration } from "./templates/CapcutFinish";
 import { octAngiography } from "./edits/oct-angiography";
+import { Still } from "remotion";
+import { ReelCover, reelCoverSchema } from "./templates/ReelCover";
 
 const FPS = 30;
 
@@ -120,6 +122,23 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={1430}
+    />
+    <Still
+      id="Cover-OctAngiography"
+      component={ReelCover}
+      schema={reelCoverSchema}
+      defaultProps={{
+        brand: "laservision" as const,
+        frame: "footage/1103/cover-frame.png",
+        title: "OCT OR\nANGIOGRAPHY?",
+        subtitle: "Here's how they work together",
+        stickers: [
+          { kind: "oct" as const, x: 30, y: 760, size: 330, tilt: -7 },
+          { kind: "angiography" as const, x: 720, y: 760, size: 330, tilt: 7 },
+        ],
+      }}
+      width={1080}
+      height={1920}
     />
   </>
 );

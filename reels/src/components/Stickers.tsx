@@ -8,20 +8,23 @@ const LABEL_FONT = "\"Montserrat Arabic\", sans-serif"; // brand/Video_Editing_G
 export type StickerKind = "oct" | "angiography";
 
 // Pops in with a little overshoot and tilt, floats while on screen, shrinks away at the end.
-export const Sticker: React.FC<{ kind: StickerKind; x: number; y: number; size: number; tilt: number }> = ({
+// `still`: render settled (no pop, no float), for covers.
+export const Sticker: React.FC<{ kind: StickerKind; x: number; y: number; size: number; tilt: number; still?: boolean }> = ({
   kind,
   x,
   y,
   size,
   tilt,
+  still = false,
 }) => {
-  const frame = useCurrentFrame();
+  const live = useCurrentFrame();
+  const frame = still ? 1000 : live;
   const { fps, durationInFrames } = useVideoConfig();
   const enter = spring({ frame, fps, config: { damping: 9, stiffness: 160, mass: 0.7 } });
-  const exit = spring({ frame: frame - (durationInFrames - 8), fps, config: { damping: 200 } });
+  const exit = still ? 0 : spring({ frame: frame - (durationInFrames - 8), fps, config: { damping: 200 } });
   const scale = enter * (1 - exit);
-  const bob = Math.sin((frame / fps) * Math.PI * 1.2) * 6;
-  const rot = tilt + interpolate(enter, [0, 1], [-14, 0]) + Math.sin((frame / fps) * Math.PI) * 1.2;
+  const bob = still ? 0 : Math.sin((frame / fps) * Math.PI * 1.2) * 6;
+  const rot = tilt + interpolate(enter, [0, 1], [-14, 0]) + (still ? 0 : Math.sin((frame / fps) * Math.PI) * 1.2);
 
   return (
     <div
