@@ -61,8 +61,9 @@ export const brands: Record<BrandId, Brand> = {
       primary: "#000000",
       accent: "#D9E906",
       text: "#FFFFFF",
-      captionBg: "#FFFFFF",
-      captionText: "#000000",
+      // ZVC subtitles: white text on a ZEISS Indigo box (never black and white).
+      captionBg: "#0F2DB3",
+      captionText: "#FFFFFF",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "box",

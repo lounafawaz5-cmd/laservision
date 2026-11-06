@@ -155,8 +155,8 @@ const ContactLensesPopUp: React.FC = () => {
 const outlinedText = {
   fontFamily: "Outfit, sans-serif",
   fontWeight: 700,
-  color: "#D9E906", // ZEISS Lime: highlight accent
-  WebkitTextStroke: "10px #000000",
+  color: "#0F2DB3", // ZEISS Indigo, white outline
+  WebkitTextStroke: "12px #FFFFFF",
   paintOrder: "stroke fill",
   lineHeight: 1,
 } as const;
@@ -187,7 +187,7 @@ const MarkBadge: React.FC<{ kind: "tick" | "cross"; t: number[]; left: number; t
   return (
     <div style={{ position: "absolute", left, top, transform: `scale(${sc})`, filter: shadow }}>
       <svg viewBox="0 0 200 200" width={230} height={230}>
-        <circle cx="100" cy="100" r="92" fill={tick ? "#22C55E" : "#EF4444"} stroke="#FFFFFF" strokeWidth="10" />
+        <circle cx="100" cy="100" r="92" fill={tick ? "#0F2DB3" : "#000000"} stroke="#FFFFFF" strokeWidth="10" />
         {tick ? (
           <path d="M55 104 L88 136 L148 70" fill="none" stroke="#FFFFFF" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={draw} />
         ) : (
