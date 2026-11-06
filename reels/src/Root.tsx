@@ -10,6 +10,7 @@ import { MultiTake, multiTakeSchema, MultiTakeProps, multiTakeDuration } from ".
 import { visualField } from "./edits/visual-field";
 import { ExportPatch, exportPatchSchema, ExportPatchProps } from "./templates/ExportPatch";
 import { visualFieldFinal } from "./edits/visual-field-final";
+import { ReelCover, reelCoverSchema, ReelCoverProps } from "./templates/ReelCover";
 
 const FPS = 30;
 
@@ -146,6 +147,24 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={1670}
+    />
+    {/* Covers are stills: render frame 34 (motif fully in, before its exit animation at frame 37). */}
+    <Composition
+      id="Cover-VisualField"
+      component={ReelCover}
+      schema={reelCoverSchema}
+      defaultProps={{
+        brand: "laservision",
+        image: "footage/visual-field/cover-frame.png", // RIB_0029 at 1:17.3
+        title: "VISUAL FIELD TEST",
+        subtitle: "فحص مجال الرؤية",
+        motif: "fieldEye",
+        logo: "brand/laservision-logo-white.png",
+      } satisfies ReelCoverProps}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={45}
     />
   </>
 );
