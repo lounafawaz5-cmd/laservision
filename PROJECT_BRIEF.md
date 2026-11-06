@@ -55,6 +55,7 @@ Full setup checklist: `NEXT_SESSION_SETUP.md`.
 - ZVC: store name **ZEISS Vision Center** is OK on screen. Logo = the "by Laser Vision" wordmark `brand/zeiss/zvc-wordmark-dark.png` / `-white.png`. **Never the blue ZEISS block logo.**
 - **Carousels: English only, font Outfit** (Light/Medium/Bold) for both accounts, in `brand/fonts/Outfit/`.
 - Arabic appears only in reels (spoken Arabic → Arabic subtitles). Reel style: `references/laservision/REEL_STYLE.md`. Carousel style: `references/laservision/CAROUSEL_STYLE.md`.
+- Reel editing settings (captions, glow, transitions, sound effects), both accounts: `brand/VIDEO_EDITING_GUIDE.md` (PDF: `brand/Video_Editing_Guide.pdf`)
 - Canva templates (41 designs, both brands): `brand/CANVA-TEMPLATE-LINKS.md`
 
 ## WhatsApp

@@ -4,6 +4,9 @@ import { staticFile } from "remotion";
 // Fonts are bundled in public/fonts so renders never depend on network access.
 // Swap for each brand's own font files once the brand kits arrive.
 const LATIN = "Inter";
+// Captions: Montserrat Arabic Bold for English and Arabic (Video Editing Guide).
+export const CAPTION_FONT = "Montserrat Arabic";
+loadFont({ family: CAPTION_FONT, url: staticFile("fonts/Montserrat-Arabic-Bold.ttf"), weight: "700" });
 const ARABIC_FONT = "Noto Sans Arabic";
 for (const weight of ["400", "700", "800"]) {
   loadFont({ family: LATIN, url: staticFile(`fonts/inter-latin-${weight}-normal.woff2`), weight });
@@ -21,13 +24,11 @@ export type Brand = {
     primary: string;
     accent: string;
     text: string;
-    captionBg: string;
     captionText: string;
+    // Caption glow color, per account (brand/VIDEO_EDITING_GUIDE.md).
+    captionGlow: string;
   };
   fonts: { latin: string; arabic: string };
-  // "clean": white bold words with a shadow, no box (LaserVision house style).
-  // "box": text on a solid caption box.
-  captionStyle: "clean" | "box";
   // On screen this is always the WhatsApp icon + the number, never the word "WhatsApp".
   whatsapp: string;
 };
@@ -45,11 +46,10 @@ export const brands: Record<BrandId, Brand> = {
       primary: "#005D83",
       accent: "#30A4BF",
       text: "#FFFFFF",
-      captionBg: "#005D83",
       captionText: "#FFFFFF",
+      captionGlow: "#005D83",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
-    captionStyle: "clean",
     whatsapp: "+961 81 54 20 20",
   },
   zvc: {
@@ -61,12 +61,10 @@ export const brands: Record<BrandId, Brand> = {
       primary: "#000000",
       accent: "#D9E906",
       text: "#FFFFFF",
-      // ZVC subtitles: white text on a ZEISS Indigo box (never black and white).
-      captionBg: "#0F2DB3",
       captionText: "#FFFFFF",
+      captionGlow: "#0C188D",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
-    captionStyle: "box",
     whatsapp: "81 47 20 20",
   },
 };

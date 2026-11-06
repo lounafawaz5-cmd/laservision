@@ -9,15 +9,14 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { loadFont } from "@remotion/fonts";
-import { brands } from "../brands";
+import { brands, CAPTION_FONT } from "../brands";
 import { Caption, Captions } from "../components/Captions";
 
 // ZVC reel: contact lens right side vs. inside out (Luna talking head, RIB_0115).
 // Footage + photos are pulled from Drive into public/footage/zvc-lens-sides/ (never committed).
-loadFont({ family: "Outfit", url: staticFile("fonts/Outfit-Bold.ttf"), weight: "700" });
 
 const DIR = "footage/zvc-lens-sides";
+const ZVC_BLUE = brands.zvc.colors.captionGlow; // #0C188D
 export const ZVC_LENS_SIDES_SECONDS = 36.2;
 
 // Times in seconds, taken from the word timestamps of the transcript.
@@ -33,7 +32,7 @@ const T = {
   bottle: [31.9, 35.2], // "contact lens solution"
 };
 
-// ZVC subtitles: Arabic, English terms in CAPS, boxed (brands.zvc.captionStyle = "box").
+// ZVC subtitles: Arabic, English terms in CAPS. Look comes from the Video Editing Guide (components/Captions).
 const s = (text: string, a: number, b: number): Caption => ({ text, startMs: a * 1000, endMs: b * 1000 });
 export const zvcLensSidesCaptions: Caption[] = [
   s("إذا أول مرة", 0.0, 1.5),
@@ -153,9 +152,9 @@ const ContactLensesPopUp: React.FC = () => {
 };
 
 const outlinedText = {
-  fontFamily: "Outfit, sans-serif",
+  fontFamily: `"${CAPTION_FONT}", sans-serif`,
   fontWeight: 700,
-  color: "#0F2DB3", // ZEISS Indigo, white outline
+  color: ZVC_BLUE, // ZVC color from the Video Editing Guide, white outline
   WebkitTextStroke: "12px #FFFFFF",
   paintOrder: "stroke fill",
   lineHeight: 1,
@@ -187,7 +186,7 @@ const MarkBadge: React.FC<{ kind: "tick" | "cross"; t: number[]; left: number; t
   return (
     <div style={{ position: "absolute", left, top, transform: `scale(${sc})`, filter: shadow }}>
       <svg viewBox="0 0 200 200" width={230} height={230}>
-        <circle cx="100" cy="100" r="92" fill={tick ? "#0F2DB3" : "#000000"} stroke="#FFFFFF" strokeWidth="10" />
+        <circle cx="100" cy="100" r="92" fill={tick ? ZVC_BLUE : "#000000"} stroke="#FFFFFF" strokeWidth="10" />
         {tick ? (
           <path d="M55 104 L88 136 L148 70" fill="none" stroke="#FFFFFF" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={draw} />
         ) : (
@@ -249,7 +248,7 @@ const EyeRubber: React.FC = () => {
     <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center" }}>
       <svg viewBox="0 0 400 360" width={440} height={396} style={{ transform: `translateY(${y + 6}px) rotate(${sway}deg)`, transformOrigin: "50% 100%", filter: shadow }}>
         {/* shoulders */}
-        <path d="M60 360 C 70 290, 330 290, 340 360 Z" fill="#0F2DB3" />
+        <path d="M60 360 C 70 290, 330 290, 340 360 Z" fill={ZVC_BLUE} />
         {/* head */}
         <circle cx="200" cy="170" r="125" fill="#FFD166" stroke="#1A1A1A" strokeWidth="8" />
         {/* hair tuft */}
@@ -295,14 +294,14 @@ const SolutionBottle: React.FC = () => {
     <div style={{ position: "absolute", left: 50, top: 210, transform: `scale(${sc})`, transformOrigin: "50% 100%" }}>
       <svg viewBox="0 0 220 420" width={250} height={477} style={{ transform: `rotate(${rock}deg)`, transformOrigin: "50% 95%", filter: shadow }}>
         {/* nozzle + cap */}
-        <path d="M98 10 h 24 l 8 46 h -40 Z" fill="#0F2DB3" stroke="#1A1A1A" strokeWidth="6" strokeLinejoin="round" />
-        <rect x="72" y="54" width="76" height="42" rx="10" fill="#0F2DB3" stroke="#1A1A1A" strokeWidth="6" />
+        <path d="M98 10 h 24 l 8 46 h -40 Z" fill={ZVC_BLUE} stroke="#1A1A1A" strokeWidth="6" strokeLinejoin="round" />
+        <rect x="72" y="54" width="76" height="42" rx="10" fill={ZVC_BLUE} stroke="#1A1A1A" strokeWidth="6" />
         {/* body */}
         <path d="M60 96 h 100 c 30 14 40 40 40 70 v 214 c 0 18 -12 30 -30 30 h -120 c -18 0 -30 -12 -30 -30 v -214 c 0 -30 10 -56 40 -70 Z" fill="#FFFFFF" stroke="#1A1A1A" strokeWidth="7" />
         {/* label */}
         <rect x="34" y="190" width="152" height="150" rx="16" fill="#0072EF" />
-        <text x="110" y="232" textAnchor="middle" fontFamily="Outfit, sans-serif" fontWeight={700} fontSize="25" fill="#FFFFFF">LENS</text>
-        <text x="110" y="262" textAnchor="middle" fontFamily="Outfit, sans-serif" fontWeight={700} fontSize="22" fill="#FFFFFF">SOLUTION</text>
+        <text x="110" y="232" textAnchor="middle" fontFamily={CAPTION_FONT} fontWeight={700} fontSize="25" fill="#FFFFFF">LENS</text>
+        <text x="110" y="262" textAnchor="middle" fontFamily={CAPTION_FONT} fontWeight={700} fontSize="22" fill="#FFFFFF">SOLUTION</text>
         <path d="M78 312 C 84 282, 136 282, 142 312 Z" fill="#BFE0FB" stroke="#FFFFFF" strokeWidth="5" />
         {/* shine */}
         <path d="M48 140 v 40" stroke="#E6EEF7" strokeWidth="10" strokeLinecap="round" />
