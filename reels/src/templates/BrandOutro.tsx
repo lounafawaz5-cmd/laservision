@@ -34,9 +34,13 @@ export const BrandOutro: React.FC<z.infer<typeof brandOutroSchema>> = ({ brand: 
         src={staticFile(isLv ? "brand/laservision-logo-white.png" : brand.logo)}
         style={{ width: 780, opacity: logoIn, transform: `translateY(${(1 - logoIn) * 30}px)` }}
       />
+      {isLv ? null : (
+        // ZEISS Indigo (brand/zeiss/GUIDELINES.md) rule under the wordmark, drawn out like the Monogram end card's line.
+        <div style={{ marginTop: 70, width: interpolate(textIn, [0, 1], [0, 420]), height: 5, background: "#0F2DB3" }} />
+      )}
       <div
         style={{
-          marginTop: 90,
+          marginTop: isLv ? 90 : 50,
           opacity: textIn,
           transform: `translateY(${(1 - textIn) * 20}px)`,
           textAlign: "center",
