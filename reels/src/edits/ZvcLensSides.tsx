@@ -31,6 +31,8 @@ const T = {
   question: [10.0, 11.4], // "كيف منعرف الفرق؟"
   brollRight: [16.6, 20.6], // GAM_0312, right side (cup shape)
   brollWrong: [21.3, 24.6], // GAM_0313, inside out (edges flare out)
+  brollRightLens: [17.0, 20.2], // correct-lens illustration above the finger (on GAM_0312)
+  brollWrongLens: [22.0, 24.2], // inside-out illustration above the finger (on GAM_0313)
   rubbing: [27.2, 30.4], // "رح تحسّوا كأنّو في شي بعينكن"
   bottle: [31.9, 35.2], // "contact lens solution"
 };
@@ -212,13 +214,13 @@ const Important: React.FC = () => {
 // Circle badge whose mark draws itself in.
 // Luna's lens illustrations (cut out: lens + arrows only), replacing the tick and X.
 // Source images cut with scripts/cutlens.py; files in public/overlays/.
-const LensSideImage: React.FC<{ src: string; t: number[]; left: number; top: number; tilt: number }> = ({ src, t, left, top, tilt }) => {
+const LensSideImage: React.FC<{ src: string; t: number[]; left: number; top: number; tilt: number; width?: number }> = ({ src, t, left, top, tilt, width = 330 }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const sc = usePop(durOf(t, fps));
   const bob = Math.sin(frame / 7) * 5;
   return (
-    <div style={{ position: "absolute", left, top, width: 330, transform: `translateY(${bob}px) scale(${sc}) rotate(${tilt}deg)`, filter: shadow }}>
+    <div style={{ position: "absolute", left, top, width, transform: `translateY(${bob}px) scale(${sc}) rotate(${tilt}deg)`, filter: shadow }}>
       <Img src={staticFile(src)} style={{ width: "100%" }} />
     </div>
   );
@@ -370,6 +372,9 @@ const ZvcLensSidesMain: React.FC = () => {
 
       <At t={T.brollRight}><PhotoBroll src={`${DIR}/GAM_0312.jpg`} t={T.brollRight} focusY={0.53} zoom={[1.3, 1.45]} /></At>
       <At t={T.brollWrong}><PhotoBroll src={`${DIR}/GAM_0313.jpg`} t={T.brollWrong} focusY={0.65} zoom={[1.52, 1.65]} /></At>
+
+      <At t={T.brollRightLens}><LensSideImage src="overlays/lens-right-side.png" t={T.brollRightLens} left={370} top={470} tilt={0} width={480} /></At>
+      <At t={T.brollWrongLens}><LensSideImage src="overlays/lens-inside-out.png" t={T.brollWrongLens} left={312} top={470} tilt={0} width={480} /></At>
 
       <At t={T.lenses}><ContactLensesPopUp /></At>
       <At t={T.bang}><Important /></At>
