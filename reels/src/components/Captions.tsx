@@ -10,7 +10,6 @@ const glow = (color: string) =>
 
 const FONT_SIZE = 70;
 const FADE_MS = 140;
-const MIN_COVER_WIDTH = 120;
 
 let ctx: CanvasRenderingContext2D | null = null;
 const measure = (text: string) => {
@@ -19,26 +18,13 @@ const measure = (text: string) => {
   return ctx!.measureText(text).width;
 };
 
-// Left-to-right screen order of the words. In an Arabic line the words run right to left,
-// but a run of English words inside it (e.g. "CONTACT LENS") still reads left to right.
-const visualOrder = (words: string[], rtl: boolean) => {
-  if (!rtl) return words.map((_, i) => i);
-  const runs: number[][] = [];
-  words.forEach((w, i) => {
-    const latin = !isArabic(w);
-    const last = runs[runs.length - 1];
-    if (last && latin && !isArabic(words[last[last.length - 1]])) last.push(i);
-    else runs.push([i]);
-  });
-  return runs.reverse().flat();
-};
-
 // Video Editing Guide (brand/VIDEO_EDITING_GUIDE.md): Montserrat Arabic Bold, white,
 // word-by-word fade, glow in the account color, no box.
 //
-// cover: a spot in the footage the subtitles must keep hidden (e.g. a wardrobe gap). The line is
-// slid sideways so its first wide word sits on that spot, and that word (with any words before it)
-// shows from the line's first frame; the other words still fade in one by one. Give it captions with no pauses between them.
+// cover: a spot in the footage the subtitles must keep hidden (e.g. a wardrobe gap). One-off,
+// only where Luna asks for it: the line is centered on that spot on a solid box in the account
+// color, so the spot is hidden from each line's first frame while the words still fade in.
+// Give it captions with no pauses between them.
 export const Captions: React.FC<{ captions: Caption[]; brand: Brand; cover?: { x: number; y: number } }> = ({
   captions,
   brand,
@@ -64,48 +50,41 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand; cover?: { x
     lineHeight: 1.35,
   };
 
-  const opacityOf = (i: number, pinned: number) =>
-    // Words up to the pinned one show at once, so the reveal never runs out of reading order.
-    i <= pinned
-      ? 1
-      : interpolate(nowMs - current.startMs - i * step, [0, FADE_MS], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const opacityOf = (i: number) =>
+    interpolate(nowMs - current.startMs - i * step, [0, FADE_MS], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  const line = words.map((w, i) => (
+    <span key={i} style={{ opacity: opacityOf(i) }}>
+      {w}
+      {i < words.length - 1 ? " " : ""}
+    </span>
+  ));
 
   if (cover) {
-    // Lay the words out ourselves on one line so we know where each one lands.
-    const space = measure(" ");
-    const order = visualOrder(words, rtl);
-    const widths = words.map(measure);
-    const total = widths.reduce((a, b) => a + b, 0) + space * (words.length - 1);
-    const xs: number[] = [];
-    let x = 0;
-    for (const i of order) {
-      xs[i] = x;
-      x += widths[i] + space;
-    }
-    const margin = 40;
-    // Anchor on the first word wide enough to hide the spot (a short word like "في" lets it show
-    // between its letters); any short words before it appear together with it.
-    let anchor = words.findIndex((_, i) => widths[i] >= MIN_COVER_WIDTH);
-    if (anchor < 0) anchor = widths.indexOf(Math.max(...widths));
-    // Put that word's center on the spot, but keep the line inside the frame.
-    const wanted = cover.x - (xs[anchor] + widths[anchor] / 2);
-    const left = Math.min(Math.max(wanted, margin), width - margin - total);
-    // Whichever word ends up over the spot (normally the anchor) is shown straight away.
-    const over = words.reduce(
-      (best, _, i) => (Math.abs(left + xs[i] + widths[i] / 2 - cover.x) < Math.abs(left + xs[best] + widths[best] / 2 - cover.x) ? i : best),
-      0,
-    );
-    const pinned = Math.max(anchor, over);
+    const padX = 34;
+    const boxW = measure(current.text) + padX * 2;
+    // Centered on the spot, kept inside the frame.
+    const left = Math.min(Math.max(cover.x - boxW / 2, 30), width - 30 - boxW);
     return (
       <AbsoluteFill>
-        {words.map((w, i) => (
-          <span
-            key={i}
-            style={{ ...style, position: "absolute", top: cover.y, left: left + xs[i], transform: "translateY(-50%)", whiteSpace: "pre", opacity: opacityOf(i, pinned) }}
-          >
-            {w}
-          </span>
-        ))}
+        <div
+          dir={rtl ? "rtl" : "ltr"}
+          style={{
+            ...style,
+            position: "absolute",
+            left,
+            top: cover.y,
+            width: boxW,
+            transform: "translateY(-50%)",
+            padding: `10px 0 14px`,
+            textAlign: "center",
+            whiteSpace: "nowrap",
+            background: brand.colors.captionGlow,
+            borderRadius: 24,
+          }}
+        >
+          {line}
+        </div>
       </AbsoluteFill>
     );
   }
@@ -113,12 +92,7 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand; cover?: { x
   return (
     <AbsoluteFill style={{ alignItems: "center", paddingTop: 1220 }}>
       <div dir={rtl ? "rtl" : "ltr"} style={{ ...style, maxWidth: 940, textAlign: "center" }}>
-        {words.map((w, i) => (
-          <span key={i} style={{ opacity: opacityOf(i, -1) }}>
-            {w}
-            {i < words.length - 1 ? " " : ""}
-          </span>
-        ))}
+        {line}
       </div>
     </AbsoluteFill>
   );

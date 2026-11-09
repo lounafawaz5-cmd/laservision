@@ -70,7 +70,8 @@ export const zvcLensSidesCaptions: Caption[] = [
 ];
 
 // Her shirt gapes slightly at the bottom button (about x 535-590, y 1345-1400 for the whole take).
-// The subtitles sit on that spot and never leave a pause, so it stays covered:
+// The subtitles sit on that spot on a #0C188D box (Luna asked for the box on this reel only; the guide
+// otherwise says no box) and never leave a pause, so it stays covered:
 // each line runs until the next one starts, and the last one holds to the end.
 const SHIRT_GAP = { x: 562, y: 1372 };
 const coveringCaptions: Caption[] = zvcLensSidesCaptions.map((c, i, all) => ({
