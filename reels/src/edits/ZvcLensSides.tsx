@@ -11,6 +11,7 @@ import {
 } from "remotion";
 import { brands, CAPTION_FONT } from "../brands";
 import { Caption, Captions } from "../components/Captions";
+import { BrandOutro } from "../templates/BrandOutro";
 
 // ZVC reel: contact lens right side vs. inside out (Luna talking head, RIB_0115).
 // Footage + photos are pulled from Drive into public/footage/zvc-lens-sides/ (never committed).
@@ -18,6 +19,8 @@ import { Caption, Captions } from "../components/Captions";
 const DIR = "footage/zvc-lens-sides";
 const ZVC_BLUE = brands.zvc.colors.captionGlow; // #0C188D
 export const ZVC_LENS_SIDES_SECONDS = 36.2;
+// The usual ZVC end card (templates/BrandOutro) is appended after the talk.
+export const ZVC_LENS_SIDES_OUTRO_SECONDS = 2.5;
 
 // Times in seconds, taken from the word timestamps of the transcript.
 const T = {
@@ -32,41 +35,41 @@ const T = {
   bottle: [31.9, 35.2], // "contact lens solution"
 };
 
-// ZVC subtitles: Arabic, English terms in CAPS. Look comes from the Video Editing Guide (components/Captions).
+// ZVC subtitles: Luna's edited text (her SRT, 2026-11-09). Arabic, English terms in CAPS. Look comes from the Video Editing Guide (components/Captions).
 const s = (text: string, a: number, b: number): Caption => ({ text, startMs: a * 1000, endMs: b * 1000 });
 export const zvcLensSidesCaptions: Caption[] = [
-  s("إذا أول مرة", 0.0, 1.5),
+  s("إذا أول مرة", 0, 1.5),
   s("بدكن تلبسوا", 1.5, 2.86),
   s("CONTACT LENSES", 2.86, 3.94),
-  s("في شي مهم", 3.94, 4.84),
-  s("لازم تعرفوه", 4.84, 5.85),
+  s("في شغلة مهمة", 3.94, 4.84),
+  s("لازم تعرفوها", 4.84, 5.88),
   s("الـ CONTACT LENS", 5.88, 6.92),
-  s("إلها TWO SIDES", 6.92, 7.9),
+  s("في إلها TWO SIDES", 6.92, 7.94),
   s("في وجه صح", 7.94, 8.68),
-  s("ووجه مقلوب", 8.68, 9.98),
-  s("بس كيف منعرف الفرق؟", 10.0, 11.32),
+  s("و الميلة المقلوبة", 8.68, 10),
+  s("بس كيف منعرف الفرق؟", 10, 11.32),
   s("حطّوا الـ CONTACT LENS", 11.32, 12.52),
   s("على راس إصبعكن", 12.52, 13.66),
-  s("وتطلّعوا عليها من الجنب", 13.66, 15.5),
+  s("وتطلّعوا عليها من الجنب", 13.66, 15.58),
   s("إذا شكلها متل الـ CUP", 15.58, 17.1),
   s("وأطرافها مايلة لفوق", 17.1, 18.7),
-  s("يعني هي بالاتجاه الصح", 18.7, 20.5),
+  s("يعني هي بالاتجاه الصح", 18.7, 20.6),
   s("وإذا الـ PERIPHERY", 20.6, 21.4),
-  s("طلع لبرّا", 21.4, 22.24),
+  s("طالعة لبرّا", 21.4, 22.24),
   s("يعني الـ CONTACT LENS", 22.24, 23.5),
-  s("مقلوبة", 23.5, 24.5),
+  s("مقلوبة", 23.5, 24.54),
   s("وإذا بالغلط", 24.54, 25.18),
   s("حطّيتوها مقلوبة", 25.18, 26.4),
-  s("لا تخافوا", 26.4, 27.16),
+  s("ما تخافوا", 26.4, 27.2),
   s("رح تحسّوا كأنّو", 27.2, 27.98),
   s("في شي بعينكن", 27.98, 28.92),
-  s("متل غبرة أو شعرة", 28.92, 30.4),
-  s("شيلوها", 30.54, 31.25),
+  s("متل غبرة أو شعرة", 28.92, 30.54),
+  s("شيلوها", 30.54, 31.32),
   s("غسّلوها منيح", 31.32, 31.98),
   s("بالـ CONTACT LENS", 31.98, 32.62),
   s("SOLUTION", 32.62, 33.36),
   s("ورجعوا حطّوها", 33.36, 34.48),
-  s("بالطريقة الصح", 34.48, 35.8),
+  s("بالطريقة الصح", 34.48, 36.2),
 ];
 
 // Her shirt gapes slightly at the bottom button (about x 535-590, y 1345-1400 for the whole take).
@@ -349,9 +352,24 @@ export const ZvcLensSidesCaptions: React.FC = () => (
 );
 
 export const ZvcLensSides: React.FC = () => {
+  const { fps } = useVideoConfig();
+  const mainFrames = Math.round(ZVC_LENS_SIDES_SECONDS * fps);
+  return (
+    <AbsoluteFill style={{ background: "#000" }}>
+      <Sequence durationInFrames={mainFrames}>
+        <ZvcLensSidesMain />
+      </Sequence>
+      <Sequence from={mainFrames}>
+        <BrandOutro brand="zvc" />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+const ZvcLensSidesMain: React.FC = () => {
   const { durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
-  // Short audio fade at the very end so the cut doesn't click.
+  // Short audio fade at the end of the talk so the cut to the end card doesn't click.
   const vol = interpolate(frame, [durationInFrames - 8, durationInFrames], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <AbsoluteFill style={{ background: "#000" }}>
