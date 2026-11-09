@@ -341,6 +341,13 @@ const SolutionBottle: React.FC = () => {
 
 // ---------- composition ----------
 
+// Subtitles alone on a transparent background, to lay over the footage in CapCut.
+export const ZvcLensSidesCaptions: React.FC = () => (
+  <AbsoluteFill>
+    <Captions captions={coveringCaptions} brand={brands.zvc} cover={SHIRT_GAP} />
+  </AbsoluteFill>
+);
+
 export const ZvcLensSides: React.FC = () => {
   const { durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
