@@ -209,25 +209,16 @@ const Important: React.FC = () => {
 };
 
 // Circle badge whose mark draws itself in.
-const MarkBadge: React.FC<{ kind: "tick" | "cross"; t: number[]; left: number; top: number }> = ({ kind, t, left, top }) => {
-  const frame = useCurrentFrame();
+// Luna's lens illustrations (cut out: lens + arrows only), replacing the tick and X.
+// Source images cut with scripts/cutlens.py; files in public/overlays/.
+const LensSideImage: React.FC<{ src: string; t: number[]; left: number; top: number; tilt: number }> = ({ src, t, left, top, tilt }) => {
   const { fps } = useVideoConfig();
+  const frame = useCurrentFrame();
   const sc = usePop(durOf(t, fps));
-  const draw = interpolate(frame, [4, 14], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const tick = kind === "tick";
+  const bob = Math.sin(frame / 7) * 5;
   return (
-    <div style={{ position: "absolute", left, top, transform: `scale(${sc})`, filter: shadow }}>
-      <svg viewBox="0 0 200 200" width={230} height={230}>
-        <circle cx="100" cy="100" r="92" fill={tick ? ZVC_BLUE : "#000000"} stroke="#FFFFFF" strokeWidth="10" />
-        {tick ? (
-          <path d="M55 104 L88 136 L148 70" fill="none" stroke="#FFFFFF" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={draw} />
-        ) : (
-          <g stroke="#FFFFFF" strokeWidth="22" strokeLinecap="round">
-            <path d="M64 64 L136 136" pathLength={1} strokeDasharray={1} strokeDashoffset={draw} />
-            <path d="M136 64 L64 136" pathLength={1} strokeDasharray={1} strokeDashoffset={Math.min(1, draw * 2)} />
-          </g>
-        )}
-      </svg>
+    <div style={{ position: "absolute", left, top, width: 330, transform: `translateY(${bob}px) scale(${sc}) rotate(${tilt}deg)`, filter: shadow }}>
+      <Img src={staticFile(src)} style={{ width: "100%" }} />
     </div>
   );
 };
@@ -381,8 +372,8 @@ const ZvcLensSidesMain: React.FC = () => {
 
       <At t={T.lenses}><ContactLensesPopUp /></At>
       <At t={T.bang}><Important /></At>
-      <At t={T.tick}><MarkBadge kind="tick" t={T.tick} left={770} top={360} /></At>
-      <At t={T.cross}><MarkBadge kind="cross" t={T.cross} left={80} top={360} /></At>
+      <At t={T.tick}><LensSideImage src="overlays/lens-right-side.png" t={T.tick} left={730} top={380} tilt={4} /></At>
+      <At t={T.cross}><LensSideImage src="overlays/lens-inside-out.png" t={T.cross} left={20} top={380} tilt={-4} /></At>
       <At t={T.question}><Question /></At>
       <At t={T.rubbing}><EyeRubber /></At>
       <At t={T.bottle}><SolutionBottle /></At>
