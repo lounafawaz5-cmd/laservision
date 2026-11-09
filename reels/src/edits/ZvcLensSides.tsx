@@ -69,6 +69,34 @@ export const zvcLensSidesCaptions: Caption[] = [
   s("بالطريقة الصح", 34.48, 35.8),
 ];
 
+// Her shirt gapes slightly at the bottom button (about x 535-590, y 1345-1400 for the whole take).
+// The subtitles sit on that spot and never leave a pause, so it stays covered:
+// each line runs until the next one starts, and the last one holds to the end.
+const SHIRT_GAP = { x: 562, y: 1372 };
+const coveringCaptions: Caption[] = zvcLensSidesCaptions.map((c, i, all) => ({
+  ...c,
+  startMs: i === 0 ? 0 : c.startMs,
+  endMs: i < all.length - 1 ? all[i + 1].startMs : ZVC_LENS_SIDES_SECONDS * 1000,
+}));
+
+// Under the subtitles, a soft patch of the same shirt copied from just beside the gap,
+// so nothing shows between the letters. She barely moves, so a fixed patch holds for the whole take.
+const PATCH_SHIFT_X = 95;
+const ShirtPatch: React.FC = () => (
+  <AbsoluteFill
+    style={{
+      WebkitMaskImage: `radial-gradient(ellipse 48px 44px at ${SHIRT_GAP.x}px ${SHIRT_GAP.y}px, #000 55%, transparent 100%)`,
+      maskImage: `radial-gradient(ellipse 48px 44px at ${SHIRT_GAP.x}px ${SHIRT_GAP.y}px, #000 55%, transparent 100%)`,
+    }}
+  >
+    <OffthreadVideo
+      src={staticFile(`${DIR}/main.mp4`)}
+      muted
+      style={{ width: "100%", height: "100%", objectFit: "cover", transform: `translateX(-${PATCH_SHIFT_X}px)` }}
+    />
+  </AbsoluteFill>
+);
+
 // ---------- motion helpers ----------
 
 // Pop: overshoot in, quick shrink out. Returns scale 0..~1.15..1..0.
@@ -320,6 +348,7 @@ export const ZvcLensSides: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#000" }}>
       <OffthreadVideo src={staticFile(`${DIR}/main.mp4`)} volume={vol} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <ShirtPatch />
 
       <At t={T.brollRight}><PhotoBroll src={`${DIR}/GAM_0312.jpg`} t={T.brollRight} focusY={0.53} zoom={[1.3, 1.45]} /></At>
       <At t={T.brollWrong}><PhotoBroll src={`${DIR}/GAM_0313.jpg`} t={T.brollWrong} focusY={0.65} zoom={[1.52, 1.65]} /></At>
@@ -332,7 +361,7 @@ export const ZvcLensSides: React.FC = () => {
       <At t={T.rubbing}><EyeRubber /></At>
       <At t={T.bottle}><SolutionBottle /></At>
 
-      <Captions captions={zvcLensSidesCaptions} brand={brands.zvc} />
+      <Captions captions={coveringCaptions} brand={brands.zvc} cover={SHIRT_GAP} />
     </AbsoluteFill>
   );
 };
