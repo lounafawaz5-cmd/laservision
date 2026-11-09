@@ -13,6 +13,10 @@ Read before any work in this repo. These are Luna's decisions; don't re-ask them
   glow intensity 30 / range 58 in #005D83 (LaserVision) or #0C188D (ZVC). Transitions: Mix, Echo Fade, Film Reject, Acrylic Fades.
   Sound effects: whoosh on transitions, pop on text pop-ups. Implemented in `reels/src/components/Captions.tsx`.
 - **B-roll:** keep it professional (no party or nightlife shots).
+- **LaserVision reel covers: sticker style** (examples: `covers/laservision/*/cover.png`, branch `claude/laser-vision-zeiss-strategy-tbslie`;
+  HTML source to copy: `covers/laservision/beltone-hearing/cover.html`). Speaker frame (mouth closed, warm, not sad) filling 1080×1920;
+  two illustrated stickers beside her (white rounded square left, navy #00303F circle right) each with a tilted navy label pill in CAPS;
+  ALL-CAPS English headline, white with cyan glow; one-line English subline; teal-to-navy fade at the bottom; no logo, no WhatsApp.
 
 ## Content
 - Rules for what each brand says and never says: `strategy/SUMMARY.md`.
