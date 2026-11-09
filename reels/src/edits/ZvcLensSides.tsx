@@ -86,7 +86,7 @@ const coveringCaptions: Caption[] = zvcLensSidesCaptions.map((c, i, all) => ({
 // Under the subtitles, a soft patch of the same shirt copied from just beside the gap,
 // so nothing shows between the letters. She barely moves, so a fixed patch holds for the whole take.
 const PATCH_SHIFT_X = 95;
-const ShirtPatch: React.FC = () => (
+const ShirtPatch: React.FC<{ startFrom?: number }> = ({ startFrom = 0 }) => (
   <AbsoluteFill
     style={{
       WebkitMaskImage: `radial-gradient(ellipse 48px 44px at ${SHIRT_GAP.x}px ${SHIRT_GAP.y}px, #000 55%, transparent 100%)`,
@@ -96,6 +96,7 @@ const ShirtPatch: React.FC = () => (
     <OffthreadVideo
       src={staticFile(`${DIR}/main.mp4`)}
       muted
+      startFrom={startFrom}
       style={{ width: "100%", height: "100%", objectFit: "cover", transform: `translateX(-${PATCH_SHIFT_X}px)` }}
     />
   </AbsoluteFill>
@@ -379,6 +380,60 @@ const ZvcLensSidesMain: React.FC = () => {
       <At t={T.bottle}><SolutionBottle /></At>
 
       <Captions captions={coveringCaptions} brand={brands.zvc} cover={SHIRT_GAP} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------- cover ----------
+// House cover style (see covers/laservision): closed-mouth speaker frame, two stickers beside her,
+// glowing headline + subline. ZVC version: #0C188D glow and pills, Montserrat Arabic Bold,
+// Luna's lens illustrations as the stickers.
+const COVER_AT = 36.8; // mouth closed, eyes to camera
+
+const CoverSticker: React.FC<{ src: string; label: string; left: number; top: number; tilt: number }> = ({ src, label, left, top, tilt }) => (
+  <div style={{ position: "absolute", left, top, width: 330, transform: `rotate(${tilt}deg)`, display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div style={{ background: "#FFFFFF", borderRadius: 40, padding: "34px 26px", boxShadow: "0 14px 34px rgba(0,0,0,0.28)", width: "100%" }}>
+      <Img src={staticFile(src)} style={{ width: "100%", display: "block" }} />
+    </div>
+    <div
+      style={{
+        marginTop: -26,
+        background: ZVC_BLUE,
+        color: "#FFFFFF",
+        border: "5px solid #FFFFFF",
+        borderRadius: 999,
+        padding: "8px 26px",
+        fontFamily: `"${CAPTION_FONT}", sans-serif`,
+        fontWeight: 700,
+        fontSize: 32,
+        letterSpacing: 1,
+        boxShadow: "0 8px 18px rgba(0,0,0,0.25)",
+      }}
+    >
+      {label}
+    </div>
+  </div>
+);
+
+export const ZvcLensSidesCover: React.FC = () => {
+  const { fps } = useVideoConfig();
+  const at = Math.round(COVER_AT * fps);
+  const glowText = [`0 0 6px ${ZVC_BLUE}`, `0 0 16px ${ZVC_BLUE}`, `0 0 30px ${ZVC_BLUE}`, `0 0 46px ${ZVC_BLUE}99`].join(", ");
+  return (
+    <AbsoluteFill style={{ background: "#000" }}>
+      <OffthreadVideo src={staticFile(`${DIR}/main.mp4`)} muted startFrom={at} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <ShirtPatch startFrom={at} />
+      <AbsoluteFill style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0) 48%, rgba(12,24,141,0.55) 66%, rgba(6,12,70,0.92) 84%, rgba(4,8,46,0.97) 100%)" }} />
+      <CoverSticker src="overlays/lens-inside-out.png" label="INSIDE OUT" left={30} top={700} tilt={-5} />
+      <CoverSticker src="overlays/lens-right-side.png" label="RIGHT SIDE" left={720} top={700} tilt={5} />
+      <AbsoluteFill style={{ alignItems: "center", paddingTop: 1190, fontFamily: `"${CAPTION_FONT}", sans-serif`, color: "#FFFFFF", textAlign: "center" }}>
+        <div style={{ fontWeight: 700, fontSize: 128, lineHeight: 1.02, textShadow: glowText, letterSpacing: 1 }}>
+          IS YOUR LENS
+          <br />
+          INSIDE OUT?
+        </div>
+        <div style={{ marginTop: 34, fontWeight: 700, fontSize: 46, textShadow: glowText }}>The 2-second check</div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

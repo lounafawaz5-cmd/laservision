@@ -4,7 +4,7 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
-import { ZvcLensSides, ZvcLensSidesCaptions, ZVC_LENS_SIDES_SECONDS, ZVC_LENS_SIDES_OUTRO_SECONDS } from "./edits/ZvcLensSides";
+import { ZvcLensSides, ZvcLensSidesCaptions, ZvcLensSidesCover, ZVC_LENS_SIDES_SECONDS, ZVC_LENS_SIDES_OUTRO_SECONDS } from "./edits/ZvcLensSides";
 
 const FPS = 30;
 
@@ -116,6 +116,14 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={Math.round((ZVC_LENS_SIDES_SECONDS + ZVC_LENS_SIDES_OUTRO_SECONDS) * FPS)}
+    />
+    <Composition
+      id="Cover-LensSides-ZVC"
+      component={ZvcLensSidesCover}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={1}
     />
     <Composition
       id="LensSides-ZVC-Captions"
