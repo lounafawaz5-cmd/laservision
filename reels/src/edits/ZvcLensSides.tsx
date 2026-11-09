@@ -19,7 +19,7 @@ import { BrandOutro } from "../templates/BrandOutro";
 const DIR = "footage/zvc-lens-sides";
 const ZVC_BLUE = brands.zvc.colors.captionGlow; // #0C188D
 export const ZVC_LENS_SIDES_SECONDS = 36.2;
-// The usual ZVC end card (templates/BrandOutro) is appended after the talk.
+// The ZVC end card (Luna's public/brand/zvc-outro.mp4, via templates/BrandOutro) is appended after the talk.
 export const ZVC_LENS_SIDES_OUTRO_SECONDS = 2.5;
 
 // Times in seconds, taken from the word timestamps of the transcript.

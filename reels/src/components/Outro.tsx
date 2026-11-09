@@ -1,4 +1,4 @@
-import { AbsoluteFill, Img, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Img, OffthreadVideo, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Brand } from "../brands";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 
@@ -6,6 +6,14 @@ export const Outro: React.FC<{ brand: Brand }> = ({ brand }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const enter = spring({ frame, fps, config: { damping: 200 } });
+
+  if (brand.outroVideo) {
+    return (
+      <AbsoluteFill style={{ background: "#000" }}>
+        <OffthreadVideo src={staticFile(brand.outroVideo)} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      </AbsoluteFill>
+    );
+  }
 
   return (
     <AbsoluteFill

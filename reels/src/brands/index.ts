@@ -31,6 +31,9 @@ export type Brand = {
   fonts: { latin: string; arabic: string };
   // On screen this is always the WhatsApp icon + the number, never the word "WhatsApp".
   whatsapp: string;
+  // Luna's own end card video (path in public/). When set, every end card plays this file
+  // instead of drawing one. Never swap it for a different design.
+  outroVideo: string;
 };
 
 // Colors: brand/laservision/GUIDELINES.md and brand/zeiss/GUIDELINES.md.
@@ -51,6 +54,7 @@ export const brands: Record<BrandId, Brand> = {
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     whatsapp: "+961 81 54 20 20",
+    outroVideo: "",
   },
   zvc: {
     // Store name is fine on screen; the blue ZEISS block logo is not. Use the "by Laser Vision" wordmark.
@@ -66,6 +70,8 @@ export const brands: Record<BrandId, Brand> = {
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     whatsapp: "81 47 20 20",
+    // ZVC end card from Luna (2.5 s, silent): wordmark, blue line, WhatsApp icon + number.
+    outroVideo: "brand/zvc-outro.mp4",
   },
 };
 

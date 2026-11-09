@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { brands } from "../brands";
+import { Outro } from "../components/Outro";
 import { WhatsAppIcon } from "../components/WhatsAppIcon";
 
 // Standalone end card, appended to finished edits (e.g. CapCut exports) with scripts/append-outro.sh.
@@ -11,6 +12,13 @@ export const brandOutroSchema = z.object({
 const LV_BRANCHES = ["Hazmieh", "Saida", "Tripoli", "Hôtel-Dieu"];
 
 export const BrandOutro: React.FC<z.infer<typeof brandOutroSchema>> = ({ brand: brandId }) => {
+  const brand = brands[brandId];
+  // ZVC: Luna's own end card video, never a redrawn one.
+  if (brand.outroVideo) return <Outro brand={brand} />;
+  return <DrawnOutro brandId={brandId} />;
+};
+
+const DrawnOutro: React.FC<{ brandId: "laservision" | "zvc" }> = ({ brandId }) => {
   const brand = brands[brandId];
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
