@@ -57,7 +57,7 @@ fs.mkdirSync(outDir, { recursive: true });
             blocks.push({
               left: left - sr.left, top: top - sr.top, width: w,
               html: run.map(n => ser(n, cs)).join('').trim(),
-              style: `font-size:${cs.fontSize};line-height:${lh}px;font-weight:${cs.fontWeight};color:${cs.color};letter-spacing:${cs.letterSpacing === 'normal' ? '0' : cs.letterSpacing};text-transform:${cs.textTransform};word-spacing:${cs.wordSpacing};text-align:${right ? 'right' : 'left'}`
+              style: `font-family:'Outfit';font-size:${cs.fontSize};line-height:${lh}px;font-weight:${cs.fontWeight};color:${cs.color};letter-spacing:${cs.letterSpacing === 'normal' ? '0' : cs.letterSpacing};text-transform:${cs.textTransform};word-spacing:${cs.wordSpacing};text-align:${right ? 'right' : 'left'}`
             });
           }
           run = [];
