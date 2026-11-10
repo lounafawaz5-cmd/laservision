@@ -92,7 +92,7 @@ ${texts}
   }).join('\n');
   fs.writeFileSync(path.join(outDir, 'index.html'), `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>LaserVision before &amp; after checklist</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>@font-face{font-family:'Outfit';font-weight:300;src:url('https://raw.githubusercontent.com/lounafawaz5-cmd/laservision/claude/friendly-hypatia-ut5r07/brand/fonts/Outfit/Outfit-Light.ttf') format('truetype')}@font-face{font-family:'Outfit';font-weight:400;src:url('https://raw.githubusercontent.com/lounafawaz5-cmd/laservision/claude/friendly-hypatia-ut5r07/brand/fonts/Outfit/Outfit-Regular.woff2') format('woff2')}@font-face{font-family:'Outfit';font-weight:500;src:url('https://raw.githubusercontent.com/lounafawaz5-cmd/laservision/claude/friendly-hypatia-ut5r07/brand/fonts/Outfit/Outfit-Medium.ttf') format('truetype')}@font-face{font-family:'Outfit';font-weight:700;src:url('https://raw.githubusercontent.com/lounafawaz5-cmd/laservision/claude/friendly-hypatia-ut5r07/brand/fonts/Outfit/Outfit-Bold.ttf') format('truetype')}</style>
 <style>body{margin:0;font-family:Outfit,sans-serif} section{margin:0}</style></head>
 <body>
 ${pages}
