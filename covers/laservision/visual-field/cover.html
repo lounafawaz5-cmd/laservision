@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:"MA";src:url("../../../reels/public/fonts/Montserrat-Arabic-Bold.woff2");font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1920px;position:relative;overflow:hidden;background:#00303F;font-family:"MA",sans-serif}
+.bg{position:absolute;inset:0;background:url("bg.png") 50% 0%/125% auto no-repeat}
+.scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,93,131,0) 46%,rgba(0,80,108,.55) 60%,rgba(0,62,84,.82) 74%,rgba(0,48,63,.9) 100%)}
+.card{position:absolute;left:28px;top:760px;width:310px;height:290px;border-radius:40px;background:#F1F2F2;border:12px solid #fff;box-shadow:0 14px 40px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
+.circle{position:absolute;left:785px;top:780px;width:268px;height:268px;border-radius:50%;background:#00303F;border:12px solid #fff;box-shadow:0 14px 40px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+.pill{position:absolute;padding:10px 30px;border-radius:40px;background:#005D83;border:6px solid #fff;color:#fff;font-size:34px;letter-spacing:1px;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.p1{left:58px;top:1022px;transform:rotate(-3deg)}
+.p2{right:30px;top:1022px;transform:rotate(3deg)}
+.txt{position:absolute;left:0;right:0;top:1180px;text-align:center;color:#fff;text-shadow:0 0 10px rgba(48,164,191,.9),0 0 26px rgba(48,164,191,.6),0 0 44px rgba(0,93,131,.6)}
+.h{font-size:108px;line-height:1.08}
+.s{margin-top:44px;font-size:50px}
+</style></head><body>
+<!-- LaserVision · Visual field test reel. Background: RIB_0029 at 0:00.2 (mouth closed, eyes to camera, hands still).
+     Render: node + Playwright screenshot at 1080×1920 (same as the other covers in covers/laservision/). -->
+<div class="bg"></div><div class="scrim"></div>
+<!-- Left sticker: the perimeter (bowl with fixation light and test dots, chin rest) -->
+<div class="card"><svg width="200" height="200" viewBox="0 0 100 100">
+ <rect x="8" y="6" width="84" height="76" rx="16" fill="#fff" stroke="#00303F" stroke-width="4"/>
+ <circle cx="50" cy="42" r="30" fill="#B6DFE5" stroke="#00303F" stroke-width="4"/>
+ <circle cx="50" cy="42" r="18" fill="none" stroke="#fff" stroke-width="2"/>
+ <circle cx="50" cy="42" r="4.5" fill="#005D83"/>
+ <circle cx="29" cy="30" r="3.2" fill="#fff" stroke="#30A4BF" stroke-width="1.5"/>
+ <circle cx="70" cy="55" r="3.2" fill="#fff" stroke="#30A4BF" stroke-width="1.5"/>
+ <circle cx="66" cy="24" r="3.2" fill="#fff" stroke="#30A4BF" stroke-width="1.5"/>
+ <rect x="20" y="82" width="60" height="10" rx="5" fill="#005D83" stroke="#00303F" stroke-width="3"/>
+</svg></div>
+<div class="pill p1">PERIMETRY</div>
+<!-- Right sticker: an eye seeing to both sides -->
+<div class="circle"><svg width="170" height="170" viewBox="0 0 100 100">
+ <g stroke="#B6DFE5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+  <line x1="6" y1="50" x2="24" y2="50"/><polyline points="13,42 5,50 13,58"/>
+  <line x1="76" y1="50" x2="94" y2="50"/><polyline points="87,42 95,50 87,58"/></g>
+ <path d="M24 50 Q50 24 76 50 Q50 76 24 50 Z" fill="#fff" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+ <circle cx="50" cy="50" r="11" fill="#30A4BF"/><circle cx="50" cy="50" r="6" fill="#00303F"/><circle cx="53" cy="47" r="2.2" fill="#fff"/>
+</svg></div>
+<div class="pill p2">SIDE VISION</div>
+<div class="txt"><div class="h">VISUAL FIELD<br>TEST</div><div class="s">Here's what it checks</div></div>
+</body></html>
