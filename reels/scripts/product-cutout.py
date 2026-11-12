@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Product photo on a white table → transparent PNG, cropped tight.
 
-    product-cutout.py photo.jpg out.png
+    product-cutout.py photo.jpg out.png [--solid-below 0.44]
+
+Lenses are cleared (reflections removed), keeping the temples seen through them.
+--solid-below Y: everything in the photo below Y (fraction of its height) is made opaque,
+for a tinted clip-on photographed under the frame.
 
 Silhouette from rembg (isnet), then "color to alpha" against the table's own lighting,
 so clear lenses come out see-through (keeping their reflections) instead of solid white.
@@ -12,6 +16,7 @@ from PIL import Image, ImageFilter
 from rembg import new_session, remove
 
 src, out = sys.argv[1], sys.argv[2]
+solid_below = float(sys.argv[sys.argv.index("--solid-below") + 1]) if "--solid-below" in sys.argv else None
 im = Image.open(src).convert("RGB")
 W, H = im.size
 small = im.resize((W // 2, H // 2))
@@ -57,6 +62,55 @@ alpha = t * t * (3 - 2 * t) * sil
 safe = np.maximum(alpha, 1e-3)[..., None]
 unmixed = np.clip((norm - (1 - safe)) / safe, 0, 1)
 color = np.where((alpha >= raw)[..., None], unmixed, norm)
+
+# 4. Clear the lenses: the holes inside the rims. "Material" = dark or strongly colored, not
+#    bluish glare. Inside the lenses only material survives (temples seen through the lens);
+#    reflections of the room and glare go.
+from scipy import ndimage
+L = norm.mean(axis=2)
+sat = norm.max(axis=2) - norm.min(axis=2)
+blue_cast = norm[..., 2] - np.maximum(norm[..., 0], norm[..., 1])
+warm = norm[..., 0] - norm[..., 2]  # gold / brass parts
+material = ((L < 0.45) | ((sat > 0.3) & (L < 0.8)) | ((warm > 0.12) & (L < 0.9))) & (blue_cast < 0.12)
+rim = ndimage.binary_closing((alpha > 0.45) & material, iterations=4)
+rim = ndimage.binary_opening(rim, iterations=2)
+holes = ndimage.binary_fill_holes(rim) & ~rim
+keep = ndimage.binary_opening(material & (raw > 0.5), iterations=2)
+clear = ndimage.binary_dilation(holes & ~keep, iterations=1) & ~rim
+alpha = alpha * (1 - ndimage.gaussian_filter(clear.astype(np.float32), 1.5))
+
+# 5. Tinted clip-on: solid.
+if solid_below is not None:
+    yy = np.arange(H)[:, None] >= int(solid_below * H)
+    inner = ndimage.binary_erosion(sil > 0.5, iterations=10)
+    solid = inner & yy
+    soft = ndimage.gaussian_filter(solid.astype(np.float32), 2)
+    alpha = np.maximum(alpha * (1 - (yy & (sil > 0.5) & ~solid)), 0.97 * soft)
+    # Repaint the tint as a clean gradient (the photo's reflections on it go): colors sampled
+    # from the top and bottom of the lens, a slightly darker edge, the gold studs kept.
+    ys, xs = np.nonzero(solid)
+    y0, y1 = ys.min(), ys.max()
+    rows = (np.arange(H) - y0) / max(1, y1 - y0)
+    top = np.percentile(norm[solid & (rows[:, None] < 0.35)], 15, axis=0)
+    bot = np.percentile(norm[solid & (rows[:, None] > 0.7)], 60, axis=0)
+    tt = np.clip(rows, 0, 1)[:, None, None]
+    tt = tt * tt * (3 - 2 * tt)
+    grad = top * (1 - tt) + bot * tt
+    edge = ndimage.distance_transform_edt(solid)
+    grad = grad * (1 - 0.18 * np.exp(-edge / 12))[..., None]
+    studs = solid & (warm > 0.15) & (L > 0.55) & (sat > 0.25)
+    studs = ndimage.binary_opening(studs, iterations=2)
+    # Studs sit at the far left/right ends of the clip and are small.
+    x0, x1 = xs.min(), xs.max()
+    ends = np.zeros_like(studs); span = int((x1 - x0) * 0.1)
+    ends[:, x0:x0 + span] = True; ends[:, x1 - span:x1 + 1] = True
+    lab, nlab = ndimage.label(studs & ends)
+    if nlab:
+        areas = ndimage.sum(np.ones_like(lab), lab, range(1, nlab + 1))
+        studs = np.isin(lab, [i + 1 for i, a in enumerate(areas) if a < 4000])
+    studs = ndimage.binary_dilation(studs, iterations=3)
+    color = np.where((solid & ~studs)[..., None], np.broadcast_to(grad, color.shape), color)
+    color = np.where(studs[..., None], norm, color)
 rgba = np.dstack([color, alpha]) * 255
 img = Image.fromarray(rgba.astype(np.uint8), "RGBA")
 img = img.crop(img.getbbox())

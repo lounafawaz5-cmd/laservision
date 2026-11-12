@@ -61,9 +61,9 @@ export const stylingBattleTryOn: FrameShowcaseProps = {
   volume: 1,
   mirror: false,
   x: 540,
-  y: 660,
-  maxWidth: 640,
-  maxHeight: 300,
+  y: 730,
+  maxWidth: 380,
+  maxHeight: 190,
   items: [
     { src: "footage/battle/frames/4.png", atSec: 1 },
     { src: "footage/battle/frames/3.png", atSec: 6 },
