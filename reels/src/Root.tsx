@@ -5,7 +5,8 @@ import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/B
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { BattleSplit, battleSplitSchema } from "./templates/BattleSplit";
-import { stylingBattleShot1 } from "./edits/styling-battle";
+import { BattleDiagonal, battleDiagonalSchema } from "./templates/BattleDiagonal";
+import { stylingBattleShot1, stylingBattleShot1Diagonal } from "./edits/styling-battle";
 
 const FPS = 30;
 
@@ -115,6 +116,16 @@ export const RemotionRoot: React.FC = () => (
       component={BattleSplit}
       schema={battleSplitSchema}
       defaultProps={stylingBattleShot1}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={91}
+    />
+    <Composition
+      id="BattleDiagonal-ZVC"
+      component={BattleDiagonal}
+      schema={battleDiagonalSchema}
+      defaultProps={stylingBattleShot1Diagonal}
       fps={FPS}
       width={1080}
       height={1920}
