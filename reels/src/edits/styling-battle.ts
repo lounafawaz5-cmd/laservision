@@ -1,5 +1,6 @@
 import { BattleSplitProps } from "../templates/BattleSplit";
 import { BattleDiagonalProps } from "../templates/BattleDiagonal";
+import { FrameShowcaseProps } from "../templates/FrameShowcase";
 
 // ZVC styling battle, shot 1: Joyce (left, red) vs Sara (right, blue).
 // Source: Drive file 1FQo_Cg7pUkVRBUHfTFbXY5ugSjbanZNp → public/footage/battle/shot1.mp4 (3.03 s, 4K vertical).
@@ -51,4 +52,24 @@ export const stylingBattleShot1Diagonal: BattleDiagonalProps = {
     framing: { scale: 2, x: -1080, y: -260 },
     tag: { x: 60, y: 1180, anchor: "left" },
   },
+};
+
+// Shot 3: Luna trying on frames. Product shots (scripts/product-cutout.py → public/footage/battle/frames/)
+// pop in above her head when each frame goes on. Source: Drive file 1G_0u3CwgfRCBpAhLNbyB-H2iSnR9GedI.
+export const stylingBattleTryOn: FrameShowcaseProps = {
+  video: "footage/battle/shot3.mp4",
+  volume: 1,
+  mirror: false,
+  x: 540,
+  y: 660,
+  maxWidth: 640,
+  maxHeight: 300,
+  items: [
+    { src: "footage/battle/frames/4.png", atSec: 1 },
+    { src: "footage/battle/frames/3.png", atSec: 6 },
+    { src: "footage/battle/frames/5.png", atSec: 16 },
+    { src: "footage/battle/frames/2.png", atSec: 23 },
+    { src: "footage/battle/frames/6.png", atSec: 30 },
+    { src: "footage/battle/frames/1.png", atSec: 36 },
+  ],
 };

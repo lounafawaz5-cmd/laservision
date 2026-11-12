@@ -6,7 +6,8 @@ import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { BattleSplit, battleSplitSchema } from "./templates/BattleSplit";
 import { BattleDiagonal, battleDiagonalSchema } from "./templates/BattleDiagonal";
-import { stylingBattleShot1, stylingBattleShot1Diagonal } from "./edits/styling-battle";
+import { FrameShowcase, frameShowcaseSchema } from "./templates/FrameShowcase";
+import { stylingBattleShot1, stylingBattleShot1Diagonal, stylingBattleTryOn } from "./edits/styling-battle";
 
 const FPS = 30;
 
@@ -130,6 +131,16 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={91}
+    />
+    <Composition
+      id="FrameShowcase-ZVC"
+      component={FrameShowcase}
+      schema={frameShowcaseSchema}
+      defaultProps={stylingBattleTryOn}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={1301}
     />
   </>
 );
