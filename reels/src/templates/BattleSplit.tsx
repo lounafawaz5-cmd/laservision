@@ -9,7 +9,6 @@ import {
   useVideoConfig,
   Easing,
   Img,
-  random,
 } from "remotion";
 import { loadFont } from "@remotion/fonts";
 
@@ -18,10 +17,10 @@ loadFont({ family: "Outfit", url: staticFile("fonts/Outfit-Medium.ttf"), weight:
 
 const FONT = `"Outfit", "Inter", sans-serif`;
 
-// "Battle" intro shot: one clip of two contestants, split down the middle by a lightning bolt.
+// "Battle" intro shot: one clip of two contestants, split down the middle by a comic-style lightning bolt.
 // The background behind the left contestant is graded in one team color, the right in the other;
 // the contestants stay in front of the color (cut-out frames from scripts/cutout.py laid over it).
-// VS badge on the bolt, names slam in when the contestants hit their pose (impactSec).
+// Halftone dots on each color, gold VS on the bolt, names slam in when the contestants hit their pose (impactSec).
 export const battleSplitSchema = z.object({
   video: z.string(),
   // Folder in public/ of RGBA cut-outs of the people, one per frame: 000.webp, 001.webp…
@@ -34,8 +33,9 @@ export const battleSplitSchema = z.object({
   // Divider x position (0..1 of the width) at the top and bottom of the frame; the bolt zigzags around it.
   dividerTop: z.number(),
   dividerBottom: z.number(),
-  // Zigzag size (0..1 of the width) and number of zigzags.
+  // Bolt thickness and jog size (0..1 of the width), number of jogs.
   boltWidth: z.number(),
+  boltJog: z.number(),
   boltSegments: z.number(),
   // Height of the VS badge and the name tags (0..1 of the height).
   vsY: z.number(),
@@ -48,29 +48,55 @@ export type BattleSplitProps = z.infer<typeof battleSplitSchema>;
 
 export const battleSplitDuration = (fps: number, seconds: number) => Math.round(seconds * fps);
 
-const Tint: React.FC<{ side: "left" | "right"; color: string; clip: string; strength: number }> = ({
+const Tint: React.FC<{ side: "left" | "right"; color: string; clip: string; strength: number; glowY: number }> = ({
   side,
   color,
   clip,
   strength,
+  glowY,
 }) => {
   const edge = side === "left" ? "to right" : "to left";
+  const inner = side === "left" ? "100%" : "0%";
+  const dots = (size: number, alpha: number) => `radial-gradient(circle, rgba(255,255,255,${alpha}) 0 34%, transparent 37%) 0 0 / ${size}px ${size}px`;
   return (
     <AbsoluteFill style={{ clipPath: clip }}>
       {/* Hue wash over the whole half: keeps the footage's light, swaps its color. */}
-      <AbsoluteFill style={{ background: color, mixBlendMode: "color", opacity: 0.6 * strength }} />
-      {/* Deeper color toward the outer edge, fading toward the divider. */}
+      <AbsoluteFill style={{ background: color, mixBlendMode: "color", opacity: 0.8 * strength }} />
+      {/* Deeper color toward the outer edge. */}
       <AbsoluteFill
         style={{
-          background: `linear-gradient(${edge}, ${color} 0%, ${color}AA 18%, ${color}00 55%)`,
+          background: `linear-gradient(${edge}, ${color} 0%, ${color}DD 35%, ${color}66 100%)`,
           mixBlendMode: "multiply",
-          opacity: 0.85 * strength,
+          opacity: 0.9 * strength,
+        }}
+      />
+      {/* Halftone dots: big at the outer edge, shrinking toward the bolt. */}
+      <AbsoluteFill
+        style={{
+          background: dots(46, 0.2),
+          WebkitMaskImage: `linear-gradient(${edge}, #000 0%, transparent 55%)`,
+          opacity: strength,
         }}
       />
       <AbsoluteFill
         style={{
-          background: `radial-gradient(ellipse at ${side === "left" ? "0%" : "100%"} 50%, ${color}00 40%, #000000 120%)`,
-          opacity: 0.55 * strength,
+          background: dots(26, 0.16),
+          WebkitMaskImage: `linear-gradient(${edge}, transparent 25%, #000 60%, transparent 100%)`,
+          opacity: strength,
+        }}
+      />
+      {/* Light glow by the bolt, dark vignette at the outer edge. */}
+      <AbsoluteFill
+        style={{
+          background: `radial-gradient(ellipse 60% 45% at ${inner} ${glowY * 100}%, rgba(255,255,255,0.35), transparent 70%)`,
+          mixBlendMode: "screen",
+          opacity: strength,
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          background: `linear-gradient(${edge}, rgba(0,0,0,0.35) 0%, transparent 40%)`,
+          opacity: strength,
         }}
       />
     </AbsoluteFill>
@@ -149,30 +175,27 @@ export const BattleSplit: React.FC<BattleSplitProps> = (p) => {
   const { fps, width, height, durationInFrames } = useVideoConfig();
   const hit = Math.round(p.impactSec * fps);
 
-  // Lightning bolt: a fixed zigzag around the divider line, with a small crackle every 2 frames.
-  const crackle = Math.floor(frame / 2);
-  const bolt: [number, number][] = [];
-  for (let i = 0; i <= p.boltSegments; i++) {
-    const t = i / p.boltSegments;
-    const base = p.dividerTop + (p.dividerBottom - p.dividerTop) * t;
-    const zig = i === 0 || i === p.boltSegments ? 0 : (i % 2 ? 1 : -1) * p.boltWidth * (0.6 + 0.4 * random(`z${i}`));
-    const jitter = (random(`j${i}-${crackle}`) - 0.5) * p.boltWidth * 0.35;
-    const yJit = i === 0 || i === p.boltSegments ? 0 : (random(`y${i}`) - 0.5) * 0.3;
-    bolt.push([(base + zig + jitter) * width, (t + yJit / p.boltSegments) * height]);
+  // Lightning bolt like a comic "VS" screen: straight diagonals broken by a few sharp jogs.
+  // boltWidth = thickness, boltJog = jog size (both 0..1 of the width), boltSegments = number of jogs.
+  const jogs = Math.max(0, Math.round(p.boltSegments));
+  const pad = 80;
+  const jogDy = height * 0.03;
+  const diagDy = (height + pad * 2 - jogs * jogDy) / (jogs + 1);
+  const diagDx = ((p.dividerBottom - p.dividerTop) * width - jogs * p.boltJog * width) / (jogs + 1);
+  const bolt: [number, number][] = [[p.dividerTop * width, -pad]];
+  for (let k = 0; k <= jogs; k++) {
+    const [x, y] = bolt[bolt.length - 1];
+    bolt.push([x + diagDx, y + diagDy]);
+    if (k < jogs) bolt.push([x + diagDx + p.boltJog * width, y + diagDy + jogDy]);
   }
   const pts = (list: [number, number][]) => list.map(([x, y]) => `${(x / width) * 100}% ${(y / height) * 100}%`).join(", ");
   const leftClip = `polygon(0% 0%, ${pts(bolt)}, 0% 100%)`;
   const rightClip = `polygon(100% 0%, ${pts(bolt)}, 100% 100%)`;
-  const boltPath = bolt.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
-  // Small side forks off a few of the corners.
-  const forks = [3, 7, 10]
-    .filter((i) => i < p.boltSegments)
-    .map((i) => {
-      const [x, y] = bolt[i];
-      const dir = i % 2 ? 1 : -1;
-      const len = p.boltWidth * width * 1.4;
-      return `M${x},${y} L${x + dir * len * 0.5},${y + len * 0.35} L${x + dir * len * 0.35},${y + len * 0.6} L${x + dir * len},${y + len}`;
-    });
+  const half = (p.boltWidth * width) / 2;
+  const boltShape =
+    [...bolt.map(([x, y]) => [x - half, y]), ...[...bolt].reverse().map(([x, y]) => [x + half, y])]
+      .map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`)
+      .join(" ") + " Z";
 
   // Tint eases in from the start, then jumps to full strength on the hit.
   const tint =
@@ -205,47 +228,31 @@ export const BattleSplit: React.FC<BattleSplitProps> = (p) => {
 
   const title = spring({ frame: frame - 4, fps, config: { damping: 16 } });
 
-  const vsX = ((p.dividerTop + (p.dividerBottom - p.dividerTop) * p.vsY) * width) | 0;
-  const angle = (Math.atan2((p.dividerBottom - p.dividerTop) * width, height) * 180) / Math.PI;
-  const boltFlicker = frame >= hit && frame < hit + 6 ? (frame % 2 ? 1 : 0.55) : 0.85 + 0.15 * random(`f${crackle}`);
-  const boltLen = 4000;
+  const vsX = bolt.reduce((best, pt) => (Math.abs(pt[1] - p.vsY * height) < Math.abs(best[1] - p.vsY * height) ? pt : best))[0];
+  const boltFlash = interpolate(frame, [hit, hit + 2, hit + 8], [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
     <AbsoluteFill style={{ background: "#000000", overflow: "hidden" }}>
       <AbsoluteFill style={{ transform: `translate(${shakeX}px, ${shakeY}px) scale(${zoom})` }}>
         <OffthreadVideo src={staticFile(p.video)} volume={p.volume} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        <Tint side="left" color={p.left.color} clip={leftClip} strength={tint} />
-        <Tint side="right" color={p.right.color} clip={rightClip} strength={tint} />
+        <Tint side="left" color={p.left.color} clip={leftClip} strength={tint} glowY={p.vsY} />
+        <Tint side="right" color={p.right.color} clip={rightClip} strength={tint} glowY={p.vsY} />
 
-        {/* Lightning bolt between the two halves, behind the contestants. */}
-        <svg width={width} height={height} style={{ position: "absolute", inset: 0, opacity: boltFlicker }}>
+        {/* Lightning bolt between the two halves, behind the contestants. Strikes top to bottom. */}
+        <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
           <defs>
+            <clipPath id="strike">
+              <rect x={0} y={-pad} width={width} height={(height + pad * 2) * draw} />
+            </clipPath>
             <filter id="boltGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="14" />
+              <feGaussianBlur stdDeviation="18" />
             </filter>
           </defs>
-          {[
-            { w: 46, c: "#B9D4FF", o: 0.9, f: "url(#boltGlow)" },
-            { w: 16, c: "#FFFFFF", o: 0.95, f: "url(#boltGlow)" },
-            { w: 9, c: "#FFFFFF", o: 1, f: undefined },
-          ].map((l, i) => (
-            <g key={i} filter={l.f} opacity={l.o}>
-              <path
-                d={boltPath}
-                fill="none"
-                stroke={l.c}
-                strokeWidth={l.w}
-                strokeLinejoin="miter"
-                strokeLinecap="round"
-                strokeDasharray={boltLen}
-                strokeDashoffset={boltLen * (1 - draw)}
-              />
-              {draw >= 1 &&
-                forks.map((d, j) => (
-                  <path key={j} d={d} fill="none" stroke={l.c} strokeWidth={l.w * 0.45} strokeLinejoin="miter" />
-                ))}
-            </g>
-          ))}
+          <g clipPath="url(#strike)">
+            <path d={boltShape} fill="#FFFFFF" opacity={0.45 + boltFlash * 0.4} filter="url(#boltGlow)" />
+            <path d={boltShape} fill="none" stroke="#3A0F02" strokeWidth={30} strokeLinejoin="miter" strokeMiterlimit={20} />
+            <path d={boltShape} fill="#FFFFFF" stroke="#F5891F" strokeWidth={14} strokeLinejoin="miter" strokeMiterlimit={20} />
+          </g>
         </svg>
 
         {p.cutout ? (
@@ -285,45 +292,50 @@ export const BattleSplit: React.FC<BattleSplitProps> = (p) => {
         </div>
       </div>
 
-      {/* VS badge on the divider */}
+      {/* VS: gold letters with a dark outline, slammed onto the bolt. */}
       <div
         style={{
           position: "absolute",
-          left: vsX - 120,
-          top: p.vsY * height - 120,
-          width: 240,
-          height: 240,
+          left: vsX - 200,
+          top: p.vsY * height - 130,
+          width: 400,
+          height: 260,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          transform: `scale(${vsScale * vsPulse}) rotate(${angle}deg)`,
+          transform: `scale(${vsScale * vsPulse})`,
           opacity: frame < hit ? 0 : 1,
+          filter: "drop-shadow(0 10px 0 rgba(40,8,0,0.55)) drop-shadow(0 0 40px rgba(255,190,60,0.55))",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "50%",
-            background: `linear-gradient(90deg, ${p.left.color} 50%, ${p.right.color} 50%)`,
-            border: "8px solid #FFFFFF",
-            boxShadow: "0 0 60px rgba(255,255,255,0.6), 0 16px 40px rgba(0,0,0,0.5)",
-          }}
-        />
-        <div
-          style={{
-            position: "relative",
-            transform: `rotate(${-angle}deg) skewX(-8deg)`,
-            fontFamily: FONT,
-            fontWeight: 700,
-            fontSize: 118,
-            color: "#FFFFFF",
-            letterSpacing: -2,
-            textShadow: "0 6px 0 rgba(0,0,0,0.35)",
-          }}
-        >
-          VS
-        </div>
+        {[
+          { color: "transparent", stroke: "18px #3A0F02", bg: undefined },
+          {
+            color: "transparent",
+            stroke: undefined,
+            bg: "linear-gradient(180deg, #FFF59A 0%, #FFD23F 45%, #F5891F 100%)",
+          },
+        ].map((l, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              transform: "skewX(-10deg)",
+              fontFamily: FONT,
+              fontWeight: 700,
+              fontSize: 200,
+              letterSpacing: -6,
+              lineHeight: 1,
+              color: l.color,
+              WebkitTextStroke: l.stroke,
+              background: l.bg,
+              WebkitBackgroundClip: l.bg ? "text" : undefined,
+              backgroundClip: l.bg ? "text" : undefined,
+            }}
+          >
+            VS
+          </div>
+        ))}
       </div>
 
       <NameTag side="left" {...p.left} progress={nameL} y={p.namesY} />
