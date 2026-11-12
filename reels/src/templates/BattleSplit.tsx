@@ -8,6 +8,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
   Easing,
+  Img,
+  random,
 } from "remotion";
 import { loadFont } from "@remotion/fonts";
 
@@ -16,18 +18,25 @@ loadFont({ family: "Outfit", url: staticFile("fonts/Outfit-Medium.ttf"), weight:
 
 const FONT = `"Outfit", "Inter", sans-serif`;
 
-// "Battle" intro shot: one clip of two contestants, split down the middle by a slanted line.
-// Left half graded in one team color, right half in the other, VS badge on the line,
-// names slam in when the contestants hit their pose (impactSec).
+// "Battle" intro shot: one clip of two contestants, split down the middle by a lightning bolt.
+// The background behind the left contestant is graded in one team color, the right in the other;
+// the contestants stay in front of the color (cut-out frames from scripts/cutout.py laid over it).
+// VS badge on the bolt, names slam in when the contestants hit their pose (impactSec).
 export const battleSplitSchema = z.object({
   video: z.string(),
+  // Folder in public/ of RGBA cut-outs of the people, one per frame: 000.webp, 001.webp…
+  // Empty = no cut-out (color goes over everything).
+  cutout: z.string(),
   volume: z.number(),
   // Moment the contestants land their pose: flash, punch-in, VS and names.
   impactSec: z.number(),
   title: z.string(),
-  // Divider x position (0..1 of the width) at the top and bottom of the frame.
+  // Divider x position (0..1 of the width) at the top and bottom of the frame; the bolt zigzags around it.
   dividerTop: z.number(),
   dividerBottom: z.number(),
+  // Zigzag size (0..1 of the width) and number of zigzags.
+  boltWidth: z.number(),
+  boltSegments: z.number(),
   // Height of the VS badge and the name tags (0..1 of the height).
   vsY: z.number(),
   namesY: z.number(),
@@ -49,7 +58,7 @@ const Tint: React.FC<{ side: "left" | "right"; color: string; clip: string; stre
   return (
     <AbsoluteFill style={{ clipPath: clip }}>
       {/* Hue wash over the whole half: keeps the footage's light, swaps its color. */}
-      <AbsoluteFill style={{ background: color, mixBlendMode: "color", opacity: 0.28 * strength }} />
+      <AbsoluteFill style={{ background: color, mixBlendMode: "color", opacity: 0.6 * strength }} />
       {/* Deeper color toward the outer edge, fading toward the divider. */}
       <AbsoluteFill
         style={{
@@ -137,20 +146,40 @@ const NameTag: React.FC<{
 
 export const BattleSplit: React.FC<BattleSplitProps> = (p) => {
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
+  const { fps, width, height, durationInFrames } = useVideoConfig();
   const hit = Math.round(p.impactSec * fps);
 
-  const top = p.dividerTop * 100;
-  const bot = p.dividerBottom * 100;
-  const leftClip = `polygon(0% 0%, ${top}% 0%, ${bot}% 100%, 0% 100%)`;
-  const rightClip = `polygon(${top}% 0%, 100% 0%, 100% 100%, ${bot}% 100%)`;
+  // Lightning bolt: a fixed zigzag around the divider line, with a small crackle every 2 frames.
+  const crackle = Math.floor(frame / 2);
+  const bolt: [number, number][] = [];
+  for (let i = 0; i <= p.boltSegments; i++) {
+    const t = i / p.boltSegments;
+    const base = p.dividerTop + (p.dividerBottom - p.dividerTop) * t;
+    const zig = i === 0 || i === p.boltSegments ? 0 : (i % 2 ? 1 : -1) * p.boltWidth * (0.6 + 0.4 * random(`z${i}`));
+    const jitter = (random(`j${i}-${crackle}`) - 0.5) * p.boltWidth * 0.35;
+    const yJit = i === 0 || i === p.boltSegments ? 0 : (random(`y${i}`) - 0.5) * 0.3;
+    bolt.push([(base + zig + jitter) * width, (t + yJit / p.boltSegments) * height]);
+  }
+  const pts = (list: [number, number][]) => list.map(([x, y]) => `${(x / width) * 100}% ${(y / height) * 100}%`).join(", ");
+  const leftClip = `polygon(0% 0%, ${pts(bolt)}, 0% 100%)`;
+  const rightClip = `polygon(100% 0%, ${pts(bolt)}, 100% 100%)`;
+  const boltPath = bolt.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  // Small side forks off a few of the corners.
+  const forks = [3, 7, 10]
+    .filter((i) => i < p.boltSegments)
+    .map((i) => {
+      const [x, y] = bolt[i];
+      const dir = i % 2 ? 1 : -1;
+      const len = p.boltWidth * width * 1.4;
+      return `M${x},${y} L${x + dir * len * 0.5},${y + len * 0.35} L${x + dir * len * 0.35},${y + len * 0.6} L${x + dir * len},${y + len}`;
+    });
 
   // Tint eases in from the start, then jumps to full strength on the hit.
   const tint =
     interpolate(frame, [0, 12], [0.4, 0.7], { extrapolateRight: "clamp" }) +
     interpolate(frame, [hit, hit + 3], [0, 0.3], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  // Divider draws top to bottom in the first 12 frames.
+  // Bolt strikes top to bottom in the first frames.
   const draw = interpolate(frame, [2, 14], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -178,6 +207,8 @@ export const BattleSplit: React.FC<BattleSplitProps> = (p) => {
 
   const vsX = ((p.dividerTop + (p.dividerBottom - p.dividerTop) * p.vsY) * width) | 0;
   const angle = (Math.atan2((p.dividerBottom - p.dividerTop) * width, height) * 180) / Math.PI;
+  const boltFlicker = frame >= hit && frame < hit + 6 ? (frame % 2 ? 1 : 0.55) : 0.85 + 0.15 * random(`f${crackle}`);
+  const boltLen = 4000;
 
   return (
     <AbsoluteFill style={{ background: "#000000", overflow: "hidden" }}>
@@ -185,32 +216,45 @@ export const BattleSplit: React.FC<BattleSplitProps> = (p) => {
         <OffthreadVideo src={staticFile(p.video)} volume={p.volume} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         <Tint side="left" color={p.left.color} clip={leftClip} strength={tint} />
         <Tint side="right" color={p.right.color} clip={rightClip} strength={tint} />
-      </AbsoluteFill>
 
-      {/* Divider: white core with a glow, drawn top to bottom. */}
-      <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
-        <defs>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="10" />
-          </filter>
-        </defs>
-        {[
-          { w: 26, c: "#FFFFFF", o: 0.7, f: "url(#glow)" },
-          { w: 9, c: "#FFFFFF", o: 1, f: undefined },
-        ].map((l, i) => (
-          <line
-            key={i}
-            x1={p.dividerTop * width}
-            y1={0}
-            x2={p.dividerTop * width + (p.dividerBottom - p.dividerTop) * width * draw}
-            y2={height * draw}
-            stroke={l.c}
-            strokeWidth={l.w}
-            opacity={l.o}
-            filter={l.f}
+        {/* Lightning bolt between the two halves, behind the contestants. */}
+        <svg width={width} height={height} style={{ position: "absolute", inset: 0, opacity: boltFlicker }}>
+          <defs>
+            <filter id="boltGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="14" />
+            </filter>
+          </defs>
+          {[
+            { w: 46, c: "#B9D4FF", o: 0.9, f: "url(#boltGlow)" },
+            { w: 16, c: "#FFFFFF", o: 0.95, f: "url(#boltGlow)" },
+            { w: 9, c: "#FFFFFF", o: 1, f: undefined },
+          ].map((l, i) => (
+            <g key={i} filter={l.f} opacity={l.o}>
+              <path
+                d={boltPath}
+                fill="none"
+                stroke={l.c}
+                strokeWidth={l.w}
+                strokeLinejoin="miter"
+                strokeLinecap="round"
+                strokeDasharray={boltLen}
+                strokeDashoffset={boltLen * (1 - draw)}
+              />
+              {draw >= 1 &&
+                forks.map((d, j) => (
+                  <path key={j} d={d} fill="none" stroke={l.c} strokeWidth={l.w * 0.45} strokeLinejoin="miter" />
+                ))}
+            </g>
+          ))}
+        </svg>
+
+        {p.cutout ? (
+          <Img
+            src={staticFile(`${p.cutout}/${String(Math.min(frame, durationInFrames - 1)).padStart(3, "0")}.webp`)}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
           />
-        ))}
-      </svg>
+        ) : null}
+      </AbsoluteFill>
 
       {/* Title */}
       <div
