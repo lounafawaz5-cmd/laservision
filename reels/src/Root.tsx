@@ -4,6 +4,8 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { BattleSplit, battleSplitSchema } from "./templates/BattleSplit";
+import { stylingBattleShot1 } from "./edits/styling-battle";
 
 const FPS = 30;
 
@@ -107,6 +109,16 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={900}
+    />
+    <Composition
+      id="BattleSplit-ZVC"
+      component={BattleSplit}
+      schema={battleSplitSchema}
+      defaultProps={stylingBattleShot1}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={91}
     />
   </>
 );
