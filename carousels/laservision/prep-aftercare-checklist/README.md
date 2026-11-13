@@ -8,7 +8,8 @@ Finished slides: `out/slide-01.png` … `out/slide-08.png`.
 |---|---|
 | `slides.html` | All 8 slides (HTML + inline SVG line art). Edit copy here. |
 | `render.mjs` | `node carousels/laservision/prep-aftercare-checklist/render.mjs` → re-renders `out/` |
-| `photos/` | Optional. Drop `slide-0N.jpg` here and re-render: that slide shows the photo in its lower band (fading into the background) instead of the line art. |
+| `photos/` | Nurse photos (Hazmieh, shot for a reel) used as tinted, low-opacity backgrounds on slides 2–7. |
+| `export-canva.cjs` | Builds `canva/` (background image + editable text boxes per slide) for import into Canva. |
 
 ## Slides
 | # | Background | Label | Headline |
@@ -28,9 +29,10 @@ highlight is a cyan marker band behind navy text.
 ## Where this departs from the brief, and why
 - **"WhatsApp us to book…" (slide 8)** became *"Book your tests or consultation."* + WhatsApp icon +
   **+961 81 54 20 20**. House rule: never the word "WhatsApp" on screen.
-- **Photography:** the strategy rules out stock and AI imagery for LaserVision, and no clinic photos
-  are in the repo yet, so the slides use minimal line art plus abstract cyan light. Swap in real
-  photos through `photos/` (shot list below).
+- **Photography:** real staff photos only (no stock, no AI). Slides 2–7 use the nurse photos as grayscale,
+  brand-tinted backgrounds at low opacity, with a navy/gray gradient over the text side. Cover and closing
+  slide keep the line art and light visuals. The syringe-and-needle shot (IMG_1692) is cropped so the
+  needle sits off-frame, to keep the slides free of graphic clinical imagery.
 - **Size:** 1080 × 1350 as requested. The reference carousel (`CAROUSEL_STYLE.md`) is 1200 × 1500, also 4:5,
   so the two are interchangeable on Instagram.
 - **"Before / After" chips** added to the labels so the checklist reads as two halves when saved.
@@ -43,15 +45,16 @@ highlight is a cyan marker band behind navy text.
 - The treating ophthalmologist decides suitability, procedure and instructions (slides 2, 5, 7, 8). No optometrist role mentioned.
 - No doctors shown or named. WhatsApp: icon + number only.
 
-## Optional photo shot list (real, on site)
-| Slide | Shot |
-|---|---|
-| 1 | Close-up of an eye in soft natural light (staff member, with consent) |
-| 2 | Patient at a corneal topographer / biometry device, technician beside them (no doctor on camera) |
-| 3 | Contact-lens case beside a pair of glasses on a clean surface |
-| 4 | Flat-lay: glasses, car keys, printed checklist |
-| 5 | Patient resting in a recovery chair with sunglasses |
-| 6 | Sunglasses, eye-drop bottle, appointment card/calendar |
-| 8 | Hazmieh reception |
+## Photos used
+| Slide | Photo | Shows |
+|---|---|---|
+| 2 | IMG_1696 | Nurse, close-up |
+| 3 | IMG_1700 | Opening a contact-lens pack |
+| 4 | IMG_1712 | Preparing the tray |
+| 5 | IMG_1678 | Drops (dropper bottle) |
+| 6 | IMG_1692 | Nurse, close-up (needle cropped out) |
+| 7 | IMG_1710 | Gloved hands with instrument |
+
+Footer on slides 2–7: LaserVision logo · Hazmieh · Saida · Tripoli · Hôtel-Dieu · WhatsApp icon + number.
 
 Caption reminder: WhatsApp **+961 81 54 20 20** goes in the caption too (every LaserVision post).
