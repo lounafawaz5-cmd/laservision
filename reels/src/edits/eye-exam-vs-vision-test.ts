@@ -32,7 +32,7 @@ const DURATION_MS = Math.round(SEGS.reduce((a, [s, e]) => a + e - s, 0) * 1000);
 // [text, source start]; each line ends at the next one's start, or at an explicit end in source time.
 const LINES: [string, number, number?][] = [
   ["بتشوفوا منيح", 3.45],
-  ["يعني عيونكم منيح؟", 5.44, 7.06],
+  ["يعني عيونكن مناح؟", 5.44, 7.06],
   ["مش ضروري", 7.06, 8.04],
   ["فحص النظر", 8.78],
   ["أو الـ REFRACTION", 9.58],
@@ -67,7 +67,7 @@ const LINES: [string, number, number?][] = [
   ["متل الـ GLAUCOMA", 43.32],
   ["والـ DIABETIC RETINOPATHY", 44.46, 46.33],
   ["بتبلش", 46.78],
-  ["بمرحلتها الأولى", 47.2],
+  ["بمراحلها الأولى", 47.2],
   ["بلا أي عوارض", 48.26, 49.48],
   ["لهيك", 50.43, 50.89],
   ["مش بس لازم", 51.29],
