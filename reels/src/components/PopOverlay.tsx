@@ -1,7 +1,9 @@
-import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { REEL_FONT } from "../brands";
 
-// Pop-up overlays for talking-head reels: a round illustration badge on the speaker's chest with an
-// English term under it (as in the LaserVision reference reel), or a short statement card.
+// Pop-up overlays for talking-head reels: a round illustration badge with an English term under it,
+// or a short statement card. They sit UNDER the captions (Luna, 13 Nov), with a pop on each entrance
+// (brand/Video_Editing_Guide.pdf: pop on text pop-ups).
 // Colors: LaserVision brand palette only (brand/laservision/GUIDELINES.md).
 const C = {
   navy: "#00303F",
@@ -11,7 +13,8 @@ const C = {
   gray: "#F1F2F2",
   white: "#FFFFFF",
 };
-const FONT = `"Outfit", "Inter", sans-serif`;
+// Editing guide: all on-screen text in Montserrat Arabic Bold.
+const FONT = `"${REEL_FONT}", sans-serif`;
 
 export type OverlayKind =
   | "question"
@@ -167,8 +170,9 @@ const Illustration: React.FC<{ kind: OverlayKind; part?: AnatomyPart }> = ({ kin
   }
 };
 
-const BADGE = 330;
-const CENTER_Y = 850;
+// Captions sit at y≈1110–1200; overlays start below them.
+const BADGE = 290;
+const CENTER_Y = 1390;
 
 const OverlayView: React.FC<{ o: Overlay; nowMs: number }> = ({ o, nowMs }) => {
   const { fps } = useVideoConfig();
@@ -187,11 +191,11 @@ const OverlayView: React.FC<{ o: Overlay; nowMs: number }> = ({ o, nowMs }) => {
   if (o.kind === "statement") {
     const [a, b] = o.label.split("|");
     return (
-      <AbsoluteFill style={{ alignItems: "center", paddingTop: CENTER_Y - 90 }}>
+      <AbsoluteFill style={{ alignItems: "center", paddingTop: 1250 }}>
         <div style={{ transform: `scale(${scale})`, background: C.navy, borderRadius: 34, padding: "34px 52px",
           boxShadow: "0 18px 50px rgba(0,0,0,0.35)", textAlign: "center", fontFamily: FONT, border: `4px solid ${C.teal}` }}>
-          <div style={{ color: C.white, fontWeight: 700, fontSize: 70, letterSpacing: 1 }}>{a}</div>
-          <div style={{ color: C.mint, fontWeight: 500, fontSize: 52, marginTop: 6 }}>{b}</div>
+          <div style={{ color: C.white, fontWeight: 700, fontSize: 62 }}>{a}</div>
+          <div style={{ color: C.mint, fontWeight: 700, fontSize: 46, marginTop: 6 }}>{b}</div>
         </div>
       </AbsoluteFill>
     );
@@ -206,7 +210,7 @@ const OverlayView: React.FC<{ o: Overlay; nowMs: number }> = ({ o, nowMs }) => {
         </svg>
       </div>
       <div style={{ marginTop: -26, transform: `scale(${labelPop})`, background: C.blue, color: C.white, fontFamily: FONT,
-        fontWeight: 700, fontSize: 44, letterSpacing: 1.5, padding: "10px 30px", borderRadius: 999, whiteSpace: "nowrap",
+        fontWeight: 700, fontSize: 40, letterSpacing: 1, padding: "10px 30px", borderRadius: 999, whiteSpace: "nowrap",
         boxShadow: "0 8px 24px rgba(0,0,0,0.3)" }}>
         {label}
       </div>
@@ -214,10 +218,17 @@ const OverlayView: React.FC<{ o: Overlay; nowMs: number }> = ({ o, nowMs }) => {
   );
 };
 
-export const PopOverlays: React.FC<{ overlays: Overlay[] }> = ({ overlays }) => {
+export const PopOverlays: React.FC<{ overlays: Overlay[]; popSfx?: string; popVolume?: number }> = ({
+  overlays,
+  popSfx = "sfx/pop.wav",
+  popVolume = 0.18,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const nowMs = (frame / fps) * 1000;
+  const f = (ms: number) => Math.round((ms / 1000) * fps);
+  // A pop on every entrance, and on each new anatomy label.
+  const pops = overlays.flatMap((o) => [o.fromMs, ...(o.steps ?? []).map((s) => s.atMs).filter((t) => t > o.fromMs + 150)]);
   return (
     <>
       {overlays
@@ -225,6 +236,11 @@ export const PopOverlays: React.FC<{ overlays: Overlay[] }> = ({ overlays }) => 
         .map((o) => (
           <OverlayView key={`${o.kind}${o.fromMs}`} o={o} nowMs={nowMs} />
         ))}
+      {pops.map((t) => (
+        <Sequence key={`pop${t}`} from={f(t)} durationInFrames={f(1000)}>
+          <Audio src={staticFile(popSfx)} volume={popVolume} />
+        </Sequence>
+      ))}
     </>
   );
 };

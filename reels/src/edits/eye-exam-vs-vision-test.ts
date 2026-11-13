@@ -2,8 +2,8 @@ import { BrollReelProps } from "../templates/BrollReel";
 import { Overlay } from "../components/PopOverlay";
 
 // LaserVision · "Seeing well ≠ healthy eyes": vision test vs comprehensive eye exam (Drive IMG_1389.mov, 13 Nov).
-// Style after the reference reel DcV1yP9OCYW minus the zoom-ins: talking head, stock B-roll cut-ins,
-// pop-up illustration badges, word-by-word Lebanese Arabic subtitles (English terms in CAPS).
+// Style after the reference reel DcV1yP9OCYW minus the zoom-ins: talking head, a few stock B-roll cut-ins,
+// pop-up illustration badges under the subtitles, house captions (brand/Video_Editing_Guide.pdf).
 //
 // Footage (not committed; pulled per session into public/footage/2026-11-13/):
 //   main.mp4  = IMG_1389.mov scaled to 1080×1920 @30
@@ -86,7 +86,7 @@ const captions = LINES.map(([text, s, e], i) => ({
   endMs: ms(e ?? LINES[i + 1][1]),
 }));
 
-// B-roll in edited-timeline seconds (cut-ins of 1–2.5 s, several placed over the pause cuts to hide them).
+// B-roll in edited-timeline seconds, Mix in and out with a whoosh. Pause cuts not under B-roll get a Mix too.
 const B = (id: number, from: number, to: number, startSec: number, x: number) => ({
   src: `${DIR}/broll/${id}.mp4`,
   fromMs: Math.round(from * 1000),
@@ -94,17 +94,13 @@ const B = (id: number, from: number, to: number, startSec: number, x: number) =>
   startSec,
   x,
 });
+// v2 (Luna, 13 Nov): far fewer cut-ins. Removed the trial frame, trial lenses, "vision device", pupil
+// (its DILATING DROPS overlay stays), the eye after DIABETIC RETINOPATHY and the vision-test shots.
 const broll = [
   B(20962, 2.04, 3.66, 1, 52), // "يعني عيونكم منيح؟" eye close-up
-  B(13075, 7.32, 9.28, 4.5, 58), // "بحدد إذا كنتوا بحاجة" trial frame
-  B(22130, 9.28, 11.35, 24, 46), // "لعوينات أو CONTACT LENSES" trying on glasses
-  B(36703, 12.48, 14.2, 5, 40), // "تلاقوا الدرجات" trial lenses
-  B(13078, 15.0, 16.6, 2, 36), // "رؤية واضحة ومريحة | بس هون" (covers cut 1)
+  B(22130, 9.28, 11.35, 8.0, 62), // "لعوينات أو CONTACT LENSES" man puts on a pair of glasses
   B(13072, 19.71, 20.57, 3, 38), // "كيف عم تقشعوا" cover test
-  B(13073, 20.57, 22.5, 10, 82), // "أما الفحص الكامل" slit lamp (covers cut 2)
-  B(48017, 32.89, 35.6, 11, 50), // "قطرات لتوسيع بؤبؤ العين" pupil (covers cut 3)
-  B(4257, 41.05, 44.3, 2.1, 50), // "بتبلش… بلا أي عوارض" (covers cut 4)
-  B(13076, 45.4, 47.16, 12, 50), // "تفحصوا نظركم" vision test
+  B(13073, 20.57, 22.5, 10, 82), // "أما الفحص الكامل" slit lamp
   B(36420, 47.16, 49.28, 1, 97), // "تتشيكوا على صحة عيونكم" slit lamp exam
 ];
 
@@ -138,7 +134,9 @@ const overlays: Overlay[] = [
 
 export const eyeExamVsVisionTest: BrollReelProps = {
   brand: "laservision",
-  video: `${DIR}/edit.mp4`,
+  video: `${DIR}/main.mp4`,
+  segs: SEGS,
+  audio: `${DIR}/edit.mp4`,
   durationMs: DURATION_MS,
   broll,
   overlays,
