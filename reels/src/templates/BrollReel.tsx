@@ -28,6 +28,8 @@ export const brollReelSchema = z.object({
   ),
   overlays: z.array(z.any()),
   captions: z.array(z.object({ text: z.string(), startMs: z.number(), endMs: z.number() })),
+  // false = render without subtitles (they go out as .srt via scripts/export-srt.ts for editing in CapCut).
+  showCaptions: z.boolean().optional(),
 });
 
 export type BrollReelProps = z.infer<typeof brollReelSchema>;
@@ -64,7 +66,7 @@ const BrollShot: React.FC<{ src: string; startSec: number; x: number; len: numbe
   );
 };
 
-export const BrollReel: React.FC<BrollReelProps> = ({ brand: brandId, video, segs, audio, broll, overlays, captions }) => {
+export const BrollReel: React.FC<BrollReelProps> = ({ brand: brandId, video, segs, audio, broll, overlays, captions, showCaptions = true }) => {
   const brand = brands[brandId];
   const { fps, durationInFrames } = useVideoConfig();
   const f = (ms: number) => Math.round((ms / 1000) * fps);
@@ -98,7 +100,7 @@ export const BrollReel: React.FC<BrollReelProps> = ({ brand: brandId, video, seg
           </Sequence>
         );
       })}
-      <Captions captions={captions} brand={brand} />
+      {showCaptions ? <Captions captions={captions} brand={brand} /> : null}
       <PopOverlays overlays={overlays} />
     </AbsoluteFill>
   );
