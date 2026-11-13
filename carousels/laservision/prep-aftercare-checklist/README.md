@@ -31,8 +31,8 @@ highlight is a cyan marker band behind navy text.
   **+961 81 54 20 20**. House rule: never the word "WhatsApp" on screen.
 - **Photography:** real staff photos only (no stock, no AI). Slides 2–7 use the nurse photos as grayscale,
   brand-tinted backgrounds at low opacity, with a navy/gray gradient over the text side. Cover and closing
-  slide keep the line art and light visuals. The syringe-and-needle shot (IMG_1692) is cropped so the
-  needle sits off-frame, to keep the slides free of graphic clinical imagery.
+  slide keep the line art and light visuals. In the syringe shot (IMG_1692) the needle sits under the heavy
+  text overlay on the left and doesn't show, keeping the slides free of graphic clinical imagery.
 - **Size:** 1080 × 1350 as requested. The reference carousel (`CAROUSEL_STYLE.md`) is 1200 × 1500, also 4:5,
   so the two are interchangeable on Instagram.
 - **"Before / After" chips** added to the labels so the checklist reads as two halves when saved.
@@ -52,7 +52,7 @@ highlight is a cyan marker band behind navy text.
 | 3 | IMG_1700 | Opening a contact-lens pack |
 | 4 | IMG_1712 | Preparing the tray |
 | 5 | IMG_1678 | Drops (dropper bottle) |
-| 6 | IMG_1692 | Nurse, close-up (needle cropped out) |
+| 6 | IMG_1692 | Nurse, close-up (needle hidden under the overlay) |
 | 7 | IMG_1710 | Gloved hands with instrument |
 
 Footer on slides 2–7: LaserVision logo · Hazmieh · Saida · Tripoli · Hôtel-Dieu · WhatsApp icon + number.
