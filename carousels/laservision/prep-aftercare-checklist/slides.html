@@ -22,26 +22,26 @@
 
   /* staff photo backgrounds (slides 2-7): tinted, low opacity, overlays on top */
   .bg { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; z-index: 0; }
-  .dark .bg  { filter: grayscale(1) contrast(1.08); mix-blend-mode: luminosity; opacity: .5; }
-  .light .bg { filter: grayscale(1) contrast(1.05) brightness(1.06); opacity: .34; }
+  .dark .bg  { filter: grayscale(1) contrast(1.1) brightness(1.02); mix-blend-mode: luminosity; opacity: .95; }
+  .light .bg { filter: grayscale(1) contrast(1.08); opacity: .62; }
   .shade { position: absolute; inset: 0; z-index: 0; }
   .dark .shade  { background:
-      linear-gradient(100deg, rgba(0,48,63,.88) 0%, rgba(0,48,63,.62) 55%, rgba(0,48,63,.18) 100%),
-      linear-gradient(180deg, rgba(0,48,63,.55) 0%, rgba(0,48,63,0) 40%, rgba(0,48,63,0) 75%, rgba(0,48,63,.75) 100%); }
+      linear-gradient(100deg, rgba(0,48,63,.80) 0%, rgba(0,48,63,.48) 50%, rgba(0,48,63,.05) 100%),
+      linear-gradient(180deg, rgba(0,48,63,.45) 0%, rgba(0,48,63,0) 35%); }
   .light .shade { background:
-      linear-gradient(100deg, rgba(241,242,242,.88) 0%, rgba(241,242,242,.55) 55%, rgba(182,223,229,.18) 100%),
-      linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 40%); }
-  .tint { position: absolute; inset: 0; z-index: 0; background: #30A4BF; mix-blend-mode: color; opacity: .35; }
-  .dark .tint { opacity: .55; background: #005D83; }
+      linear-gradient(100deg, rgba(241,242,242,.86) 0%, rgba(241,242,242,.5) 50%, rgba(241,242,242,0) 100%),
+      linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 35%); }
+  .tint { position: absolute; inset: 0; z-index: 0; background: #30A4BF; mix-blend-mode: color; opacity: .45; }
+  .dark .tint { opacity: .6; background: #005D83; }
 
-  /* LaserVision footer bar (slides 2-7) */
-  .footer { position: absolute; left: 0; right: 0; bottom: 0; height: 112px; padding: 0 64px; z-index: 3;
-            display: flex; align-items: center; justify-content: space-between; color: #fff; }
-  .dark .footer  { background: rgba(0,26,35,.78); border-top: 1px solid rgba(182,223,229,.25); }
-  .light .footer { background: var(--navy); }
-  .footer img { height: 38px; }
-  .footer .br { font-size: 22px; letter-spacing: .02em; color: var(--mint); word-spacing: .35em; }
-  .footer .wa { display: flex; align-items: center; gap: 12px; font-size: 27px; font-weight: 500; }
+  /* LaserVision footer (matches the Canva footer component): navy fade from the bottom,
+     white logo, branches in Light, WhatsApp icon + number in Bold */
+  .footer { position: absolute; left: 0; right: 0; bottom: 0; height: 270px; padding: 0 64px 74px; z-index: 3;
+            display: flex; align-items: flex-end; justify-content: space-between; color: #fff;
+            background: linear-gradient(180deg, rgba(0,26,35,0) 0%, rgba(0,26,35,.55) 45%, rgba(0,26,35,.92) 100%); }
+  .footer img { height: 43px; }
+  .footer .br { display: flex; gap: 32px; font-size: 22px; font-weight: 300; margin-bottom: 4px; }
+  .footer .wa { display: flex; align-items: center; gap: 13px; font-size: 25px; font-weight: 700; margin-bottom: 2px; }
 
   /* top bar */
   .top { position: absolute; top: 66px; left: 88px; right: 88px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 3; }
@@ -68,7 +68,10 @@
   ul.check li { display: grid; grid-template-columns: 50px 1fr; column-gap: 26px; align-items: start; font-size: 41px; line-height: 1.27; margin-bottom: 30px; }
   ul.check li svg { width: 50px; height: 50px; margin-top: 1px; }
   ul.check b { font-weight: 500; }
-  .dark ul.check b { color: var(--mint); }
+  .dark ul.check b { color: #fff; font-weight: 700; }
+  .dark .content { text-shadow: 0 2px 16px rgba(0,26,35,.65); }
+  .dark .content .card, .dark .content .card * { text-shadow: none; }
+  .slide[data-n="7"] .shade { background: linear-gradient(180deg, rgba(0,48,63,.5) 0%, rgba(0,48,63,.2) 35%, rgba(0,48,63,.45) 70%, rgba(0,48,63,.85) 100%), linear-gradient(100deg, rgba(0,48,63,.6) 0%, rgba(0,48,63,.2) 100%); }
 
   .note { font-size: 30px; line-height: 1.38; font-weight: 400; margin-top: 34px; padding-top: 24px; }
   .dark .note  { border-top: 2px solid rgba(182,223,229,.35); color: rgba(255,255,255,.78); }
@@ -367,7 +370,7 @@
   document.getElementById('wa').innerHTML = `<svg width="64" height="64" viewBox="0 0 24 24" role="img" aria-label="WhatsApp"><path fill="#FFFFFF" d="${WA}"/></svg>`;
 
   for (const f of document.querySelectorAll('.footer')) {
-    f.innerHTML = `<img src="../../../brand/laservision/logo-white.png" alt="LaserVision"><span class="br">Hazmieh · Saida · Tripoli · Hôtel-Dieu</span><span class="wa"><svg width="34" height="34" viewBox="0 0 24 24" role="img" aria-label="WhatsApp"><path fill="#FFFFFF" d="${WA}"/></svg>+961 81 54 20 20</span>`;
+    f.innerHTML = `<img src="../../../brand/laservision/logo-white.png" alt="LaserVision"><span class="br"><span>Hazmieh</span><span>Saida</span><span>Tripoli</span><span>Hôtel-Dieu</span></span><span class="wa"><svg width="27" height="27" viewBox="0 0 24 24" role="img" aria-label="WhatsApp"><path fill="#FFFFFF" d="${WA}"/></svg>+961 81 54 20 20</span>`;
   }
   for (const s of document.querySelectorAll('.slide')) {
     const n = +s.dataset.n;

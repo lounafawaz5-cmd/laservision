@@ -30,7 +30,7 @@ highlight is a cyan marker band behind navy text.
 - **"WhatsApp us to book…" (slide 8)** became *"Book your tests or consultation."* + WhatsApp icon +
   **+961 81 54 20 20**. House rule: never the word "WhatsApp" on screen.
 - **Photography:** real staff photos only (no stock, no AI). Slides 2–7 use the nurse photos as grayscale,
-  brand-tinted backgrounds at low opacity, with a navy/gray gradient over the text side. Cover and closing
+  brand-tinted backgrounds (kept clearly visible, per Luna), with a navy/gray gradient over the text side. Cover and closing
   slide keep the line art and light visuals. In the syringe shot (IMG_1692) the needle sits under the heavy
   text overlay on the left and doesn't show, keeping the slides free of graphic clinical imagery.
 - **Size:** 1080 × 1350 as requested. The reference carousel (`CAROUSEL_STYLE.md`) is 1200 × 1500, also 4:5,
@@ -55,6 +55,7 @@ highlight is a cyan marker band behind navy text.
 | 6 | IMG_1692 | Nurse, close-up (needle hidden under the overlay) |
 | 7 | IMG_1710 | Gloved hands with instrument |
 
-Footer on slides 2–7: LaserVision logo · Hazmieh · Saida · Tripoli · Hôtel-Dieu · WhatsApp icon + number.
+Footer on slides 2–7 follows the Canva footer component (canva.com/design/DAHW2S7R9JQ): navy fade from the
+bottom, white logo left, branches in Outfit Light, WhatsApp icon + number in Bold on the right.
 
 Caption reminder: WhatsApp **+961 81 54 20 20** goes in the caption too (every LaserVision post).
