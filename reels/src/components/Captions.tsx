@@ -26,7 +26,7 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ capt
           borderRadius: 20,
           background: clean ? "transparent" : brand.colors.captionBg,
           color: brand.colors.captionText,
-          textShadow: clean ? "0 2px 12px rgba(0,0,0,0.55)" : "none",
+          textShadow: clean ? "0 2px 12px rgba(0,0,0,0.55), 0 0 3px rgba(0,0,0,0.7)" : "none",
           fontFamily: fontFor(brand, current.text),
           fontWeight: clean ? 800 : 700,
           fontSize: clean ? 66 : 58,
