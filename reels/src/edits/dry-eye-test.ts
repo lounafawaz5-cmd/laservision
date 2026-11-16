@@ -8,7 +8,8 @@ import { Overlay, StepPart } from "../components/PopOverlay";
 // Footage (not committed; pulled per session into public/footage/dry-eye-0074/):
 //   main.mp4  = RIB_0074.MP4 at 30 fps (1080×1920)
 //   edit.m4a  = RIB_0074 audio, 11.95–43.75 s, 30/80 ms fades
-//   broll/RIB_0042.mp4 = RIB_0042.MP4 at 30 fps: a patient at the dry eye analyzer (our own footage, same shoot)
+//   broll/schirmer.mp4 = public/stills/dry-eye-schirmer.png (Luna, 16 Nov: the Schirmer strip test) as a 4 s still at
+//   1080×1920, no zoom. (Not RIB_0042 = topography, not RIB_0068 = analyzer.)
 const DIR = "footage/dry-eye-0074";
 
 // One kept range: the 12 s warm-up before "عيونك" and the hand gesture after "Tripoli" are cut.
@@ -58,10 +59,10 @@ const captions = LINES.map(([text, words, end]) => ({
   words: words.map(ms),
 }));
 
-// The one B-roll: the first time she says "DRY EYE TEST", a patient at the dry eye analyzer,
+// The one B-roll: the first time she says "DRY EYE TEST", the Schirmer strip test,
 // held through "منقيّم حالة العين" (Mix in and out with a whoosh).
 const broll = [
-  { src: `${DIR}/broll/RIB_0042.mp4`, fromMs: ms(22.0), toMs: ms(24.75), startSec: 1.0, x: 50 },
+  { src: `${DIR}/broll/schirmer.mp4`, fromMs: ms(22.0), toMs: ms(24.75), startSec: 0, x: 50 },
 ];
 
 const O = (kind: Overlay["kind"], fromSrc: number, toSrc: number, label: string, steps?: [StepPart, number, string][]): Overlay => ({
