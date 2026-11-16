@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screen-tired eyes: carousel</title>
+<style>
+@font-face { font-family: Outfit; font-weight: 300; src: url("../../../brand/fonts/Outfit/Outfit-Light.ttf"); }
+@font-face { font-family: Outfit; font-weight: 500; src: url("../../../brand/fonts/Outfit/Outfit-Medium.ttf"); }
+@font-face { font-family: Outfit; font-weight: 700; src: url("../../../brand/fonts/Outfit/Outfit-Bold.ttf"); }
+:root {
+  --blue: #005D83; --navy: #00303F; --gray: #F1F2F2;
+  --teal: #30A4BF; --mint: #B6DFE5; --white: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #222; font-family: Outfit, sans-serif; color: var(--white); }
+.slide {
+  position: relative; width: 1080px; height: 1350px; overflow: hidden;
+  background: linear-gradient(180deg, #0E3D52 0%, var(--navy) 45%, #002633 100%);
+  margin-bottom: 40px;
+}
+/* halftone dots, top-left fade like the reference */
+.slide::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(182,223,229,.10) 1.6px, transparent 1.8px);
+  background-size: 14px 14px;
+  -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 45%);
+          mask-image: linear-gradient(135deg, #000 0%, transparent 45%);
+}
+.art { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; }
+.counter { position: absolute; top: 100px; right: 108px; text-align: right; z-index: 3; }
+.counter .n { font-weight: 300; font-size: 25px; letter-spacing: .5px; }
+.counter .dots { display: flex; gap: 9px; margin-top: 14px; }
+.counter .dots i { width: 26px; height: 26px; border: 2px solid var(--white); border-radius: 50%; }
+.counter .dots i.on { background: var(--white); }
+.text { position: absolute; left: 108px; right: 108px; top: 205px; z-index: 3; }
+.tip {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-weight: 500; font-size: 26px; letter-spacing: 3px; text-transform: uppercase; color: var(--mint);
+  margin-bottom: 22px;
+}
+.tip b { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  background: var(--teal); color: var(--white); font-weight: 700; font-size: 28px; letter-spacing: 0; }
+h1 { font-weight: 700; font-size: 92px; line-height: .98; letter-spacing: -2.5px; }
+h1.caps { font-size: 104px; text-transform: uppercase; letter-spacing: -3px; line-height: .95; }
+.sub { font-weight: 300; font-size: 44px; letter-spacing: -.5px; margin-top: 26px; }
+.body { font-weight: 300; font-size: 38px; line-height: 1.22; letter-spacing: -.3px; margin-top: 26px; max-width: 840px; }
+.body strong { font-weight: 500; color: var(--mint); }
+.logo { position: absolute; bottom: 64px; left: 50%; transform: translateX(-50%); width: 250px; z-index: 3; }
+.label { font-weight: 500; font-size: 25px; fill: var(--white); letter-spacing: .2px; }
+.label.light { font-weight: 300; }
+.footer {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 150px; z-index: 3;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 72px;
+  background: linear-gradient(0deg, rgba(0,32,42,.95), rgba(0,32,42,.0));
+}
+.footer img { width: 230px; }
+.footer .branches { display: flex; gap: 30px; font-weight: 300; font-size: 23px; color: var(--gray); }
+.footer .wa { display: flex; align-items: center; gap: 14px; font-weight: 500; font-size: 27px; }
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide" id="s1">
+  <svg class="art" viewBox="0 0 1080 1350">
+    <defs>
+      <radialGradient id="glow1" cx="540" cy="1110" r="460" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#B6DFE5" stop-opacity=".55"/>
+        <stop offset=".45" stop-color="#30A4BF" stop-opacity=".22"/>
+        <stop offset="1" stop-color="#30A4BF" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="face1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8FC7D2"/><stop offset="1" stop-color="#B6DFE5"/>
+      </linearGradient>
+      <linearGradient id="lid1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0B4F69"/><stop offset="1" stop-color="#00303F"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="640" width="1080" height="710" fill="url(#glow1)"/>
+    <!-- torso -->
+    <path d="M300 1350 C300 1180 330 1080 430 1045 C470 1032 500 1026 540 1026 C580 1026 610 1032 650 1045 C750 1080 780 1180 780 1350Z" fill="#005D83"/>
+    <path d="M492 1030 Q540 1080 588 1030" fill="none" stroke="#00303F" stroke-width="10" stroke-linecap="round" opacity=".5"/>
+    <!-- neck -->
+    <path d="M500 950 L500 1030 Q540 1060 580 1030 L580 950Z" fill="#8FC7D2"/>
+    <!-- hair back -->
+    <path d="M430 860 C420 740 470 680 545 680 C625 680 668 745 655 870 C650 930 640 980 628 1000 L452 1000 C440 980 432 930 430 860Z" fill="#001A24"/>
+    <!-- ears -->
+    <ellipse cx="447" cy="885" rx="17" ry="28" fill="#8FC7D2"/>
+    <ellipse cx="633" cy="885" rx="17" ry="28" fill="#8FC7D2"/>
+    <!-- face -->
+    <ellipse cx="540" cy="880" rx="92" ry="112" fill="url(#face1)"/>
+    <!-- fringe -->
+    <path d="M446 850 C450 760 500 728 548 728 C600 728 640 765 636 840 C612 790 560 772 520 790 C490 805 470 825 446 850Z" fill="#001A24"/>
+    <!-- furrowed brow -->
+    <path d="M512 820 q10 -8 20 0 M548 820 q10 -8 20 0" fill="none" stroke="#005D83" stroke-width="4" stroke-linecap="round"/>
+    <!-- mouth -->
+    <path d="M520 960 q20 -9 40 0" fill="none" stroke="#005D83" stroke-width="5" stroke-linecap="round"/>
+    <!-- right eye: squeezed shut -->
+    <path d="M560 872 q20 10 40 0" fill="none" stroke="#005D83" stroke-width="5" stroke-linecap="round"/>
+    <path d="M566 860 l-6 -6 M594 860 l6 -6" stroke="#005D83" stroke-width="4" stroke-linecap="round"/>
+    <!-- right forearm resting down behind the laptop -->
+    <line x1="700" y1="1180" x2="640" y2="1060" stroke="#005D83" stroke-width="66" stroke-linecap="round"/>
+    <!-- left forearm rising to the face -->
+    <line x1="380" y1="1180" x2="455" y2="940" stroke="#005D83" stroke-width="66" stroke-linecap="round"/>
+    <line x1="452" y1="955" x2="478" y2="902" stroke="#8FC7D2" stroke-width="44" stroke-linecap="round"/>
+    <!-- fist rubbing the left eye: curled fingers + thumb -->
+    <g transform="rotate(-18 500 868)">
+      <rect x="456" y="830" width="92" height="76" rx="34" fill="#B6DFE5" stroke="#5FAFC0" stroke-width="3"/>
+      <path d="M480 834 q-4 20 0 40 M504 832 q-4 22 0 44 M528 836 q-4 20 0 38" fill="none" stroke="#5FAFC0" stroke-width="3" stroke-linecap="round"/>
+      <path d="M462 884 q30 22 66 10" fill="none" stroke="#5FAFC0" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- strain marks -->
+    <g stroke="#30A4BF" stroke-width="6" stroke-linecap="round">
+      <path d="M392 800 l-30 -18 M386 840 h-36 M392 880 l-30 18"/>
+      <path d="M688 800 l30 -18 M694 840 h36 M688 880 l30 18"/>
+    </g>
+    <!-- laptop lid (back) -->
+    <path d="M300 1090 L780 1090 L800 1290 L280 1290Z" fill="url(#lid1)"/>
+    <path d="M300 1090 L780 1090" stroke="#B6DFE5" stroke-width="4" opacity=".9"/>
+    <!-- desk -->
+    <rect x="0" y="1286" width="1080" height="64" fill="#002633"/>
+    <rect x="0" y="1286" width="1080" height="4" fill="#30A4BF" opacity=".35"/>
+    <path d="M250 1290 L830 1290 L850 1306 L230 1306Z" fill="#0B4F69"/>
+  </svg>
+  <div class="counter"><div class="n">01/06</div><div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="text" style="top:250px">
+    <h1 class="caps">Screen-tired<br>eyes?</h1>
+    <p class="sub">5 habits that help.</p>
+  </div>
+  <img class="logo" src="../../../brand/laservision/logo-white.svg" alt="LaserVision" style="bottom:120px">
+</section>
+
+<!-- ============ SLIDE 2: 20-20-20 ============ -->
+<section class="slide" id="s2">
+  <svg class="art" viewBox="0 0 1080 1350">
+    <!-- three columns -->
+    <g font-family="Outfit" text-anchor="middle">
+      <!-- dividers -->
+      <line x1="396" y1="1035" x2="396" y2="1120" stroke="#B6DFE5" stroke-width="2" opacity=".35"/>
+      <line x1="684" y1="1035" x2="684" y2="1120" stroke="#B6DFE5" stroke-width="2" opacity=".35"/>
+      <!-- col 1: clock -->
+      <g transform="translate(252 770)">
+        <circle r="34" fill="none" stroke="#30A4BF" stroke-width="5"/>
+        <path d="M0 -20 V0 L14 10" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="252" y="1000" font-size="230" font-weight="700" fill="#FFFFFF" letter-spacing="-10">20</text>
+      <text x="252" y="1066" font-size="30" font-weight="500" fill="#B6DFE5" letter-spacing="3">MINUTES</text>
+      <text x="252" y="1108" font-size="27" font-weight="300" fill="#FFFFFF">every</text>
+      <!-- col 2: distance -->
+      <g transform="translate(540 770)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M-58 0 q16 -16 32 0 q-16 16 -32 0Z" stroke="#FFFFFF" stroke-width="4"/>
+        <circle cx="-42" cy="0" r="5" fill="#FFFFFF"/>
+        <path d="M-14 0 H42" stroke="#30A4BF" stroke-width="5" stroke-dasharray="2 10"/>
+        <path d="M30 -12 L44 0 L30 12" stroke="#30A4BF" stroke-width="5"/>
+        <path d="M54 20 L70 -12 L86 20Z" stroke="#FFFFFF" stroke-width="4"/>
+      </g>
+      <text x="540" y="1000" font-size="230" font-weight="700" fill="#30A4BF" letter-spacing="-10">20</text>
+      <text x="540" y="1066" font-size="30" font-weight="500" fill="#B6DFE5" letter-spacing="3">FEET (6 M)</text>
+      <text x="540" y="1108" font-size="27" font-weight="300" fill="#FFFFFF">look this far away</text>
+      <!-- col 3: timer -->
+      <g transform="translate(828 772)" fill="none" stroke-linecap="round">
+        <circle r="32" stroke="#30A4BF" stroke-width="5"/>
+        <path d="M0 -32 A32 32 0 0 1 27.7 16 L0 0Z" fill="#B6DFE5" stroke="none" opacity=".9"/>
+        <path d="M-10 -46 H10 M0 -46 V-34" stroke="#FFFFFF" stroke-width="5"/>
+      </g>
+      <text x="828" y="1000" font-size="230" font-weight="700" fill="#B6DFE5" letter-spacing="-10">20</text>
+      <text x="828" y="1066" font-size="30" font-weight="500" fill="#B6DFE5" letter-spacing="3">SECONDS</text>
+      <text x="828" y="1108" font-size="27" font-weight="300" fill="#FFFFFF">for</text>
+    </g>
+  </svg>
+  <div class="counter"><div class="n">02/06</div><div class="dots"><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="text">
+    <div class="tip"><b>1</b>Tip one</div>
+    <h1>The 20-20-20 rule.</h1>
+    <p class="body">Every 20 minutes, look at something 20&nbsp;feet (6&nbsp;m) away for 20 seconds.</p>
+  </div>
+  <img class="logo" src="../../../brand/laservision/logo-white.svg" alt="LaserVision">
+</section>
+
+<!-- ============ SLIDE 3: BLINK ============ -->
+<section class="slide" id="s3">
+  <svg class="art" viewBox="0 0 1080 1350">
+    <defs>
+      <radialGradient id="iris3" cx=".5" cy=".5" r=".5">
+        <stop offset=".35" stop-color="#005D83"/><stop offset="1" stop-color="#30A4BF"/>
+      </radialGradient>
+      <clipPath id="eyeclip3"><path d="M250 960 Q540 720 830 960 Q540 1170 250 960Z"/></clipPath>
+    </defs>
+    <!-- eye white -->
+    <path d="M250 960 Q540 720 830 960 Q540 1170 250 960Z" fill="#F1F2F2"/>
+    <g clip-path="url(#eyeclip3)">
+      <circle cx="540" cy="960" r="118" fill="url(#iris3)"/>
+      <circle cx="540" cy="960" r="50" fill="#00303F"/>
+      <circle cx="575" cy="925" r="20" fill="#FFFFFF" opacity=".9"/>
+      <!-- upper lid half way down (mid-blink) -->
+      <path d="M200 700 H880 V930 Q540 1000 200 930Z" fill="#30A4BF"/>
+      <path d="M200 930 Q540 1000 880 930" fill="none" stroke="#005D83" stroke-width="10"/>
+    </g>
+    <path d="M250 960 Q540 720 830 960 Q540 1170 250 960Z" fill="none" stroke="#B6DFE5" stroke-width="6"/>
+    <!-- blink motion arrows -->
+    <g fill="none" stroke="#B6DFE5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M215 820 q-40 70 0 140"/><path d="M200 945 l15 15 l18 -12"/>
+      <path d="M865 820 q40 70 0 140"/><path d="M880 945 l-15 15 l-18 -12"/>
+    </g>
+    <!-- callouts -->
+    <g stroke="#FFFFFF" stroke-width="2" fill="none">
+      <path d="M540 1065 V1160 H690"/><circle cx="540" cy="1065" r="7" fill="#FFFFFF"/>
+      <path d="M360 840 V770 H160" opacity="0"/>
+    </g>
+    <text class="label" x="700" y="1152">Each blink spreads</text>
+    <text class="label light" x="700" y="1186">a fresh tear film</text>
+  </svg>
+  <div class="counter"><div class="n">03/06</div><div class="dots"><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div></div>
+  <div class="text">
+    <div class="tip"><b>2</b>Tip two</div>
+    <h1>Blink more.</h1>
+    <p class="body">We blink far less when we stare at a screen, and fewer blinks let the eye dry out. Every so often, <strong>close your eyes fully</strong> and slowly.</p>
+  </div>
+  <img class="logo" src="../../../brand/laservision/logo-white.svg" alt="LaserVision">
+</section>
+
+<!-- ============ SLIDE 4: SETUP ============ -->
+<section class="slide" id="s4">
+  <svg class="art" viewBox="0 0 1080 1350">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10Z" fill="#B6DFE5"/>
+      </marker>
+    </defs>
+    <!-- floor/desk -->
+    <rect x="470" y="1080" width="520" height="16" rx="4" fill="#005D83"/>
+    <rect x="520" y="1096" width="14" height="150" fill="#005D83"/>
+    <rect x="930" y="1096" width="14" height="150" fill="#005D83"/>
+    <!-- chair -->
+    <path d="M190 940 Q180 1040 200 1110 L330 1110" fill="none" stroke="#0B4F69" stroke-width="20" stroke-linecap="round"/>
+    <path d="M260 1110 V1220 M200 1240 H320" stroke="#0B4F69" stroke-width="14" stroke-linecap="round"/>
+    <!-- person, side view, facing right -->
+    <path d="M232 900 Q222 1010 250 1090 L360 1092 Q370 1000 330 905Z" fill="#005D83"/>            <!-- torso -->
+    <path d="M300 1080 H440 Q470 1080 470 1110 V1230" fill="none" stroke="#00303F" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/> <!-- legs -->
+    <path d="M300 1080 H440 Q470 1080 470 1110 V1230" fill="none" stroke="#0B4F69" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="270" y="845" width="38" height="45" fill="#8FC7D2"/>                                    <!-- neck -->
+    <circle cx="300" cy="800" r="64" fill="#B6DFE5"/>                                                <!-- head -->
+    <path d="M238 800 Q232 730 300 728 Q362 728 366 780 Q330 760 300 770 Q270 790 262 830Z" fill="#001A24"/> <!-- hair -->
+    <circle cx="346" cy="796" r="6" fill="#00303F"/>                                                 <!-- eye -->
+    <!-- outstretched arm: shoulder to fingertip near screen -->
+    <path d="M300 930 L560 960" stroke="#005D83" stroke-width="36" stroke-linecap="round"/>
+    <path d="M555 960 L700 962" stroke="#8FC7D2" stroke-width="26" stroke-linecap="round"/>
+    <!-- monitor side view -->
+    <rect x="712" y="806" width="22" height="200" rx="6" fill="#F1F2F2"/>
+    <path d="M723 1006 V1066 M688 1076 H760" stroke="#B6DFE5" stroke-width="12" stroke-linecap="round"/>
+    <path d="M712 820 L650 830 L650 990 L712 1000" fill="#30A4BF" opacity=".18"/>
+    <!-- eye-level dashed line -->
+    <line x1="352" y1="796" x2="980" y2="796" stroke="#B6DFE5" stroke-width="3" stroke-dasharray="10 10"/>
+    <!-- top of screen marker -->
+    <path d="M740 806 H800" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="734" cy="806" r="6" fill="#FFFFFF"/>
+    <text class="label" x="812" y="768" text-anchor="start">Eye level</text>
+    <text class="label" x="812" y="842">Top of screen</text>
+    <text class="label light" x="812" y="876">at or just below</text>
+    <!-- arm's length dimension -->
+    <line x1="352" y1="1190" x2="712" y2="1190" stroke="#B6DFE5" stroke-width="3" marker-start="url(#arr)" marker-end="url(#arr)"/>
+    <line x1="352" y1="1170" x2="352" y2="1210" stroke="#B6DFE5" stroke-width="3"/>
+    <line x1="712" y1="1170" x2="712" y2="1210" stroke="#B6DFE5" stroke-width="3"/>
+    <rect x="440" y="1168" width="184" height="44" rx="22" fill="#00303F"/>
+    <text class="label" x="532" y="1199" text-anchor="middle">Arm's length</text>
+  </svg>
+  <div class="counter"><div class="n">04/06</div><div class="dots"><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div></div>
+  <div class="text">
+    <div class="tip"><b>3</b>Tip three</div>
+    <h1>Fix your setup.</h1>
+    <p class="body">Keep the screen about an arm's length away, with the top of the screen at or just below eye level.</p>
+  </div>
+  <img class="logo" src="../../../brand/laservision/logo-white.svg" alt="LaserVision">
+</section>
+
+<!-- ============ SLIDE 5: LIGHT ============ -->
+<section class="slide" id="s5">
+  <svg class="art" viewBox="0 0 1080 1350">
+    <defs>
+      <linearGradient id="ray5" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#B6DFE5" stop-opacity=".45"/><stop offset="1" stop-color="#B6DFE5" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <!-- window on the side wall -->
+    <rect x="96" y="740" width="210" height="300" rx="6" fill="#0B4F69" stroke="#B6DFE5" stroke-width="6"/>
+    <path d="M201 740 V1040 M96 890 H306" stroke="#B6DFE5" stroke-width="6"/>
+    <circle cx="160" cy="800" r="26" fill="#B6DFE5" opacity=".8"/>
+    <!-- light falling across the desk, beside the screen -->
+    <path d="M306 760 L560 1130 L306 1130Z" fill="url(#ray5)"/>
+    <!-- desk -->
+    <rect x="80" y="1130" width="920" height="16" rx="4" fill="#005D83"/>
+    <!-- monitor front view -->
+    <rect x="560" y="760" width="400" height="260" rx="14" fill="#F1F2F2"/>
+    <rect x="576" y="776" width="368" height="228" rx="6" fill="#005D83"/>
+    <path d="M740 1020 V1100 M690 1110 H810" stroke="#B6DFE5" stroke-width="14" stroke-linecap="round"/>
+    <!-- brightness slider on screen -->
+    <g transform="translate(760 890)">
+      <circle cx="-130" cy="0" r="14" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+      <g stroke="#FFFFFF" stroke-width="4" stroke-linecap="round">
+        <path d="M-130 -26 v-8 M-130 26 v8 M-156 0 h-8 M-104 0 h8 M-148 -18 l-6 -6 M-112 18 l6 6 M-148 18 l-6 6 M-112 -18 l6 -6"/>
+      </g>
+      <rect x="-80" y="-6" width="230" height="12" rx="6" fill="#00303F"/>
+      <rect x="-80" y="-6" width="128" height="12" rx="6" fill="#B6DFE5"/>
+      <circle cx="48" cy="0" r="18" fill="#FFFFFF"/>
+    </g>
+    <!-- callouts -->
+    <g stroke="#FFFFFF" stroke-width="2" fill="none">
+      <path d="M808 890 V700 H860"/><circle cx="808" cy="890" r="6" fill="#FFFFFF" stroke="none"/>
+      <path d="M201 740 V690 H250"/><circle cx="201" cy="740" r="6" fill="#FFFFFF" stroke="none"/>
+    </g>
+    <text class="label" x="870" y="692">Match</text>
+    <text class="label light" x="870" y="724">the room</text>
+    <text class="label" x="262" y="682">Window to the side,</text>
+    <text class="label light" x="262" y="714">not behind or facing the screen</text>
+  </svg>
+  <div class="counter"><div class="n">05/06</div><div class="dots"><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div></div>
+  <div class="text">
+    <div class="tip"><b>4</b>Tip four</div>
+    <h1>Mind the light.</h1>
+    <p class="body">Match your screen's brightness to the room, and set your desk so light from windows doesn't glare off the screen.</p>
+  </div>
+  <img class="logo" src="../../../brand/laservision/logo-white.svg" alt="LaserVision">
+</section>
+
+<!-- ============ SLIDE 6: CTA ============ -->
+<section class="slide" id="s6">
+  <svg class="art" viewBox="0 0 1080 1350">
+    <defs>
+      <radialGradient id="glow6" cx="540" cy="1000" r="420" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#30A4BF" stop-opacity=".35"/><stop offset="1" stop-color="#30A4BF" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect x="0" y="560" width="1080" height="800" fill="url(#glow6)"/>
+    <!-- eye chart card -->
+    <rect x="390" y="760" width="300" height="400" rx="20" fill="#F1F2F2"/>
+    <g font-family="Outfit" font-weight="700" fill="#00303F" text-anchor="middle">
+      <text x="540" y="890" font-size="120">E</text>
+      <text x="540" y="975" font-size="56" letter-spacing="14">F P</text>
+      <text x="540" y="1035" font-size="38" letter-spacing="12">T O Z</text>
+      <text x="540" y="1080" font-size="26" letter-spacing="10" fill="#005D83">L P E D</text>
+      <text x="540" y="1116" font-size="18" letter-spacing="8" fill="#30A4BF">P E C F D</text>
+    </g>
+  </svg>
+  <div class="counter"><div class="n">06/06</div><div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div></div>
+  <div class="text">
+    <div class="tip"><b>5</b>Tip five</div>
+    <h1>Still burning,<br>blurry or dry?</h1>
+    <p class="body">It may be more than tired eyes. <strong>Book an exam at LaserVision.</strong></p>
+  </div>
+  <div class="footer">
+    <img src="../../../brand/laservision/logo-white.svg" alt="LaserVision">
+    <div class="branches"><span>Hazmieh</span><span>Saida</span><span>Tripoli</span><span>Hôtel-Dieu</span></div>
+    <div class="wa">
+      <svg width="34" height="34" viewBox="0 0 24 24" aria-label="WhatsApp"><path fill="#FFFFFF" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      <span>+961 81 54 20 20</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
