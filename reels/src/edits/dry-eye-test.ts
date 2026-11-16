@@ -49,7 +49,7 @@ const LINES: [string, number[], number][] = [
   ["هالفحص موجود عنا", [38.46, 39.48, 39.84], 40.2],
   ["شوف حكيمك", [40.2, 40.74], 41.22],
   ["وتواصل معنا", [41.22, 41.7], 41.98],
-  ["بـ LaserVision Tripoli", [41.98, 42.16, 42.76], 43.6],
+  // v4 (Luna, 16 Nov): no subtitle for "بـ LaserVision Tripoli"; the contact card below carries it.
 ];
 
 const captions = LINES.map(([text, words, end]) => ({
@@ -74,9 +74,8 @@ const O = (kind: Overlay["kind"], fromSrc: number, toSrc: number, label: string,
 });
 
 // Pop-up badges UNDER the captions (Luna, 13 Nov). None over the B-roll.
+// v4 (Luna, 16 Nov): removed WATERY EYES, DRY EYE ≠ NO TEARS and THE RIGHT TREATMENT.
 const overlays: Overlay[] = [
-  O("tears", 12.46, 14.72, "WATERY EYES"),
-  O("statement", 14.78, 17.36, "DRY EYE|≠ NO TEARS"),
   O("tearfilm", 18.96, 21.98, "QUANTITY", [
     ["quantity", 18.96, "QUANTITY"],
     ["quality", 20.04, "QUALITY"],
@@ -88,7 +87,6 @@ const overlays: Overlay[] = [
     ["screen", 30.8, "SCREEN FATIGUE"],
     ["blur", 31.9, "BLURRY VISION"],
   ]),
-  O("drops", 37.08, 38.46, "THE RIGHT TREATMENT"),
   O("contact", 40.74, 43.75, "LASERVISION TRIPOLI|+961 81 54 20 20"),
 ];
 
