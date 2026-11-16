@@ -6,6 +6,7 @@ import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { BrollReel, brollReelSchema, BrollReelProps } from "./templates/BrollReel";
 import { eyeExamVsVisionTest } from "./edits/eye-exam-vs-vision-test";
+import { dryEyeTest } from "./edits/dry-eye-test";
 
 const FPS = 30;
 
@@ -115,6 +116,17 @@ export const RemotionRoot: React.FC = () => (
       component={BrollReel}
       schema={brollReelSchema}
       defaultProps={eyeExamVsVisionTest}
+      calculateMetadata={({ props }: { props: BrollReelProps }) => ({ durationInFrames: Math.round((props.durationMs / 1000) * FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={300}
+    />
+    <Composition
+      id="DryEyeTest-LaserVision"
+      component={BrollReel}
+      schema={brollReelSchema}
+      defaultProps={dryEyeTest}
       calculateMetadata={({ props }: { props: BrollReelProps }) => ({ durationInFrames: Math.round((props.durationMs / 1000) * FPS) })}
       fps={FPS}
       width={1080}

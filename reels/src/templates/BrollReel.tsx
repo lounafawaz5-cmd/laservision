@@ -27,7 +27,7 @@ export const brollReelSchema = z.object({
     }),
   ),
   overlays: z.array(z.any()),
-  captions: z.array(z.object({ text: z.string(), startMs: z.number(), endMs: z.number() })),
+  captions: z.array(z.object({ text: z.string(), startMs: z.number(), endMs: z.number(), words: z.array(z.number()).optional() })),
   // false = render without subtitles (they go out as .srt via scripts/export-srt.ts for editing in CapCut).
   showCaptions: z.boolean().optional(),
 });

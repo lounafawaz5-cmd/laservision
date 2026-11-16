@@ -1,5 +1,6 @@
 import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { REEL_FONT } from "../brands";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 // Pop-up overlays for talking-head reels: a round illustration badge with an English term under it,
 // or a short statement card. They sit UNDER the captions (Luna, 13 Nov), with a pop on each entrance
@@ -27,9 +28,17 @@ export type OverlayKind =
   | "retinopathy"
   | "silent"
   | "check"
-  | "statement";
+  | "statement"
+  // Dry eye reel (RIB_0074)
+  | "tears"
+  | "tearfilm"
+  | "symptoms"
+  | "contact";
 
 export type AnatomyPart = "cornea" | "lens" | "retina" | "nerve" | "pressure";
+export type TearPart = "quantity" | "quality" | "evaporation";
+export type SymptomPart = "burning" | "sand" | "screen" | "blur";
+export type StepPart = AnatomyPart | TearPart | SymptomPart;
 
 export type Overlay = {
   kind: OverlayKind;
@@ -37,7 +46,7 @@ export type Overlay = {
   toMs: number;
   label: string;
   // Anatomy only: which part lights up from which time. The label follows the active part.
-  steps?: { part: AnatomyPart; atMs: number; label: string }[];
+  steps?: { part: StepPart; atMs: number; label: string }[];
 };
 
 const Eye: React.FC<{ y?: number }> = ({ y = 100 }) => (
@@ -49,7 +58,7 @@ const Eye: React.FC<{ y?: number }> = ({ y = 100 }) => (
   </g>
 );
 
-const Illustration: React.FC<{ kind: OverlayKind; part?: AnatomyPart }> = ({ kind, part }) => {
+const Illustration: React.FC<{ kind: OverlayKind; part?: StepPart }> = ({ kind, part }) => {
   switch (kind) {
     case "question":
       return (
@@ -165,6 +174,84 @@ const Illustration: React.FC<{ kind: OverlayKind; part?: AnatomyPart }> = ({ kin
           <path d="M66 102 L90 126 L138 76" fill="none" stroke={C.white} strokeWidth={16} strokeLinecap="round" strokeLinejoin="round" />
         </g>
       );
+    case "tears":
+      // A watery eye: tears running down, yet it can still be a dry eye.
+      return (
+        <g>
+          <Eye y={86} />
+          <path d="M70 128 Q58 150 70 162 Q82 150 70 128 Z" fill={C.teal} />
+          <path d="M132 136 Q122 154 132 164 Q142 154 132 136 Z" fill={C.teal} />
+          <path d="M100 150 Q90 168 100 178 Q110 168 100 150 Z" fill={C.mint} stroke={C.teal} strokeWidth={3} />
+        </g>
+      );
+    case "tearfilm": {
+      if (part === "quantity")
+        // A drop with a level line: how much tear there is.
+        return (
+          <g>
+            <path d="M100 24 Q48 98 56 130 Q64 176 100 176 Q136 176 144 130 Q152 98 100 24 Z" fill={C.white} stroke={C.navy} strokeWidth={7} />
+            <path d="M58 132 Q64 174 100 174 Q136 174 142 132 Z" fill={C.teal} />
+            <line x1={50} y1={132} x2={150} y2={132} stroke={C.navy} strokeWidth={5} strokeDasharray="10 8" />
+          </g>
+        );
+      if (part === "quality")
+        // The tear film's three layers.
+        return (
+          <g>
+            <rect x={30} y={44} width={140} height={30} rx={10} fill={C.blue} />
+            <rect x={30} y={82} width={140} height={44} rx={10} fill={C.mint} stroke={C.teal} strokeWidth={4} />
+            <rect x={30} y={134} width={140} height={22} rx={10} fill={C.teal} />
+            <path d="M44 104 Q60 94 76 104 T108 104 T140 104 T172 104" fill="none" stroke={C.white} strokeWidth={5} strokeLinecap="round" />
+          </g>
+        );
+      // evaporation: a drop with rising wavy lines
+      return (
+        <g>
+          <path d="M100 82 Q66 130 72 152 Q78 182 100 182 Q122 182 128 152 Q134 130 100 82 Z" fill={C.teal} stroke={C.navy} strokeWidth={6} />
+          {[64, 100, 136].map((x) => (
+            <path key={x} d={`M${x} 66 Q${x - 12} 52 ${x} 38 Q${x + 12} 24 ${x} 12`} fill="none" stroke={C.blue} strokeWidth={7} strokeLinecap="round" />
+          ))}
+        </g>
+      );
+    }
+    case "symptoms": {
+      if (part === "burning")
+        return (
+          <g>
+            <path d="M100 18 Q140 70 132 112 Q150 98 148 78 Q176 118 160 152 Q144 184 100 184 Q56 184 40 152 Q26 118 56 84 Q56 108 72 116 Q60 64 100 18 Z" fill={C.teal} stroke={C.navy} strokeWidth={6} strokeLinejoin="round" />
+            <path d="M100 96 Q124 124 118 150 Q112 170 100 170 Q88 170 82 150 Q78 128 100 96 Z" fill={C.mint} />
+          </g>
+        );
+      if (part === "sand")
+        // An eye with grains of sand.
+        return (
+          <g>
+            <Eye y={82} />
+            {[[54, 150, 9], [80, 164, 7], [106, 148, 10], [130, 166, 8], [150, 146, 7], [92, 182, 6], [124, 184, 6]].map(([x, y, r]) => (
+              <circle key={`${x}${y}`} cx={x} cy={y} r={r} fill={C.blue} />
+            ))}
+          </g>
+        );
+      if (part === "screen")
+        return (
+          <g>
+            <rect x={26} y={34} width={148} height={100} rx={10} fill={C.white} stroke={C.navy} strokeWidth={7} />
+            <rect x={40} y={48} width={120} height={72} rx={4} fill={C.mint} />
+            <path d="M82 134 L76 162 H124 L118 134 Z" fill={C.navy} />
+            <rect x={60} y={160} width={80} height={10} rx={5} fill={C.navy} />
+            <path d="M74 84 Q100 62 126 84 Q100 106 74 84 Z" fill={C.white} stroke={C.blue} strokeWidth={4} />
+            <circle cx={100} cy={84} r={8} fill={C.blue} />
+          </g>
+        );
+      // blur: a doubled, soft eye chart letter
+      return (
+        <g>
+          <rect x={45} y={22} width={110} height={156} rx={10} fill={C.white} stroke={C.navy} strokeWidth={6} />
+          <text x={108} y={124} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={88} fill={C.mint}>E</text>
+          <text x={96} y={118} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={88} fill={C.teal} opacity={0.75}>E</text>
+        </g>
+      );
+    }
     default:
       return null;
   }
@@ -187,6 +274,23 @@ const OverlayView: React.FC<{ o: Overlay; nowMs: number }> = ({ o, nowMs }) => {
   // Each new anatomy step re-pops the label.
   const labelLocal = step ? ((nowMs - step.atMs) / 1000) * fps : local - 4;
   const labelPop = spring({ frame: labelLocal, fps, config: { damping: 10, stiffness: 180, mass: 0.5 } }) * out;
+
+  if (o.kind === "contact") {
+    // Closing card: branch + WhatsApp icon and number (never the word "WhatsApp" on screen).
+    const [place, number] = o.label.split("|");
+    return (
+      <AbsoluteFill style={{ alignItems: "center", paddingTop: 1290 }}>
+        <div style={{ transform: `scale(${scale})`, background: C.navy, borderRadius: 34, padding: "26px 44px",
+          boxShadow: "0 18px 50px rgba(0,0,0,0.35)", textAlign: "center", fontFamily: FONT, border: `4px solid ${C.teal}` }}>
+          <div style={{ color: C.mint, fontWeight: 700, fontSize: 40, letterSpacing: 2 }}>{place}</div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, marginTop: 10, transform: `scale(${labelPop})` }}>
+            <WhatsAppIcon size={58} />
+            <span dir="ltr" style={{ color: C.white, fontWeight: 700, fontSize: 56 }}>{number}</span>
+          </div>
+        </div>
+      </AbsoluteFill>
+    );
+  }
 
   if (o.kind === "statement") {
     const [a, b] = o.label.split("|");

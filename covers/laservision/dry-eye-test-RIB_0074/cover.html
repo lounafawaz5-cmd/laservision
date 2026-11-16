@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:"MA";src:url("../../../reels/public/fonts/Montserrat-Arabic-Bold.woff2");font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1920px;position:relative;overflow:hidden;background:#00303F;font-family:"MA",sans-serif}
+.bg{position:absolute;inset:0;background:url("bg.jpg") 50% 0%/125% auto no-repeat}
+.scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,93,131,0) 46%,rgba(0,80,108,.55) 60%,rgba(0,62,84,.82) 74%,rgba(0,48,63,.9) 100%)}
+.card{position:absolute;left:28px;top:760px;width:310px;height:290px;border-radius:40px;background:#F1F2F2;border:12px solid #fff;box-shadow:0 14px 40px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
+.circle{position:absolute;left:785px;top:780px;width:268px;height:268px;border-radius:50%;background:#00303F;border:12px solid #fff;box-shadow:0 14px 40px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+.pill{position:absolute;padding:10px 30px;border-radius:40px;background:#005D83;border:6px solid #fff;color:#fff;font-size:34px;letter-spacing:1px;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.p1{left:44px;top:1022px;transform:rotate(-3deg)}
+.p2{right:24px;top:1022px;transform:rotate(3deg)}
+.txt{position:absolute;left:0;right:0;top:1180px;text-align:center;color:#fff;text-shadow:0 0 10px rgba(48,164,191,.9),0 0 26px rgba(48,164,191,.6),0 0 44px rgba(0,93,131,.6)}
+.h{font-size:104px;line-height:1.08}
+.s{margin-top:44px;font-size:50px}
+</style></head><body>
+<!-- LaserVision · Dry eye test reel (RIB_0074, Tripoli). Background: RIB_0074.MP4 at 0:43.9
+     (soft smile, eyes to camera). Render: Playwright screenshot at 1080×1920. -->
+<div class="bg"></div><div class="scrim"></div>
+<!-- Left sticker: a watery eye -->
+<div class="card"><svg width="200" height="200" viewBox="0 0 200 200">
+ <path d="M20 86 Q100 24 180 86 Q100 148 20 86 Z" fill="#fff" stroke="#00303F" stroke-width="7"/>
+ <circle cx="100" cy="86" r="28" fill="#30A4BF"/><circle cx="100" cy="86" r="12" fill="#00303F"/><circle cx="108" cy="78" r="5" fill="#fff"/>
+ <path d="M70 128 Q58 150 70 162 Q82 150 70 128 Z" fill="#30A4BF"/>
+ <path d="M132 136 Q122 154 132 164 Q142 154 132 136 Z" fill="#30A4BF"/>
+ <path d="M100 150 Q90 168 100 178 Q110 168 100 150 Z" fill="#B6DFE5" stroke="#30A4BF" stroke-width="3"/>
+</svg></div>
+<div class="pill p1">WATERY EYES</div>
+<!-- Right sticker: the analyzer's ring pattern over an eye (the dry eye test) -->
+<div class="circle"><svg width="210" height="210" viewBox="0 0 200 200">
+ <circle cx="100" cy="100" r="84" fill="none" stroke="#30A4BF" stroke-width="7"/>
+ <circle cx="100" cy="100" r="66" fill="none" stroke="#B6DFE5" stroke-width="7"/>
+ <circle cx="100" cy="100" r="48" fill="none" stroke="#30A4BF" stroke-width="7"/>
+ <circle cx="100" cy="100" r="30" fill="#B6DFE5"/><circle cx="100" cy="100" r="14" fill="#005D83"/><circle cx="107" cy="93" r="5" fill="#fff"/>
+</svg></div>
+<div class="pill p2">DRY EYE TEST</div>
+<div class="txt"><div class="h">WATERY EYES<br>CAN BE DRY EYES</div><div class="s">What a dry eye test shows</div></div>
+</body></html>
