@@ -59,11 +59,8 @@ const captions = LINES.map(([text, words, end]) => ({
   words: words.map(ms),
 }));
 
-// The one B-roll: the first time she says "DRY EYE TEST", the Schirmer strip test,
-// held through "منقيّم حالة العين" (Mix in and out with a whoosh).
-const broll = [
-  { src: `${DIR}/broll/schirmer.mp4`, fromMs: ms(22.0), toMs: ms(24.75), startSec: 0, x: 50 },
-];
+// v5 (Luna, 16 Nov): no B-roll. (Tried at the first "DRY EYE TEST": RIB_0042, RIB_0068, the Schirmer still.)
+const broll: BrollReelProps["broll"] = [];
 
 const O = (kind: Overlay["kind"], fromSrc: number, toSrc: number, label: string, steps?: [StepPart, number, string][]): Overlay => ({
   kind,
