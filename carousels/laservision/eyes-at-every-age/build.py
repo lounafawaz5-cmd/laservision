@@ -108,10 +108,6 @@ body{{width:1080px;height:1350px;overflow:hidden;font-family:Outfit;color:{WHITE
   background-size:18px 18px;-webkit-mask-image:linear-gradient(115deg,#000 0%,transparent 45%)}}
 .glow{{position:absolute;left:50%;top:930px;width:1100px;height:760px;transform:translate(-50%,-50%);
   background:radial-gradient(closest-side,rgba(48,164,191,.45),rgba(48,164,191,0))}}
-.counter{{position:absolute;top:96px;right:96px;text-align:right;font-weight:300;font-size:26px;letter-spacing:.5px}}
-.counter .d{{display:flex;gap:9px;margin-top:14px}}
-.counter i{{width:26px;height:26px;border:2px solid {WHITE};border-radius:50%;display:block}}
-.counter i.on{{background:{WHITE}}}
 .txt{{position:absolute;left:108px;right:108px;top:190px}}
 .tag{{display:inline-block;font-weight:500;font-size:26px;letter-spacing:2px;text-transform:uppercase;
   color:{NAVY};background:{MINT};padding:8px 20px;border-radius:40px;margin-bottom:26px}}
@@ -136,7 +132,6 @@ def logo_tag(cls="logo"):
     return f'<img class="{cls}" src="{LOGO}">'
 
 for n, s in enumerate(SLIDES, 1):
-    dots = "".join(f'<i class="{"on" if k == n else ""}"></i>' for k in range(1, TOTAL + 1))
     if s.get("cover"):
         txt = f'<h1 class="cover">{s["h"]}</h1><div class="sub">{s["b"]}</div>'
     elif s.get("cta"):
@@ -148,7 +143,6 @@ for n, s in enumerate(SLIDES, 1):
     html = f"""<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body><div class="slide">
 <div class="dots-bg"></div><div class="glow"></div>
 <svg class="art" viewBox="0 0 1080 1350">{ART[n]}</svg><div class="fade"></div>
-<div class="counter">{n:02d}/{TOTAL:02d}<div class="d">{dots}</div></div>
 <div class="txt">{txt}</div>{footer}</div></body></html>"""
     (HERE / "html").mkdir(exist_ok=True)
     (HERE / "html" / f"slide-{n:02d}.html").write_text(html)
