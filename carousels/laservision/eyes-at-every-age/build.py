@@ -83,7 +83,7 @@ SLIDES = [
               "Watch for squinting, head tilting or sitting too close to screens."]),
     dict(tag="Ages 20–39", h="20s &amp; 30s.",
          pts=["An eye exam every 2 years.",
-              "Screen strain: every 20 minutes, look 20 feet away for 20 seconds.",
+              "Manage screen strain with regular breaks from your screens.",
               "A stable prescription may make you a LASIK candidate. Your doctor will tell you."]),
     dict(tag="Ages 40–59", h="40s &amp; 50s.",
          pts=["Reading up close getting harder? That's presbyopia, and it's normal.",
