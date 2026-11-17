@@ -98,11 +98,19 @@ const B = (id: number, from: number, to: number, startSec: number, x: number) =>
 // DROPS, NO SYMPTOMS, VISION TEST and the closing card removed; no badge label where the subtitle says the term.
 // v2 (Luna, 13 Nov): far fewer cut-ins. Removed the trial frame, trial lenses, "vision device", pupil
 // (its DILATING DROPS overlay stays), the eye after DIABETIC RETINOPATHY and the vision-test shots.
+// v5 (Luna, 17 Nov): every cut-in is our own clinic footage (Drive: 02-04-2026 Laser Vision Clinic Shoot / 2-VIDEOS),
+// shot vertically, converted to 1080×1920 @30 in footage/2026-11-13/clinic/.
+const C = (n: number, from: number, to: number, startSec: number) => ({
+  src: `${DIR}/clinic/RIB_${n}.mp4`,
+  fromMs: Math.round(from * 1000),
+  toMs: Math.round(to * 1000),
+  startSec,
+  x: 50,
+});
 const broll = [
-  B(20962, 2.04, 3.66, 1, 52), // "يعني عيونكم منيح؟" eye close-up
-  // "كيف عم تقشعوا | أما الفحص الكامل": our own clinic photo (02-04-2026 Laser Vision Clinic Shoot, RIB_2349).
-  { src: `${DIR}/clinic/RIB_2349.jpg`, fromMs: 19710, toMs: 22500, startSec: 0, x: 50 },
-  B(36420, 47.16, 49.28, 1, 97), // "تتشيكوا على صحة عيونكم" slit lamp exam
+  C(2484, 2.04, 3.66, 0), // "يعني عيونكن مناح؟" eye scan on the optometrist's laptop
+  C(2348, 19.71, 22.5, 0), // "كيف عم تقشعوا | أما الفحص الكامل" optometrist examining a patient at the device
+  C(2471, 47.16, 49.28, 0), // "تتشيكوا على صحة عيونكم" corneal topographer (red rings)
 ];
 
 const O = (kind: Overlay["kind"], fromSrc: number, toSrc: number, label: string, steps?: Overlay["steps"]): Overlay => ({
