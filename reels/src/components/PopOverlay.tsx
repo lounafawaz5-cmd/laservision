@@ -209,11 +209,13 @@ const OverlayView: React.FC<{ o: Overlay; nowMs: number }> = ({ o, nowMs }) => {
           <Illustration kind={o.kind} part={step?.part} />
         </svg>
       </div>
-      <div style={{ marginTop: -26, transform: `scale(${labelPop})`, background: C.blue, color: C.white, fontFamily: FONT,
+      {label ? (
+        <div style={{ marginTop: -26, transform: `scale(${labelPop})`, background: C.blue, color: C.white, fontFamily: FONT,
         fontWeight: 700, fontSize: 40, letterSpacing: 1, padding: "10px 30px", borderRadius: 999, whiteSpace: "nowrap",
         boxShadow: "0 8px 24px rgba(0,0,0,0.3)" }}>
         {label}
       </div>
+      ) : null}
     </AbsoluteFill>
   );
 };

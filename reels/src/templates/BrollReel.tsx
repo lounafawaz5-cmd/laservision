@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AbsoluteFill, Audio, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { brands } from "../brands";
 import { Captions } from "../components/Captions";
 import { PopOverlays } from "../components/PopOverlay";
@@ -60,8 +60,13 @@ const BrollShot: React.FC<{ src: string; startSec: number; x: number; len: numbe
   );
   return (
     <AbsoluteFill style={{ opacity }}>
+      {/\.(jpe?g|png|webp)$/i.test(src) ? (
+        // Still photo: held full-frame, no zoom.
+        <Img src={staticFile(src)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `${x}% 50%` }} />
+      ) : (
       <OffthreadVideo src={staticFile(src)} muted startFrom={Math.round(startSec * fps)}
         style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `${x}% 50%` }} />
+      )}
     </AbsoluteFill>
   );
 };

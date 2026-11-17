@@ -94,13 +94,14 @@ const B = (id: number, from: number, to: number, startSec: number, x: number) =>
   startSec,
   x,
 });
+// v4 (Luna, 17 Nov): glasses shot removed; the 0:20 stock shots replaced by our clinic photo; overlays DILATING
+// DROPS, NO SYMPTOMS, VISION TEST and the closing card removed; no badge label where the subtitle says the term.
 // v2 (Luna, 13 Nov): far fewer cut-ins. Removed the trial frame, trial lenses, "vision device", pupil
 // (its DILATING DROPS overlay stays), the eye after DIABETIC RETINOPATHY and the vision-test shots.
 const broll = [
   B(20962, 2.04, 3.66, 1, 52), // "يعني عيونكم منيح؟" eye close-up
-  B(22130, 9.28, 11.35, 8.0, 62), // "لعوينات أو CONTACT LENSES" man puts on a pair of glasses
-  B(13072, 19.71, 20.57, 3, 38), // "كيف عم تقشعوا" cover test
-  B(13073, 20.57, 22.5, 10, 82), // "أما الفحص الكامل" slit lamp
+  // "كيف عم تقشعوا | أما الفحص الكامل": our own clinic photo (02-04-2026 Laser Vision Clinic Shoot, RIB_2349).
+  { src: `${DIR}/clinic/RIB_2349.jpg`, fromMs: 19710, toMs: 22500, startSec: 0, x: 50 },
   B(36420, 47.16, 49.28, 1, 97), // "تتشيكوا على صحة عيونكم" slit lamp exam
 ];
 
@@ -123,13 +124,10 @@ const overlays: Overlay[] = [
     { part: "nerve", atMs: ms(33.22), label: "OPTIC NERVE" },
     { part: "pressure", atMs: ms(34.28), label: "EYE PRESSURE" },
   ]),
-  O("drops", 37.72, 40.15, "DILATING DROPS"),
-  O("glaucoma", 43.32, 44.46, "GLAUCOMA"),
-  O("retinopathy", 44.46, 46.33, "DIABETIC RETINOPATHY"),
-  O("silent", 48.26, 49.48, "NO SYMPTOMS"),
-  O("check", 51.96, 53.34, "VISION TEST"),
+  // No label: the subtitle already says GLAUCOMA / DIABETIC RETINOPATHY.
+  O("glaucoma", 43.32, 44.46, ""),
+  O("retinopathy", 44.46, 46.33, ""),
   O("check", 53.72, 55.84, "EYE HEALTH CHECK"),
-  O("statement", 57.48, 60.75, "CLEAR VISION|≠ HEALTHY EYES"),
 ];
 
 export const eyeExamVsVisionTest: BrollReelProps = {
