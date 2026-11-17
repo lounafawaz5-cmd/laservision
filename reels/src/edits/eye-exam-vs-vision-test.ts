@@ -109,7 +109,8 @@ const C = (n: number, from: number, to: number, startSec: number) => ({
 });
 const broll = [
   C(2484, 2.04, 3.66, 0), // "يعني عيونكن مناح؟" eye scan on the optometrist's laptop
-  C(2348, 19.71, 22.5, 0), // "كيف عم تقشعوا | أما الفحص الكامل" optometrist examining a patient at the device
+  // Luna, 17 Nov: her pick from Drive (01-06-2026 Laser Vision Shoot / Photos, RIB_0048): patient at the phoropter.
+  { src: `${DIR}/clinic/RIB_0048.jpg`, fromMs: 19710, toMs: 22500, startSec: 0, x: 45 }, // "كيف عم تقشعوا | أما الفحص الكامل"
   C(2471, 47.16, 49.28, 0), // "تتشيكوا على صحة عيونكم" corneal topographer (red rings)
 ];
 
