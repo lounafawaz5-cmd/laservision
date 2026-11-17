@@ -5,6 +5,10 @@ import { staticFile } from "remotion";
 // Swap for each brand's own font files once the brand kits arrive.
 const LATIN = "Inter";
 const ARABIC_FONT = "Noto Sans Arabic";
+// brand/Video_Editing_Guide.pdf: ALL on-screen text in reels = Montserrat Arabic Bold (covers Arabic and Latin),
+// word-by-word fade, glow intensity 30 / range 58 in the account colour. (OFL, github.com/typeagm/Montserrat-Arabic)
+export const REEL_FONT = "Montserrat Arabic";
+loadFont({ family: REEL_FONT, url: staticFile("fonts/Montserrat-Arabic-Bold.woff2"), weight: "700" });
 for (const weight of ["400", "700", "800"]) {
   loadFont({ family: LATIN, url: staticFile(`fonts/inter-latin-${weight}-normal.woff2`), weight });
   loadFont({ family: ARABIC_FONT, url: staticFile(`fonts/noto-sans-arabic-arabic-${weight}-normal.woff2`), weight });
@@ -30,6 +34,8 @@ export type Brand = {
   captionStyle: "clean" | "box";
   // On screen this is always the WhatsApp icon + the number, never the word "WhatsApp".
   whatsapp: string;
+  // Caption glow colour, from brand/Video_Editing_Guide.pdf.
+  glow: string;
 };
 
 // Colors: brand/laservision/GUIDELINES.md and brand/zeiss/GUIDELINES.md.
@@ -51,6 +57,7 @@ export const brands: Record<BrandId, Brand> = {
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "clean",
     whatsapp: "+961 81 54 20 20",
+    glow: "#005D83",
   },
   zvc: {
     // Store name is fine on screen; the blue ZEISS block logo is not. Use the "by Laser Vision" wordmark.
@@ -67,6 +74,7 @@ export const brands: Record<BrandId, Brand> = {
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "box",
     whatsapp: "81 47 20 20",
+    glow: "#0C188D",
   },
 };
 
@@ -80,3 +88,6 @@ export const fontFor = (brand: Brand, text: string) => {
   const arabic = `"${brand.fonts.arabic}"`;
   return isArabic(text) ? `${arabic}, ${latin}, sans-serif` : `${latin}, ${arabic}, sans-serif`;
 };
+
+// CapCut glow at intensity 30 / range 58, approximated: a tight core and a wide soft spread.
+export const textGlow = (brand: Brand) => `0 0 7px ${brand.glow}, 0 0 14px ${brand.glow}, 0 0 28px ${brand.glow}c0`;

@@ -13,7 +13,7 @@ Caption on post: "Your eye doctor decides which refractive surgery is right for 
 ## Subtitles
 - **Language:** the spoken language (Lebanese Arabic). English medical terms stay in English inside the Arabic line, in CAPS (IPL, DRYNESS, MEIBOMIAN GLANDS, TEST).
 - **Chunking:** 1–3 words at a time, synced to speech.
-- **Look:** white, bold, no background box, soft shadow. Quick fade in.
+- **Look (brand/Video_Editing_Guide.pdf, overrides anything else):** Montserrat Arabic Bold for ALL on-screen text, white, word-by-word fade, glow intensity 30 / range 58 in **#005d83** (ZVC **#0c188d**). No background box. **64 px Arabic, 54 px English CAPS**.
 - **Position:** centered horizontally, about 60% of the way down (chest height), clear of the face.
 
 ## Pacing
