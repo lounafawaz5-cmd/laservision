@@ -108,10 +108,11 @@ const C = (n: number, from: number, to: number, startSec: number) => ({
   x: 50,
 });
 const broll = [
-  C(2484, 2.04, 3.66, 0), // "يعني عيونكن مناح؟" eye scan on the optometrist's laptop
+  // Luna, 18 Nov: no cut-in at 0:02 (the eye scan on the laptop was removed).
   // Luna, 18 Nov: her two photos (sent in chat as IMG_1854 / IMG_1853).
   { src: `${DIR}/clinic/IMG_1854.jpg`, fromMs: 19710, toMs: 22500, startSec: 0, x: 50 }, // "كيف عم تقشعوا | أما الفحص الكامل" patient at the scanner
-  { src: `${DIR}/clinic/IMG_1853.jpg`, fromMs: 47160, toMs: 49280, startSec: 0, x: 50 }, // "تتشيكوا على صحة عيونكم" optometrist at the device
+  // Luna, 18 Nov: her clip RIB_2206 (patient at the slit lamp, 1.35 s at 50 fps), slowed to 0.63× to fill the line.
+  { src: `${DIR}/clinic/RIB_2206.mp4`, fromMs: 47160, toMs: 49280, startSec: 0, x: 50 }, // "تتشيكوا على صحة عيونكم"
 ];
 
 const O = (kind: Overlay["kind"], fromSrc: number, toSrc: number, label: string, steps?: Overlay["steps"]): Overlay => ({
