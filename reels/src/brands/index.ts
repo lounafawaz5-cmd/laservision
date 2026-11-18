@@ -5,6 +5,10 @@ import { staticFile } from "remotion";
 // Swap for each brand's own font files once the brand kits arrive.
 const LATIN = "Inter";
 const ARABIC_FONT = "Noto Sans Arabic";
+// Reel captions (editing guide, Oct 2026): Montserrat Arabic Bold. Only the free Latin Montserrat is bundled;
+// Arabic falls back to Noto Sans Arabic until the Montserrat Arabic font file is added to public/fonts.
+export const CAPTION_LATIN = "Montserrat";
+loadFont({ family: CAPTION_LATIN, url: staticFile("fonts/montserrat-latin-700-normal.woff2"), weight: "700" });
 for (const weight of ["400", "700", "800"]) {
   loadFont({ family: LATIN, url: staticFile(`fonts/inter-latin-${weight}-normal.woff2`), weight });
   loadFont({ family: ARABIC_FONT, url: staticFile(`fonts/noto-sans-arabic-arabic-${weight}-normal.woff2`), weight });
@@ -28,6 +32,8 @@ export type Brand = {
   // "clean": white bold words with a shadow, no box (LaserVision house style).
   // "box": text on a solid caption box.
   captionStyle: "clean" | "box";
+  // Caption glow color from the editing guide (CapCut glow: intensity 30, range 58).
+  captionGlow: string;
   // On screen this is always the WhatsApp icon + the number, never the word "WhatsApp".
   whatsapp: string;
 };
@@ -50,6 +56,7 @@ export const brands: Record<BrandId, Brand> = {
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
     captionStyle: "clean",
+    captionGlow: "#005D83",
     whatsapp: "+961 81 54 20 20",
   },
   zvc: {
@@ -65,7 +72,9 @@ export const brands: Record<BrandId, Brand> = {
       captionText: "#000000",
     },
     fonts: { latin: LATIN, arabic: ARABIC_FONT },
-    captionStyle: "box",
+    // Editing guide: same captions as LaserVision, only the glow color differs.
+    captionStyle: "clean",
+    captionGlow: "#0C188D",
     whatsapp: "81 47 20 20",
   },
 };
