@@ -4,6 +4,8 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { MythFact, mythFactSchema, MythFactProps } from "./templates/MythFact";
+import { mythFact1118 } from "./edits/myth-fact-1118";
 
 const FPS = 30;
 
@@ -107,6 +109,19 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={900}
+    />
+    <Composition
+      id="MythFact-1118-LaserVision"
+      component={MythFact}
+      schema={mythFactSchema}
+      defaultProps={mythFact1118}
+      calculateMetadata={({ props }: { props: MythFactProps }) => ({
+        durationInFrames: Math.round(props.mainSeconds * FPS) + Math.round(props.outroSeconds * FPS),
+      })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={2400}
     />
   </>
 );
