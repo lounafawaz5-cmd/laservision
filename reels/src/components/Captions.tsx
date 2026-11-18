@@ -26,7 +26,10 @@ export const Captions: React.FC<{ captions: Caption[]; brand: Brand }> = ({ capt
           borderRadius: 20,
           background: clean ? "transparent" : brand.colors.captionBg,
           color: brand.colors.captionText,
-          textShadow: clean ? "0 2px 12px rgba(0,0,0,0.55)" : "none",
+          // LaserVision house look: soft white glow around the letters, plus a light shadow for contrast.
+          textShadow: clean
+            ? "0 0 8px rgba(255,255,255,0.75), 0 0 20px rgba(255,255,255,0.45), 0 0 36px rgba(255,255,255,0.25), 0 2px 8px rgba(0,0,0,0.35)"
+            : "none",
           fontFamily: fontFor(brand, current.text),
           fontWeight: clean ? 800 : 700,
           fontSize: clean ? 66 : 58,

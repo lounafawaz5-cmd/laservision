@@ -11,13 +11,13 @@ export const mythFact1118: MythFactProps = {
   audio: "footage/1118-myth-fact/audio.wav",
   mainSeconds: 78.32,
   outroSeconds: 2.5,
-  // Border runs from the verdict to the end of the doctor's answer.
+  // Border glows only around the moment she says MYTH / FACT (about 2 s), not the whole answer.
   verdicts: [
-    { kind: "myth", startMs: 3030, endMs: 14450 },
-    { kind: "fact", startMs: 18470, endMs: 23900 },
-    { kind: "fact", startMs: 28690, endMs: 44600 },
-    { kind: "myth", startMs: 47400, endMs: 59700 },
-    { kind: "myth", startMs: 63450, endMs: 78320 },
+    { kind: "myth", startMs: 3030, endMs: 5000 },
+    { kind: "fact", startMs: 18470, endMs: 20400 },
+    { kind: "fact", startMs: 28690, endMs: 30700 },
+    { kind: "myth", startMs: 47400, endMs: 49300 },
+    { kind: "myth", startMs: 63450, endMs: 65300 },
   ],
   captions: [
     // Q1
