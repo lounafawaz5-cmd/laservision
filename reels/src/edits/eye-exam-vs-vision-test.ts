@@ -109,9 +109,9 @@ const C = (n: number, from: number, to: number, startSec: number) => ({
 });
 const broll = [
   C(2484, 2.04, 3.66, 0), // "يعني عيونكن مناح؟" eye scan on the optometrist's laptop
-  // Luna, 17 Nov: her pick from Drive (01-06-2026 Laser Vision Shoot / Photos, RIB_0048): patient at the phoropter.
-  { src: `${DIR}/clinic/RIB_0048.jpg`, fromMs: 19710, toMs: 22500, startSec: 0, x: 45 }, // "كيف عم تقشعوا | أما الفحص الكامل"
-  C(2471, 47.16, 49.28, 0), // "تتشيكوا على صحة عيونكم" corneal topographer (red rings)
+  // Luna, 18 Nov: her two photos (sent in chat as IMG_1854 / IMG_1853).
+  { src: `${DIR}/clinic/IMG_1854.jpg`, fromMs: 19710, toMs: 22500, startSec: 0, x: 50 }, // "كيف عم تقشعوا | أما الفحص الكامل" patient at the scanner
+  { src: `${DIR}/clinic/IMG_1853.jpg`, fromMs: 47160, toMs: 49280, startSec: 0, x: 50 }, // "تتشيكوا على صحة عيونكم" optometrist at the device
 ];
 
 const O = (kind: Overlay["kind"], fromSrc: number, toSrc: number, label: string, steps?: Overlay["steps"]): Overlay => ({
