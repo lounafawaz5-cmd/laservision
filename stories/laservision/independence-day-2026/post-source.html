@@ -3,49 +3,30 @@
 @font-face{font-family:Outfit;font-weight:500;src:url(../../../brand/fonts/Outfit/Outfit-Medium.ttf)}
 @font-face{font-family:Outfit;font-weight:700;src:url(../../../brand/fonts/Outfit/Outfit-Bold.ttf)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{width:1200px;height:1500px;font-family:Outfit;overflow:hidden}
-.s{width:1200px;height:1500px;position:relative;display:none}
-.s.on{display:block}
-.mark{position:absolute;bottom:95px;left:50%;transform:translateX(-50%);width:460px}
+body{width:1200px;height:1500px;font-family:Outfit;background:#F1F2F2;color:#00303F;overflow:hidden;position:relative}
+.chart{position:absolute;left:110px;right:110px;top:110px;bottom:250px;background:#fff;border-radius:6px}
+.row{position:absolute;left:0;right:0;display:flex;align-items:center;justify-content:center}
+.n{position:absolute;left:44px;font-weight:300;font-size:26px;color:#005D83}
+.r{position:absolute;right:44px;font-weight:300;font-size:26px;color:#005D83}
+.foot{position:absolute;bottom:105px;left:0;right:0;text-align:center}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
- <symbol id="cedar" viewBox="0 0 260 200">
-  <g fill="#00A651">
+ <symbol id="cedar" viewBox="0 0 260 200"><g fill="#00A651">
    <path d="M130 2 L160 26 Q150 25 142 29 L130 22 L118 29 Q110 25 100 26 Z"/>
    <path d="M130 22 L184 56 Q168 53 156 59 L130 46 L104 59 Q92 53 76 56 Z"/>
    <path d="M130 46 L208 90 Q188 86 172 93 L130 74 L88 93 Q72 86 52 90 Z"/>
    <path d="M130 74 L232 128 Q206 122 186 131 L130 106 L74 131 Q54 122 28 128 Z"/>
    <path d="M130 106 L256 168 Q224 160 198 170 L130 140 L62 170 Q36 160 4 168 Z"/>
-   <rect x="121" y="140" width="18" height="56" rx="2"/>
-  </g>
- </symbol>
- <clipPath id="lensL"><rect x="40" y="40" width="380" height="300" rx="120"/></clipPath>
- <clipPath id="lensR"><rect x="580" y="40" width="380" height="300" rx="120"/></clipPath>
- <g id="flagfill">
-  <rect x="-1000" y="0" width="4000" height="380" fill="#fff"/>
-  <rect x="-1000" y="0" width="4000" height="105" fill="#ED1C24"/>
-  <rect x="-1000" y="275" width="4000" height="105" fill="#ED1C24"/>
- </g>
+   <rect x="121" y="140" width="18" height="56" rx="2"/></g></symbol>
 </defs></svg>
-
-<!-- A: white, glasses with the flag in the lenses -->
-<div class="s on" id="a" style="background:#00303F">
- <div style="position:absolute;top:105px;width:100%;text-align:center;font-weight:700;font-size:64px;letter-spacing:4px;color:#fff">22.11</div>
- <svg style="position:absolute;top:250px;left:100px" width="1000" height="380" viewBox="0 0 1000 380">
-  <g clip-path="url(#lensL)"><use href="#flagfill"/><use href="#cedar" x="135" y="110" width="190" height="146"/></g>
-  <g clip-path="url(#lensR)"><use href="#flagfill"/><use href="#cedar" x="675" y="110" width="190" height="146"/></g>
-  <g fill="none" stroke="#30A4BF" stroke-width="22" stroke-linecap="round">
-   <rect x="40" y="40" width="380" height="300" rx="120"/>
-   <rect x="580" y="40" width="380" height="300" rx="120"/>
-   <path d="M420 150 Q500 100 580 150"/>
-   <path d="M40 120 L4 104"/><path d="M960 120 L996 104"/>
-  </g>
- </svg>
- <div style="position:absolute;top:735px;width:100%;text-align:center;color:#fff">
-  <div style="font-weight:700;font-size:96px;line-height:1.05;letter-spacing:-1px">Caring for<br>Lebanon's eyes<br>since 1995.</div>
-  <div style="margin-top:44px;font-weight:300;font-size:46px">Happy Independence Day</div>
- </div>
- <img class="mark" style="width:380px;bottom:80px" src="../../../brand/laservision/logo-white.svg">
+<div class="chart">
+ <div class="row" style="top:95px;height:250px"><span class="n">1</span><svg width="300" height="231" viewBox="0 0 260 200"><use href="#cedar" width="260" height="200"/></svg><span class="r">6/60</span></div>
+ <div class="row" style="top:410px;height:150px"><span class="n">2</span><span style="font-weight:700;font-size:150px;letter-spacing:30px;margin-right:-30px">22 11</span><span class="r">6/36</span></div>
+ <div class="row" style="top:625px;height:110px"><span class="n">3</span><span style="font-weight:700;font-size:96px;letter-spacing:22px;margin-right:-22px">LEBANON</span><span class="r">6/18</span></div>
+ <div class="row" style="top:800px;height:60px"><span class="n">4</span><span style="font-weight:500;font-size:38px;letter-spacing:7px;margin-right:-7px">HAPPY INDEPENDENCE DAY</span><span class="r">6/12</span></div>
+ <div style="position:absolute;top:905px;left:150px;right:150px;height:5px;background:#ED1C24"></div>
+ <div class="row" style="top:945px;height:40px"><span class="n">5</span><span style="font-weight:500;font-size:22px;letter-spacing:5px;margin-right:-5px">CARING FOR LEBANON'S EYES SINCE 1995</span><span class="r">6/6</span></div>
+ <div style="position:absolute;top:1025px;left:150px;right:150px;height:5px;background:#00A651"></div>
 </div>
-
+<div class="foot"><img style="width:340px" src="../../../brand/laservision/logo.svg"></div>
 </body></html>
