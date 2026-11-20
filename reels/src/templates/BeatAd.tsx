@@ -56,7 +56,8 @@ export const beatAdSchema = z.object({
       beats: z.number(),
       // "logo": text is an image path in public/, revealed with a wipe.
       // "word": thin, wide-tracked key word. "cta": sentence-case line with an accent underline.
-      style: z.enum(["slam", "letters", "outline", "tag", "small", "logo", "word", "cta"]),
+      // "type": typed on letter by letter with a cursor. "count": "20|50|% OFF" rolls the number from 20 up to 50.
+      style: z.enum(["slam", "letters", "outline", "tag", "small", "logo", "word", "cta", "type", "count"]),
     }),
   ),
   // Small logo in the corner overlay; empty = no logo.
@@ -210,6 +211,66 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
               {c}
             </span>
           ))}
+        </div>
+      </AbsoluteFill>
+    );
+  }
+  if (style === "type") {
+    // Typed out like on the laptop in the skit: one letter per eighth of a beat, blinking cursor.
+    const shown = Math.min(text.length, Math.floor(frame / Math.max(1, beatLen / 8)));
+    const cursor = Math.floor(frame / Math.max(1, beatLen / 2)) % 2 === 0;
+    return (
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
+        <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: Math.min(130, 1300 / text.length), letterSpacing: 4, color: "#fff", background: "#000", padding: "18px 34px", whiteSpace: "nowrap", transform: `scale(${interpolate(inn, [0, 1], [1.15, 1])})` }}>
+          {text.slice(0, shown)}
+          <span style={{ display: "inline-block", width: 10, height: "0.9em", marginLeft: 10, background: accent, verticalAlign: "-0.1em", opacity: cursor || shown < text.length ? 1 : 0 }} />
+        </div>
+      </AbsoluteFill>
+    );
+  }
+  if (style === "count") {
+    // "from|to|suffix": small "FROM% TO" line, then the big number rolls up from "from" to "to" over two beats and lands with a punch.
+    const [fromS, toS, suffix] = text.split("|");
+    const from = Number(fromS);
+    const to = Number(toS);
+    const roll = interpolate(frame, [beatLen * 0.5, beatLen * 2.5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+    const n = Math.round(from + (to - from) * roll);
+    const land = spring({ frame: frame - Math.round(beatLen * 2.5), fps, config: { damping: 10, stiffness: 320, mass: 0.5 } });
+    const landScale = frame >= beatLen * 2.5 ? interpolate(land, [0, 1], [1.25, 1]) : 1;
+    return (
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
+        <AbsoluteFill style={{ background: "radial-gradient(ellipse 80% 30% at 50% 50%, rgba(0,0,0,0.6), transparent)" }} />
+        <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 64, letterSpacing: 10, color: "#fff", textShadow: shadow, opacity: inn }}>
+          {fromS}% TO
+        </div>
+        <div
+          style={{
+            fontFamily: FONT,
+            fontWeight: 800,
+            fontSize: 330,
+            lineHeight: 1,
+            color: "#fff",
+            textShadow: shadow,
+            fontVariantNumeric: "tabular-nums",
+            transform: `scale(${interpolate(inn, [0, 1], [1.6, 1]) * landScale})`,
+          }}
+        >
+          {n}%
+        </div>
+        <div
+          style={{
+            fontFamily: FONT,
+            fontWeight: 800,
+            fontSize: 84,
+            letterSpacing: 8,
+            background: accent,
+            color: "#000",
+            padding: "8px 36px",
+            marginTop: 10,
+            clipPath: `inset(0 ${(1 - land) * 100}% 0 0)`,
+          }}
+        >
+          {suffix.replace("%", "").trim()}
         </div>
       </AbsoluteFill>
     );
