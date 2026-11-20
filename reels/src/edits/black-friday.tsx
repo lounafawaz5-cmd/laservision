@@ -5,18 +5,17 @@ import { BeatAd, BeatAdProps } from "../templates/BeatAd";
 // ZVC · Black Friday announcement (Nov 21–30, 20% to 50% off sunglasses only).
 // Review 20 Nov: "make the announcement more engaging and add frames of glasses."
 // v2 keeps Luna's skit (WhatsApp export, 576×1024) up to the moment she starts typing the answer,
-// then cuts on the beat to a try-on montage of frames with the offer typed, counted and tagged on screen,
+// then cuts on the beat to sunglasses drawers opening and closing, with the offer typed, counted and tagged on screen,
 // and ends on a Black Friday end card (offer, dates, wordmark, WhatsApp icon + number). The original song is a 137 BPM, 8-beat (3.5 s) loop, so the audio
 // is the skit's own track extended by repeating its last loop (public/audio/bf-skit-extended.wav).
-// Footage: public/footage/bf/skit.mp4 (the export) + Drive RIB_0145–0147 (try-on, 1920×1080, center-cropped).
-// RIB_0143/0144 are over the Drive connector's 10 MB limit and are not used.
+// Footage: public/footage/bf/skit.mp4 (the export) + drawer_1583/1586/1587.mp4.
 
 export const BF_FPS = 30;
 const BEAT = 60 / 137.14; // 0.4375 s
 // Cut on the beat at 10.24 s, just before the export's "Find us at…" text starts typing in.
 export const BF_CUT_SEC = 10.24;
 
-const c = (n: string) => `footage/bf/RIB_${n}.mp4`;
+const d = (n: string) => `footage/bf/drawer_${n}.mp4`;
 
 export const blackFridayMontage: BeatAdProps = {
   brand: "zvc",
@@ -25,21 +24,26 @@ export const blackFridayMontage: BeatAdProps = {
   audioStartSec: 0,
   beatTimesMs: [],
   bpm: 137.14,
-  // Seven frame changes, one every two beats; wood wall (grey frames) alternates with the store wall (dark square frames).
+  // Drawers concept (review 20 Nov): each drawer of sunglasses slides open on the beat, holds, and closes,
+  // then the next one opens. Footage: Luna's IMG_1583/1586/1587 (4K HEVC, transcoded to 1080×1920 drawer_*.mp4).
+  // Opens run at 1.25×, closes at 1.5× so each drawer is shut on the cut; the last one shuts into the end card.
   shots: [
-    { src: c("0147"), at: 0.2, beats: 2, rate: 1, move: "punch", flash: true },
-    { src: c("0145"), at: 6.2, beats: 2, rate: 1, move: "slideL" },
-    { src: c("0147"), at: 5.5, beats: 2, rate: 1, move: "push" },
-    { src: c("0146"), at: 0.3, beats: 2, rate: 1, move: "punch", flash: true },
-    { src: c("0147"), at: 8.6, beats: 2, rate: 1, move: "slideR" },
-    { src: c("0145"), at: 9.0, beats: 2, rate: 1, move: "push" },
-    { src: c("0147"), at: 1.6, beats: 2, rate: 1, move: "pull" },
+    // Drawer 1 opens (hand in at ~2.2 s, fully open by ~3.3 s).
+    { src: d("1583"), at: 2.2, beats: 4, rate: 1.25, move: "hold", flash: true },
+    // Drawer 2 opens and holds…
+    { src: d("1586"), at: 0.4, beats: 4, rate: 1.25, move: "hold" },
+    // …and closes.
+    { src: d("1586"), at: 3.3, beats: 2, rate: 1.5, move: "hold" },
+    // Drawer 3 opens and holds…
+    { src: d("1587"), at: 1.1, beats: 4, rate: 1.25, move: "hold" },
+    // …and shuts into the end card.
+    { src: d("1587"), at: 4.1, beats: 2, rate: 1.1, move: "hold" },
   ],
   texts: [
     { text: "BLACK FRIDAY", beat: 0, beats: 4, style: "type" },
     { text: "20|50|OFF SUNGLASSES", beat: 4, beats: 4, style: "count" },
-    { text: "NOV 21–30", beat: 8, beats: 4, style: "tag" },
-    { text: "at ZEISS Vision Center", beat: 12, beats: 2, style: "cta" },
+    { text: "NOV 21–30", beat: 10, beats: 4, style: "tag" },
+    { text: "at ZEISS Vision Center", beat: 14, beats: 2, style: "cta" },
   ],
   hudLogo: "brand/zvc-wordmark-white.png",
   // End card is drawn below (BlackFridayCard), not by BeatAd.

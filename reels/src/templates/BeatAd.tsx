@@ -24,7 +24,8 @@ for (const [weight, file] of [["300", "Light"], ["500", "Medium"]]) {
 // Fast, ad-style product montage cut to the beat of a song.
 // Every cut and text hit is placed in beats, so a new song only needs new beat times.
 
-const move = z.enum(["punch", "push", "pull", "slideL", "slideR", "spin"]);
+// "hold": near-still frame with a slow 4% creep, for footage whose own motion is the point (e.g. a drawer opening).
+const move = z.enum(["punch", "push", "pull", "slideL", "slideR", "spin", "hold"]);
 
 export const beatAdSchema = z.object({
   brand: z.enum(["laservision", "zvc"]),
@@ -137,6 +138,7 @@ const Shot: React.FC<{
   let scale = 1.08;
   let x = 0;
   let rot = 0;
+  if (move === "hold") scale = 1.02 + lin * 0.04;
   if (move === "punch") scale = interpolate(hit, [0, 1], [1.45, 1.1]) + lin * 0.05;
   if (move === "push") scale = interpolate(lin, [0, 1], [1.05, 1.28]) + (1 - hit) * 0.25;
   if (move === "pull") scale = interpolate(lin, [0, 1], [1.3, 1.06], { easing: Easing.out(Easing.quad) });
@@ -239,7 +241,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
     const landScale = frame >= beatLen * 2.5 ? interpolate(land, [0, 1], [1.25, 1]) : 1;
     return (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
-        <AbsoluteFill style={{ background: "radial-gradient(ellipse 80% 30% at 50% 50%, rgba(0,0,0,0.6), transparent)" }} />
+        <AbsoluteFill style={{ background: "radial-gradient(ellipse 85% 34% at 50% 50%, rgba(0,0,0,0.78), rgba(0,0,0,0.35) 70%, transparent)" }} />
         <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 64, letterSpacing: 10, color: "#fff", textShadow: shadow, opacity: inn }}>
           {fromS}% TO
         </div>
