@@ -63,6 +63,13 @@ export const beatAdSchema = z.object({
   ),
   // Small logo in the corner overlay; empty = no logo.
   hudLogo: z.string(),
+  // Optional overrides (default = the original energetic look).
+  // hud: corner frame lines, corner logo and shot counter. beatPulse: zoom bump on every beat.
+  // accent / accentText: tag and cursor color and the text on it (defaults: brand accent, black).
+  hud: z.boolean().optional(),
+  beatPulse: z.boolean().optional(),
+  accent: z.string().optional(),
+  accentText: z.string().optional(),
   outroBeats: z.number(),
   // Partner/product logo above the store wordmark on the end card.
   outroLogo: z.string(),
@@ -103,9 +110,10 @@ const Shot: React.FC<{
   move: z.infer<typeof move>;
   flash: boolean;
   beatFrames: number[];
+  pulse: boolean;
   calm: boolean;
   fadeIn: number;
-}> = ({ src, at, rate, move, flash, beatFrames, calm, fadeIn }) => {
+}> = ({ src, at, rate, move, flash, beatFrames, pulse, calm, fadeIn }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames: d, width } = useVideoConfig();
 
@@ -153,11 +161,11 @@ const Shot: React.FC<{
   }
 
   // Small pulse on every beat inside the shot so long shots still ride the music.
-  for (const b of beatFrames) {
+  for (const b of pulse ? beatFrames : []) {
     if (b > 0 && frame >= b) scale += 0.04 * Math.exp(-(frame - b) / 3);
   }
 
-  const blur = interpolate(frame, [0, 4], [move === "pull" ? 0 : 14, 0], { extrapolateRight: "clamp" });
+  const blur = interpolate(frame, [0, 4], [move === "pull" || move === "hold" ? 0 : 14, 0], { extrapolateRight: "clamp" });
   const flashOpacity = flash ? interpolate(frame, [0, 3], [0.9, 0], { extrapolateRight: "clamp" }) : 0;
 
   return (
@@ -186,11 +194,12 @@ const Scrim: React.FC<{ y: string; opacity: number }> = ({ y, opacity }) => (
   <AbsoluteFill style={{ background: `radial-gradient(ellipse 75% 16% at 50% ${y}, rgba(0,0,0,0.55), transparent)`, opacity }} />
 );
 
-const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"]; beatLen: number; accent: string; calm: boolean }> = ({
+const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"]; beatLen: number; accent: string; accentText: string; calm: boolean }> = ({
   text,
   style,
   beatLen,
   accent,
+  accentText,
   calm,
 }) => {
   const frame = useCurrentFrame();
@@ -220,12 +229,12 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
   if (style === "type") {
     // Typed out like on the laptop in the skit: one letter per eighth of a beat, blinking cursor.
     const shown = Math.min(text.length, Math.floor(frame / Math.max(1, beatLen / 8)));
-    const cursor = Math.floor(frame / Math.max(1, beatLen / 2)) % 2 === 0;
+    // Cursor is steady while typing and gone once the word is complete (no blinking).
     return (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
-        <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: Math.min(130, 1300 / text.length), letterSpacing: 4, color: "#fff", background: "#000", padding: "18px 34px", whiteSpace: "nowrap", transform: `scale(${interpolate(inn, [0, 1], [1.15, 1])})` }}>
+        <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: Math.min(130, 1300 / text.length), letterSpacing: 4, color: "#fff", background: "#000", padding: "18px 34px", whiteSpace: "nowrap" }}>
           {text.slice(0, shown)}
-          <span style={{ display: "inline-block", width: 10, height: "0.9em", marginLeft: 10, background: accent, verticalAlign: "-0.1em", opacity: cursor || shown < text.length ? 1 : 0 }} />
+          <span style={{ display: "inline-block", width: 10, height: "0.9em", marginLeft: 10, background: accent, verticalAlign: "-0.1em", opacity: shown < text.length ? 1 : 0 }} />
         </div>
       </AbsoluteFill>
     );
@@ -237,8 +246,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
     const to = Number(toS);
     const roll = interpolate(frame, [beatLen * 0.5, beatLen * 2.5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
     const n = Math.round(from + (to - from) * roll);
-    const land = spring({ frame: frame - Math.round(beatLen * 2.5), fps, config: { damping: 10, stiffness: 320, mass: 0.5 } });
-    const landScale = frame >= beatLen * 2.5 ? interpolate(land, [0, 1], [1.25, 1]) : 1;
+    const land = spring({ frame: frame - Math.round(beatLen * 2.5), fps, config: { damping: 200 } });
     return (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: out }}>
         <AbsoluteFill style={{ background: "radial-gradient(ellipse 85% 34% at 50% 50%, rgba(0,0,0,0.78), rgba(0,0,0,0.35) 70%, transparent)" }} />
@@ -254,7 +262,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
             color: "#fff",
             textShadow: shadow,
             fontVariantNumeric: "tabular-nums",
-            transform: `scale(${interpolate(inn, [0, 1], [1.6, 1]) * landScale})`,
+            opacity: inn,
           }}
         >
           {n}%
@@ -266,7 +274,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
             fontSize: suffix.length > 6 ? 60 : 84,
             letterSpacing: suffix.length > 6 ? 5 : 8,
             background: accent,
-            color: "#000",
+            color: accentText,
             padding: "8px 36px",
             marginTop: 10,
             clipPath: `inset(0 ${(1 - land) * 100}% 0 0)`,
@@ -396,7 +404,7 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
             fontSize: 64,
             letterSpacing: 4,
             background: accent,
-            color: "#000",
+            color: accentText,
             padding: "14px 34px",
             clipPath: `inset(0 ${(1 - inn) * 100}% 0 0)`,
           }}
@@ -503,10 +511,11 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
           move={s.move}
           flash={s.flash ?? false}
           beatFrames={beatFrames}
+          pulse={props.beatPulse ?? true}
           calm={calm}
           fadeIn={pre * 2}
         />
-        {calm ? null : <Hud index={i} total={props.shots.length} logo={props.hudLogo} />}
+        {calm || props.hud === false ? null : <Hud index={i} total={props.shots.length} logo={props.hudLogo} />}
       </Sequence>
     );
   });
@@ -518,7 +527,7 @@ export const BeatAd: React.FC<BeatAdProps> = (props) => {
       <AbsoluteFill style={{ background: "radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45) 100%)" }} />
       {props.texts.map((t, i) => (
         <Sequence key={i} from={f(t.beat)} durationInFrames={f(t.beat + t.beats) - f(t.beat)}>
-          <Text text={t.text} style={t.style} beatLen={beatLen} accent={brand.colors.accent} calm={calm} />
+          <Text text={t.text} style={t.style} beatLen={beatLen} accent={props.accent ?? brand.colors.accent} accentText={props.accentText ?? "#000"} calm={calm} />
         </Sequence>
       ))}
       <Sequence from={f(mainBeats) - (calm ? Math.round(dissolve / 2) : 0)}>
