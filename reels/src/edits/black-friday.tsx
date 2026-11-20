@@ -8,7 +8,7 @@ import { BeatAd, BeatAdProps } from "../templates/BeatAd";
 // then cuts on the beat to sunglasses drawers opening and closing, with the offer typed, counted and tagged on screen,
 // and ends on a Black Friday end card (offer, dates, wordmark, WhatsApp icon + number). The original song is a 137 BPM, 8-beat (3.5 s) loop, so the audio
 // is the skit's own track extended by repeating its last loop (public/audio/bf-skit-extended.wav).
-// Footage: public/footage/bf/skit.mp4 (the export) + drawer_1583/1586/1587.mp4.
+// Footage: public/footage/bf/skit_hd.mp4 (the WhatsApp export, denoised + lanczos-upscaled to 1080×1920) + drawer_1583/1586/1587.mp4.
 
 // ZEISS Indigo (brand/zeiss/GUIDELINES.md), with white text on it.
 const INDIGO = "#0F2DB3";
@@ -105,7 +105,7 @@ export const BlackFridayZvc: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#000" }}>
       <Sequence durationInFrames={cut}>
-        <OffthreadVideo src={staticFile("footage/bf/skit.mp4")} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <OffthreadVideo src={staticFile("footage/bf/skit_hd.mp4")} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       </Sequence>
       <Sequence from={cut} durationInFrames={Math.round(MONTAGE_BEATS * BEAT * fps)}>
         <BeatAd {...blackFridayMontage} />
