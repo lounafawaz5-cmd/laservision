@@ -261,8 +261,8 @@ const Text: React.FC<{ text: string; style: BeatAdProps["texts"][number]["style"
           style={{
             fontFamily: FONT,
             fontWeight: 800,
-            fontSize: 84,
-            letterSpacing: 8,
+            fontSize: suffix.length > 6 ? 60 : 84,
+            letterSpacing: suffix.length > 6 ? 5 : 8,
             background: accent,
             color: "#000",
             padding: "8px 36px",

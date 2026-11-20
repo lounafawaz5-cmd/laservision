@@ -2,7 +2,7 @@ import { AbsoluteFill, Audio, Img, interpolate, OffthreadVideo, Sequence, spring
 import { WhatsAppIcon } from "../components/WhatsAppIcon";
 import { BeatAd, BeatAdProps } from "../templates/BeatAd";
 
-// ZVC · Black Friday announcement (Nov 21–30, 20% to 50%).
+// ZVC · Black Friday announcement (Nov 21–30, 20% to 50% off sunglasses only).
 // Review 20 Nov: "make the announcement more engaging and add frames of glasses."
 // v2 keeps Luna's skit (WhatsApp export, 576×1024) up to the moment she starts typing the answer,
 // then cuts on the beat to a try-on montage of frames with the offer typed, counted and tagged on screen,
@@ -37,7 +37,7 @@ export const blackFridayMontage: BeatAdProps = {
   ],
   texts: [
     { text: "BLACK FRIDAY", beat: 0, beats: 4, style: "type" },
-    { text: "20|50|OFF", beat: 4, beats: 4, style: "count" },
+    { text: "20|50|OFF SUNGLASSES", beat: 4, beats: 4, style: "count" },
     { text: "NOV 21–30", beat: 8, beats: 4, style: "tag" },
     { text: "at ZEISS Vision Center", beat: 12, beats: 2, style: "cta" },
   ],
@@ -74,6 +74,7 @@ const BlackFridayCard: React.FC = () => {
         <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 116, color: "#fff", lineHeight: 1 }}>20%–50%</div>
         <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 64, letterSpacing: 6, background: LIME, color: "#000", padding: "6px 22px" }}>OFF</div>
       </div>
+      <div style={{ marginTop: 24, fontFamily: FONT, fontWeight: 700, fontSize: 52, letterSpacing: 10, color: "#fff", opacity: o }}>ON SUNGLASSES</div>
       <div style={{ marginTop: 40, fontFamily: FONT, fontWeight: 700, fontSize: 64, letterSpacing: 14, color: "#fff", opacity: d, clipPath: `inset(0 ${(1 - d) * 100}% 0 0)` }}>
         NOV 21–30
       </div>
