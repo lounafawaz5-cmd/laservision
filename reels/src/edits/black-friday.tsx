@@ -2,7 +2,7 @@ import { AbsoluteFill, Audio, Img, interpolate, OffthreadVideo, Sequence, spring
 import { WhatsAppIcon } from "../components/WhatsAppIcon";
 import { BeatAd, BeatAdProps } from "../templates/BeatAd";
 
-// ZVC · Black Friday announcement (Nov 21–30, 20% to 50% off sunglasses only).
+// ZVC · Black Friday announcement (Nov 21 – Dec 30 (extended from Nov 30), 20% to 50% off sunglasses only).
 // Review 20 Nov: "make the announcement more engaging and add frames of glasses."
 // v2 keeps Luna's skit (WhatsApp export, 576×1024) up to the moment she starts typing the answer,
 // then cuts on the beat to sunglasses drawers opening and closing, with the offer typed, counted and tagged on screen,
@@ -45,7 +45,7 @@ export const blackFridayMontage: BeatAdProps = {
   texts: [
     { text: "BLACK FRIDAY", beat: 0, beats: 4, style: "type" },
     { text: "20|50|OFF SUNGLASSES", beat: 4, beats: 4, style: "count" },
-    { text: "NOV 21–30", beat: 10, beats: 4, style: "tag" },
+    { text: "NOV 21 – DEC 30", beat: 10, beats: 4, style: "tag" },
     { text: "at ZEISS Vision Center", beat: 14, beats: 2, style: "cta" },
   ],
   // Review 20 Nov: no flashing, no beat pumping, no corner lines / logo / shot counter; ZEISS Indigo accent.
@@ -57,7 +57,7 @@ export const blackFridayMontage: BeatAdProps = {
   // End card is drawn below (BlackFridayCard), not by BeatAd.
   outroBeats: 0,
   outroLogo: "",
-  outroLine: "BLACK FRIDAY · NOV 21–30",
+  outroLine: "BLACK FRIDAY · NOV 21 – DEC 30",
   whatsapp: "81 47 20 20",
 };
 
@@ -87,7 +87,7 @@ const BlackFridayCard: React.FC = () => {
       </div>
       <div style={{ marginTop: 24, fontFamily: FONT, fontWeight: 700, fontSize: 52, letterSpacing: 10, color: "#fff", opacity: o }}>ON SUNGLASSES</div>
       <div style={{ marginTop: 40, fontFamily: FONT, fontWeight: 700, fontSize: 64, letterSpacing: 14, color: "#fff", opacity: d, clipPath: `inset(0 ${(1 - d) * 100}% 0 0)` }}>
-        NOV 21–30
+        NOV 21 – DEC 30
       </div>
       <div style={{ width: interpolate(w, [0, 1], [0, 480]), height: 3, background: "#fff", marginTop: 90, marginBottom: 70 }} />
       <Img src={staticFile("brand/zvc-wordmark-white.png")} style={{ width: 620, opacity: w, transform: `translateY(${(1 - w) * 30}px)` }} />
