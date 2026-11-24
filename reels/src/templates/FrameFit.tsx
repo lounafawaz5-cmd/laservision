@@ -28,7 +28,8 @@ const clip = z.object({
   srcW: z.number(),
   srcH: z.number(),
   centerX: z.number(), // horizontal crop center in source px
-  glasses: z.object({ x: z.number(), y: z.number(), w: z.number(), h: z.number() }), // center + size in source px, frame 0
+  // Outline of the frame on the first frame, in source px: each lens rim (traced + masked), plus hinges/bridge (masked only).
+  glasses: z.object({ lenses: z.array(z.array(z.tuple([z.number(), z.number()]))), parts: z.array(z.array(z.tuple([z.number(), z.number()]))) }),
 });
 
 export const frameFitSchema = z.object({
@@ -58,6 +59,18 @@ const PANELS = [
 ];
 const RED = "#E5322D";
 const GREEN = "#2DB84B";
+
+// Closed Catmull-Rom spline through the points, so traced outlines follow the rim smoothly.
+const smoothPath = (pts: [number, number][]) => {
+  const n = pts.length;
+  let d = `M ${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < n; i++) {
+    const [p0, p1, p2, p3] = [pts[(i - 1 + n) % n], pts[i], pts[(i + 1) % n], pts[(i + 2) % n]];
+    d += ` C ${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6}, ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6}, ${p2[0]} ${p2[1]}`;
+  }
+  return d + " Z";
+};
+const polyPath = (pts: [number, number][]) => `M ${pts.map((q) => q.join(" ")).join(" L ")} Z`;
 
 const Badge: React.FC<{ kind: "wrong" | "right"; delay: number }> = ({ kind, delay }) => {
   const frame = useCurrentFrame();
@@ -107,15 +120,15 @@ const Panel: React.FC<{ p: FrameFitProps; kind: "wrong" | "right"; top: number; 
   const left = Math.min(0, Math.max(W - vidW, W / 2 - c.centerX * scale));
   const introF = Math.round(p.introSec * fps);
 
-  // Spotlight on the glasses during the intro.
-  const gx = left + c.glasses.x * scale;
-  const gy = c.glasses.y * scale;
-  const rx = (c.glasses.w * scale) / 2 + 34;
-  const ry = (c.glasses.h * scale) / 2 + 30;
+  // Fitted highlight on the glasses during the intro: dim everything but the frame, then trace each rim.
+  const toOut = (pts: [number, number][]) => pts.map(([x, y]) => [left + x * scale, y * scale] as [number, number]);
+  const lensPaths = c.glasses.lenses.map((l) => smoothPath(toOut(l)));
+  const partPaths = c.glasses.parts.map((q) => polyPath(toOut(q)));
   const spotIn = spring({ frame: frame - 3, fps, config: { damping: 200 } });
   const spotOut = interpolate(frame, [introF - 10, introF], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const spot = spotIn * spotOut;
-  const pulse = 1 + 0.06 * Math.max(0, ...p.dingsSec.map((d) => Math.exp(-(frame - d * fps) / 5) * (frame >= d * fps ? 1 : 0)));
+  const draw = interpolate(frame, [4, 4 + 0.6 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const flash = Math.max(0, ...p.dingsSec.map((d) => (frame >= d * fps ? Math.exp(-(frame - d * fps) / 5) : 0)));
 
   const capIn = spring({ frame: frame - captionKey, fps, config: { damping: 200 }, durationInFrames: 12 });
   const accent = kind === "wrong" ? RED : GREEN;
@@ -139,21 +152,27 @@ const Panel: React.FC<{ p: FrameFitProps; kind: "wrong" | "right"; top: number; 
           <defs>
             <mask id={`m-${kind}`}>
               <rect width={W} height={PANEL_H} fill="white" />
-              <ellipse cx={gx} cy={gy} rx={rx * pulse} ry={ry * pulse} fill="black" />
+              {[...lensPaths, ...partPaths].map((d, i) => (
+                <path key={i} d={d} fill="black" stroke="black" strokeWidth={6} strokeLinejoin="round" />
+              ))}
             </mask>
           </defs>
-          <rect width={W} height={PANEL_H} fill="black" opacity={0.62 * spot} mask={`url(#m-${kind})`} />
-          <ellipse
-            cx={gx}
-            cy={gy}
-            rx={rx * pulse}
-            ry={ry * pulse}
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth={6}
-            opacity={spot}
-            style={{ filter: "drop-shadow(0 0 14px rgba(255,255,255,0.9))" }}
-          />
+          <rect width={W} height={PANEL_H} fill="black" opacity={0.65 * spot} mask={`url(#m-${kind})`} />
+          {lensPaths.map((d, i) => (
+            <path
+              key={i}
+              d={d}
+              pathLength={1}
+              fill="none"
+              stroke="#FFFFFF"
+              strokeWidth={4 + 3 * flash}
+              strokeLinejoin="round"
+              strokeDasharray="1 1"
+              strokeDashoffset={1 - draw}
+              opacity={spot}
+              style={{ filter: `drop-shadow(0 0 ${8 + 12 * flash}px rgba(255,255,255,0.95))` }}
+            />
+          ))}
         </svg>
       ) : null}
 
