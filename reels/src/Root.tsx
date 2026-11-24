@@ -4,6 +4,8 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { FrameFit, frameFitSchema, FrameFitProps, frameFitDuration } from "./templates/FrameFit";
+import { frameFit } from "./edits/frame-fit";
 
 const FPS = 30;
 
@@ -107,6 +109,17 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={900}
+    />
+    <Composition
+      id="FrameFit-ZVC"
+      component={FrameFit}
+      schema={frameFitSchema}
+      defaultProps={frameFit}
+      calculateMetadata={({ props }: { props: FrameFitProps }) => ({ durationInFrames: frameFitDuration(props, FPS) })}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={450}
     />
   </>
 );
