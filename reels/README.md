@@ -32,6 +32,8 @@ npx remotion render src/index.ts TalkingHead-Zeiss out/reel.mp4 --props=props.js
 The full template list (doctor Q&A, patient story, before/after, product showcase, listicle,
 trend formats…) is decided together in Step 8, then built here.
 
+**ZVC standard outro:** `public/brand/zvc-outro.mp4` (2.5 s, 1080×1920), the end card used on ZVC reels. Use this file for ZVC endings.
+
 ## Adding the end card to a finished edit (e.g. a CapCut export)
 ```
 scripts/append-outro.sh path/to/export.mp4 laservision out/final.mp4   # or: zvc

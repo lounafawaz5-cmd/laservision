@@ -12,7 +12,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import { loadFont } from "@remotion/fonts";
-import { BrandOutro } from "./BrandOutro";
 
 for (const [file, weight] of [["Medium", "500"], ["Bold", "700"]] as const) {
   loadFont({ family: "Outfit", url: staticFile(`fonts/Outfit-${file}.ttf`), weight });
@@ -265,7 +264,8 @@ export const FrameFit: React.FC<FrameFitProps> = (p) => {
       </Sequence>
 
       <Sequence from={mainF} durationInFrames={Math.round(p.outroSec * fps)}>
-        <BrandOutro brand="zvc" />
+        {/* The standard ZVC end card (Luna's export), 2.5 s, 1080×1920. */}
+        <OffthreadVideo src={staticFile("brand/zvc-outro.mp4")} muted />
       </Sequence>
     </AbsoluteFill>
   );
