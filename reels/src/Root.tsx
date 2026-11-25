@@ -5,6 +5,7 @@ import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/B
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
 import { BlackFridayZvc, blackFridayDuration, BF_FPS } from "./edits/black-friday";
+import { BlackFridayStory, STORY_FPS, STORY_SECONDS } from "./edits/black-friday-story";
 
 const FPS = 30;
 
@@ -116,6 +117,14 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={blackFridayDuration}
+    />
+    <Composition
+      id="BlackFridayStory-ZVC"
+      component={BlackFridayStory}
+      fps={STORY_FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={STORY_SECONDS * STORY_FPS}
     />
   </>
 );
