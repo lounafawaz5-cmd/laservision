@@ -8,7 +8,7 @@ import { BeatAd, BeatAdProps } from "../templates/BeatAd";
 // then cuts on the beat to sunglasses drawers opening and closing, with the offer typed, counted and tagged on screen,
 // and ends on a Black Friday end card (offer, dates, wordmark, WhatsApp icon + number). The original song is a 137 BPM, 8-beat (3.5 s) loop, so the audio
 // is the skit's own track extended by repeating its last loop (public/audio/bf-skit-extended.wav).
-// Footage: public/footage/bf/skit_hd.mp4 (the WhatsApp export, denoised + lanczos-upscaled to 1080×1920) + drawer_1583/1586/1587.mp4.
+// Footage: public/footage/bf/skit_hd.mp4 (the WhatsApp export, denoised + lanczos-upscaled to 1080×1920) + drawer_1583/1586.mp4.
 
 // ZEISS Indigo (brand/zeiss/GUIDELINES.md), with white text on it.
 const INDIGO = "#0F2DB3";
@@ -28,25 +28,24 @@ export const blackFridayMontage: BeatAdProps = {
   beatTimesMs: [],
   bpm: 137.14,
   // Drawers concept (review 20 Nov): each drawer of sunglasses slides open on the beat, holds, and closes,
-  // then the next one opens. Footage: Luna's IMG_1583/1586/1587 (4K HEVC, transcoded to 1080×1920 drawer_*.mp4).
+  // then the next one opens. Footage: Luna's IMG_1583/1586 (4K HEVC, transcoded to 1080×1920 drawer_*.mp4).
   // Opens run at 1.25×, closes at 1.5× so each drawer is shut on the cut; the last one shuts into the end card.
   shots: [
     // Drawer 1 opens (hand in at ~2.2 s, fully open by ~3.3 s).
     { src: d("1583"), at: 2.2, beats: 4, rate: 1.25, move: "hold" },
-    // Drawer 2 opens and holds…
+    // Drawer 2 opens…
     { src: d("1586"), at: 0.4, beats: 4, rate: 1.25, move: "hold" },
-    // …and closes.
-    { src: d("1586"), at: 3.3, beats: 2, rate: 1.5, move: "hold" },
-    // Drawer 3 opens and holds…
-    { src: d("1587"), at: 1.1, beats: 4, rate: 1.25, move: "hold" },
+    // …holds open (slowed slightly)…
+    { src: d("1586"), at: 2.6, beats: 2, rate: 0.8, move: "hold" },
     // …and shuts into the end card.
-    { src: d("1587"), at: 4.1, beats: 2, rate: 1.1, move: "hold" },
+    // Drawer 3 (IMG_1587) removed 25 Nov: those sunglasses are not on sale.
+    { src: d("1586"), at: 3.3, beats: 2, rate: 1.5, move: "hold" },
   ],
   texts: [
     { text: "BLACK FRIDAY", beat: 0, beats: 4, style: "type" },
     { text: "20|50|OFF SUNGLASSES", beat: 4, beats: 4, style: "count" },
-    { text: "TILL NOV 30", beat: 10, beats: 4, style: "tag" },
-    { text: "at ZEISS Vision Center", beat: 14, beats: 2, style: "cta" },
+    { text: "TILL NOV 30", beat: 8, beats: 2, style: "tag" },
+    { text: "at ZEISS Vision Center", beat: 10, beats: 2, style: "cta" },
   ],
   // Review 20 Nov: no flashing, no beat pumping, no corner lines / logo / shot counter; ZEISS Indigo accent.
   hudLogo: "",
