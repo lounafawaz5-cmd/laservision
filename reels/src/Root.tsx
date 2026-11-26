@@ -4,7 +4,7 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
-import { MythFact, mythFactSchema, MythFactProps } from "./templates/MythFact";
+import { MythFact, mythFactSchema, MythFactProps, keptMs } from "./templates/MythFact";
 import { mythFact1118 } from "./edits/myth-fact-1118";
 
 const FPS = 30;
@@ -116,7 +116,7 @@ export const RemotionRoot: React.FC = () => (
       schema={mythFactSchema}
       defaultProps={mythFact1118}
       calculateMetadata={({ props }: { props: MythFactProps }) => ({
-        durationInFrames: Math.round(props.mainSeconds * FPS) + Math.round(props.outroSeconds * FPS),
+        durationInFrames: Math.round((keptMs(props.mainSeconds * 1000, props.cuts) / 1000) * FPS) + Math.round(props.outroSeconds * FPS),
       })}
       fps={FPS}
       width={1080}

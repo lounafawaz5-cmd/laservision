@@ -10,6 +10,8 @@ export const mythFact1118: MythFactProps = {
   video: "footage/1118-myth-fact/video.mp4",
   audio: "footage/1118-myth-fact/audio.wav",
   mainSeconds: 78.32,
+  // v3: Question 3 (screens) and its answer removed to shorten the reel.
+  cuts: [{ startMs: 24300, endMs: 44950 }],
   outroSeconds: 2.5,
   // Border glows only around the moment she says MYTH / FACT (about 2 s), not the whole answer.
   verdicts: [
