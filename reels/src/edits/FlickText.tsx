@@ -7,7 +7,7 @@ import { Glyph, useGlyphs, useOpenTypeFont } from "../components/Text3D";
 /*
  * ZVC "flick text" reel (footage: Drive "joyce").
  * 3D text stands on the counter; the optometrist flicks it away, puts glasses down,
- * and new 3D text drops onto the counter.
+ * and new 3D text appears on the counter.
  *
  * The 3D camera is matched to the footage (tripod shot, 1080x1920):
  * - Focal length: iPhone 1x lens, ~69 deg vertical field of view in portrait.
@@ -209,64 +209,23 @@ const FlickedText: React.FC<{ frame: CounterFrame; font: ReturnType<typeof useOp
 };
 
 // ---------- text 2: letters drop onto the counter ----------
-const DroppedText: React.FC<{ frame: CounterFrame; font: ReturnType<typeof useOpenTypeFont> }> = ({ frame, font }) => {
+const AppearingText: React.FC<{ frame: CounterFrame; font: ReturnType<typeof useOpenTypeFont> }> = ({ frame, font }) => {
   const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
   const glyphs = useGlyphs(font, LINES_2, 2.7, 1.0, EXTRUDE, 0.32);
   const indigo = useMemo(() => makeMaterials(INDIGO), []);
   const black = useMemo(() => makeMaterials(BLACK), []);
   const capLine = 2.7 + 1.0;
-
-  // Bottom line lands first so the lines above stack onto it.
-  const ordered = useMemo(() => {
-    const byLine = [...glyphs].sort((a, b) => a.y - b.y || a.x - b.x);
-    return new Map(byLine.map((g, i) => [g, i]));
-  }, [glyphs]);
-
-  const drop = 24; // cm above its resting place
-  const grav = 980;
-  const tFall = Math.sqrt((2 * drop) / grav);
+  if (f < DROP) return null;
+  // The whole text appears at once, growing from its base on the counter over 5 frames.
+  const p = Math.min(1, (f - DROP) / 5);
+  const s = 0.6 + 0.4 * (1 - Math.pow(1 - p, 3));
   return (
     <group position={frame.position} quaternion={frame.textQuaternion}>
-      {glyphs.map((g, i) => {
-        const order = ordered.get(g) ?? 0;
-        const t = (f - DROP - order * 0.9) / fps;
-        if (t < 0) return null;
-        const seed = Math.sin(i * 12.9898) * 43758.5453;
-        const rnd = seed - Math.floor(seed);
-        let y: number;
-        let sx = 1;
-        let sy = 1;
-        let tilt = 0;
-        if (t < tFall) {
-          y = drop - 0.5 * grav * t * t;
-          sy = 1.06;
-          sx = 0.97;
-          tilt = (rnd - 0.5) * 0.5 * (1 - t / tFall);
-        } else {
-          const s = t - tFall;
-          y = 2.2 * Math.abs(Math.sin((Math.PI * s) / 0.16)) * Math.exp(-9 * s);
-          const squash = 0.22 * Math.exp(-22 * s) * Math.cos((Math.PI * s) / 0.12);
-          sy = 1 - squash;
-          sx = 1 + squash * 0.6;
-          tilt = 0;
-        }
-        const grow = Math.min(1, t * fps / 4);
-        const isTop = Math.round(g.y / capLine) === LINES_2.length - 1;
-        return (
-          <Letter
-            key={i}
-            g={g}
-            materials={isTop ? indigo : black}
-            position={[g.x, g.y + y, 0]}
-            rotation={[0, 0, tilt]}
-            // Grows in over the first frames instead of popping; only casts a shadow once
-            // it's close to the counter (a soft ceiling light wouldn't throw a sharp one from high up).
-            scale={[sx * grow, sy * grow, sx * grow]}
-            shadow={y < 9}
-          />
-        );
-      })}
+      <group scale={[s, s, s]}>
+        {glyphs.map((g, i) => (
+          <Letter key={i} g={g} materials={Math.round(g.y / capLine) === LINES_2.length - 1 ? indigo : black} />
+        ))}
+      </group>
     </group>
   );
 };
@@ -297,7 +256,7 @@ export const FlickText: React.FC = () => {
         <Lights frame={frame < DROP ? spot1 : spot2} />
         <ShadowCatcher frame={spot1} opacity={0.32} />
         {font && frame < DROP && <FlickedText frame={spot1} font={font} />}
-        {font && <DroppedText frame={spot2} font={font} />}
+        {font && <AppearingText frame={spot2} font={font} />}
       </ThreeCanvas>
     </AbsoluteFill>
   );
