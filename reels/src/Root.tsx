@@ -4,6 +4,7 @@ import { BrandOutro, brandOutroSchema } from "./templates/BrandOutro";
 import { BeatAd, beatAdSchema, BeatAdProps, beatAdDuration } from "./templates/BeatAd";
 import { monogram } from "./edits/monogram";
 import { monogramCalm } from "./edits/monogram-calm";
+import { FlickText, FLICK_TEXT_DURATION } from "./edits/FlickText";
 
 const FPS = 30;
 
@@ -107,6 +108,14 @@ export const RemotionRoot: React.FC = () => (
       width={1080}
       height={1920}
       durationInFrames={900}
+    />
+  <Composition
+      id="FlickText-ZVC"
+      component={FlickText}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={FLICK_TEXT_DURATION}
     />
   </>
 );

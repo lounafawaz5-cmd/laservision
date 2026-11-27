@@ -27,6 +27,7 @@ npx remotion render src/index.ts TalkingHead-Zeiss out/reel.mp4 --props=props.js
 | Template | Status | What it is |
 |---|---|---|
 | BrandOutro | Ready | 2.5 s end card: LaserVision = navy, white logo, branches, WhatsApp icon + number. ZVC = black, wordmark, WhatsApp icon + number. |
+| FlickText-ZVC | One-off | 3D text standing on the counter (three.js, matched to the camera, real shadows). Flicked away, then new text drops in. Render with `--gl=swangle`. |
 | TalkingHead | Starter | Footage + timed captions; optional hook card and end card. LaserVision preset matches the reference reel (no cards, word-by-word subtitles). |
 
 The full template list (doctor Q&A, patient story, before/after, product showcase, listicle,
