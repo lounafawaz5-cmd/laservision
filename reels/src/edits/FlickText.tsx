@@ -79,11 +79,14 @@ const counterFrame = (px: number, depth: number, faceCamera: number): CounterFra
 // ---------- materials ----------
 const BLACK = "#161616";
 const INDIGO = "#0F2DB3";
+const SIDE = "#c9ccd3";
 const makeMaterials = (color: string) => {
   const c = new THREE.Color(color);
   return [
-    new THREE.MeshStandardMaterial({ color: c, roughness: 0.32, metalness: 0.0 }),
-    new THREE.MeshStandardMaterial({ color: c.clone().multiplyScalar(0.55), roughness: 0.5, metalness: 0.0 }),
+    // Matte faces (no glare) in the solid color; light grey sides so every letter has a
+    // crisp edge against the next one and against the white counter.
+    new THREE.MeshStandardMaterial({ color: c, roughness: 0.9, metalness: 0.0 }),
+    new THREE.MeshStandardMaterial({ color: new THREE.Color(SIDE), roughness: 0.85, metalness: 0.0 }),
   ];
 };
 
@@ -162,19 +165,18 @@ const Letter: React.FC<{
     rotation={rotation ?? [0, 0, 0]}
     scale={scale ?? [1, 1, 1]}
     castShadow={shadow}
-    receiveShadow
   />
 );
 
 // ---------- text 1: flicked away ----------
 const LINES_1 = ["I NEED TO", "SAVE MONEY"];
 const LINES_2 = ["NEW GLASSES", "ARE WHAT", "YOU NEED"];
-const EXTRUDE = { depth: 1.8, bevel: 0.28 };
+const EXTRUDE = { depth: 1.1, bevel: 0.18 };
 
 const FlickedText: React.FC<{ frame: CounterFrame; font: ReturnType<typeof useOpenTypeFont> }> = ({ frame, font }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const glyphs = useGlyphs(font, LINES_1, 3.8, 1.6, EXTRUDE, 0.2);
+  const glyphs = useGlyphs(font, LINES_1, 3.6, 1.3, EXTRUDE, 0.45);
   const materials = useMemo(() => makeMaterials(BLACK), []);
   const t = (f - FLICK) / fps;
   if (t > 0.9) return null;
@@ -210,10 +212,10 @@ const FlickedText: React.FC<{ frame: CounterFrame; font: ReturnType<typeof useOp
 const DroppedText: React.FC<{ frame: CounterFrame; font: ReturnType<typeof useOpenTypeFont> }> = ({ frame, font }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const glyphs = useGlyphs(font, LINES_2, 2.9, 1.4, EXTRUDE, 0.15);
+  const glyphs = useGlyphs(font, LINES_2, 2.7, 1.0, EXTRUDE, 0.32);
   const indigo = useMemo(() => makeMaterials(INDIGO), []);
   const black = useMemo(() => makeMaterials(BLACK), []);
-  const capLine = 2.9 + 1.4;
+  const capLine = 2.7 + 1.0;
 
   // Bottom line lands first so the lines above stack onto it.
   const ordered = useMemo(() => {
@@ -274,8 +276,8 @@ export const FlickText: React.FC = () => {
   const font = useOpenTypeFont("fonts/Outfit-Bold.ttf");
   const { width, height } = useVideoConfig();
   // Text 1 stands just in front of where her fingertips rest (~x 390); text 2 to the right of the sunglasses.
-  const spot1 = useMemo(() => counterFrame(330, 0.55, 0.6), []);
-  const spot2 = useMemo(() => counterFrame(565, 0.62, 0.6), []);
+  const spot1 = useMemo(() => counterFrame(370, 0.55, 0.85), []);
+  const spot2 = useMemo(() => counterFrame(545, 0.62, 0.85), []);
   const vfov = (2 * Math.atan(H / 2 / F) * 180) / Math.PI;
 
   return (
